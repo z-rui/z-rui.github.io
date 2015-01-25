@@ -1,0 +1,15 @@
+MetaDataFormat: "yaml"
+
+title: "睿"
+baseurl: "http://z-rui.github.io"
+languageCode: "zh-CN"
+theme: "redlounge"
+
+params:
+  sidebartagline: "Bootstrapping..."
+
+menu:
+  social:
+    - pre: "<i class='fa fa-github'></i>"
+      url: "https://www.github.com/z-rui"
+      identifier: "github"
