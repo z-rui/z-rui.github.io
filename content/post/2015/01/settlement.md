@@ -1,6 +1,5 @@
 ---
 date: "2015-01-25"
-draft: true
 title: "定居GitHub.io"
 categories:
   - bootstrap
