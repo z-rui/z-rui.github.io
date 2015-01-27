@@ -1,6 +1,5 @@
 ---
 date: "2015-01-27T03:58:00+08:00"
-draft: true
 title: "物理老师的信"
 category:
   - diary
