@@ -1,6 +1,14 @@
 ---
 date: "2015-01-29T14:16:00+08:00"
 title: "连连看游戏中的配对路径搜索"
+categories:
+  - algorithm
+  - thinking
+tags:
+  - 连连看
+  - 游戏
+  - BFS
+  - DFS
 ---
 
 在连连看游戏中，两个图案可以消去的条件是：
