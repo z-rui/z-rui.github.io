@@ -1,7 +1,7 @@
 ---
 date: "2015-02-09T08:26:00+08:00"
 title: "发现了MinGW GCC的一个bug"
-category:
+categories:
   - computing
 tags:
   - MinGW
