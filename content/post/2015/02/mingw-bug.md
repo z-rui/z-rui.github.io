@@ -1,7 +1,12 @@
 ---
 date: "2015-02-09T08:26:00+08:00"
-draft: true
 title: "发现了MinGW GCC的一个bug"
+category:
+  - computing
+tags:
+  - MinGW
+  - GCC
+  - bug
 ---
 
 我今天发现MinGW内置的打印函数```__mingw_printf```在处理```%a```格式的时候会产生不正确的输出。下面这段程序体现了这个问题。
