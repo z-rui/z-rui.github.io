@@ -1,7 +1,6 @@
 ---
 date: 2015-04-11T16:52:00+08:00
 title: "用gnuplot将数据可视化"
-draft: yes
 categories:
   - computing
   - math
