@@ -1,7 +1,6 @@
 ---
 date: 2015-04-30T10:07:00+08:00
 title: "SQLite3类型系统"
-draft: yes
 ---
 
 SQLite3非常[与众不同](https://www.sqlite.org/different.html)。它的类型系统也不同于大部分的数据库管理系统(DBMS)。
