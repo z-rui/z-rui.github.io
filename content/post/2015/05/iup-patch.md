@@ -54,14 +54,14 @@ IUP的下一个版本也许还会保留这个行为，但我并不需要它。�
 ```patch
 --- a/src/win/iupwin_tree.c
 +++ b/src/win/iupwin_tree.c
-@@ -3061,7 +3061,6 @@
+@@ -3060,7 +3060,6 @@
+   iupClassRegisterAttributeId(ic, "DEPTH",  winTreeGetDepthAttrib,  NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
    iupClassRegisterAttributeId(ic, "KIND",   winTreeGetKindAttrib,   NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
    iupClassRegisterAttributeId(ic, "PARENT", winTreeGetParentAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
-   iupClassRegisterAttributeId(ic, "NAME",   winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
--  iupClassRegisterAttributeId(ic, "TITLE",  winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+-  iupClassRegisterAttributeId(ic, "NAME",   winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, "TITLE",  winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
    iupClassRegisterAttributeId(ic, "CHILDCOUNT", winTreeGetChildCountAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
    iupClassRegisterAttributeId(ic, "COLOR", winTreeGetColorAttrib, winTreeSetColorAttrib, IUPAF_NO_INHERIT);
-   iupClassRegisterAttributeId(ic, "TITLEFONT", winTreeGetTitleFontAttrib, winTreeSetTitleFontAttrib, IUPAF_NO_INHERIT);
 ```
 
 我不是很确定修改IUP的源码以使它符合我的需求是不是明智的选择。
