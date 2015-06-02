@@ -36,4 +36,6 @@ $ git push
 1. 不要在master分支中修改代码。如果这样，则GitHub界面上就没有非常显眼的生成Pull Request的提示。尽管仍然可以生成Pull Request，在master分支中修改代码的主要问题是会带来冲突(conflict)。
 2. 每次push的时候git都会请求我输入用户名和密码，在反复push的时候显得很恼人。可以打开git的缓存功能，在全局设置中设置`credential.helper=cache`，就可以只输入一次用户名和密码。
 
+**更新:** git缓存用户名和密码的功能在Windows上并不好用，因为它依赖UNIX文件系统权限。使用[git-credential-winstore](http://gitcredentialstore.codeplex.com/)项目可以让Windows凭据管理器保管git用户名和密码。下载`git-credential-winstore.exe`并复制到合适的目录中，在git的全局设置中设置`credential.helper=winstore`即可。
+
 <!--more-->
