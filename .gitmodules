@@ -1,3 +1,6 @@
 [submodule "public"]
 	path = public
 	url = https://github.com/z-rui/z-rui.github.io.git
+[submodule "themes/shiori"]
+	path = themes/shiori
+	url = https://github.com/z-rui/hugo-theme-shiori.git
