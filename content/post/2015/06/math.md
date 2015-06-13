@@ -37,7 +37,7 @@ title: "高考数学填空题"
 
 首先根据**三角恒等变换**的知识
 \\[\eqalign{
-\cos x \cos y &= {1\over2}\left(\cos{x+y\over2} + \cos{x-y\over2}\right) \cr
+\cos x \cos y &= {1\over2}\left[\cos(x+y) + \cos(x-y)\right] \cr
 (\sin x + \cos x)(\sin y + \cos y)
 &= (\sin x \sin y + \cos x \cos y) + (\sin x \cos y + \cos x \sin y) \cr
 &= \cos(x-y) + \sin(x+y)
