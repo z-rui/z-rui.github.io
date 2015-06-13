@@ -11,21 +11,21 @@ Multisim是National Instruments的产品。它比较特别，可以进行实时�
 
 Multisim没有免费版本，学生版不提供给中国用户。贸泽电子提供了一个[免费版本的Multisim](http://www.mouser.com/multisimblue/support/downloads/download-multisim)，但是没有分析(analysis)功能。
 
-LTSpice是Linear Technology提供的免费的电路仿真软件。下图是其运行界面。
-
-{{< figure src="/media/ltspice-1.png" >}}
-
-LTSpice的原理图界面比较丑，但是其他功能都还不错。没有Multisim的实时仿真功能，只能靠瞬态分析来观察电路的运行情况。
+LTSpice是Linear Technology提供的免费的电路仿真软件。它的原理图界面比较丑，但是其他功能都还不错。瞬态分析、交流小信号分析、直流扫描分析等各种功能都齐全，只是没有Multisim的实时仿真功能，如果要了解电路运行情况随时间的变化，只能依靠瞬态分析来实现。
 
 手机上也有电路仿真软件。在此我推荐使用[EveryCircuit](http://everycircuit.com)。它的界面非常友好，也具有实时仿真的功能，并且在我看来，比Multisim更加好用。主要特点是：
 
+* 用户界面很美观，自动布线的功能也很好用。
 * 可以在仿真过程中动态调节元件参数（电阻、电容大小，电压源电压等）。
 * 可以在原理图中直接读出电路状态，包括每个节点的电位（如果电位在变化，则以波形表示）、每个支路的电流（以动画的方式体现出电流的方向和相对大小，如果是恒定电流则还会标出具体数值）、电容的带电量、电灯泡的功率（以亮度表示）、MOSFET的沟道状态等。
 * 示波器非常好用，无需像Multisim那样将示波器连入电路中，而只需指定要观察的量即可，而且仿真速度相对较慢，容易观察电路的变化。
 * 在仿真过程中可以通过摇晃手机来加入噪声信号。某些非稳态电路可能需要噪声才能启动。
 * 最新的版本中，增加了参数图形、频域分析的功能，还增加了几个集成元件（计数器、7段数码管、555定时器）。
 
+**更新：**EveryCircuit的作者Paul Falstad还写了一个[JavaScript版本的电路模拟器](http://www.falstad.com/circuit/)。界面比EveryCircuit稍微粗糙一点，但是功能更加全面。（对浏览器的性能是个考验。）
+
 <!--more-->
+
 
 ## 瞬态分析
 
