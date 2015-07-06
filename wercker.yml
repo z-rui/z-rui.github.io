@@ -1,12 +1,7 @@
-box: debian
+box: yesops/git
 
 build:
   steps:
-    - script:
-        name: install git
-        code: |
-            apt-get update
-            apt-get -y install git
     - script:
         name: fetch submodules
         code: |
@@ -16,11 +11,6 @@ build:
 
 deploy:
   steps:
-    - script:
-        name: install git
-        code: |
-            apt-get update
-            apt-get -y install git
     - lukevivier/gh-pages@0.2.1:
         token: $GIT_TOKEN
         basedir: public

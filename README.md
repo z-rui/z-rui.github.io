@@ -1,6 +1,6 @@
 # z-rui.github.io 源文件仓库
 
-[![wercker status](https://app.wercker.com/status/d4544681cfe12fb00dfbd47bb59fdd0a/m "wercker status")](https://app.wercker.com/project/bykey/d4544681cfe12fb00dfbd47bb59fdd0a)
+[![wercker status](https://app.wercker.com/status/f15c143baa2a3b3dd012b46409431898/m "wercker status")](https://app.wercker.com/project/bykey/f15c143baa2a3b3dd012b46409431898)
 
 这里保存的是 http://z-rui.github.io 网站的源文件。
 
