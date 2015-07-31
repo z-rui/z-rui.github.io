@@ -14,7 +14,7 @@ title: "高考数学填空题"
 ## 算术法
 
 \begin{array}{r|rrr}
-   k & \vec{a\_k} & \vec{a\_k}\cdot\vec{a_{k+1}} & \hbox{部分和} \cr
+   k & \vec{a\_k} & \vec{a\_k}\cdot\vec{a\_{k+1}} & \hbox{部分和} \cr
    0 & \left(              1,                 1\right) &   {1\over2} + \sqrt3 & {1\over2} +           \sqrt3 \cr
    1 & \left( {\sqrt3\over2},  {1+\sqrt3\over2}\right) &  1 + {3\sqrt3\over4} & {3\over2} + { 7\sqrt3\over4} \cr
    2 & \left(      {1\over2},  {1+\sqrt3\over2}\right) &     {1+\sqrt3\over2} &         2 + { 9\sqrt3\over4} \cr
@@ -70,4 +70,4 @@ title: "高考数学填空题"
 
 [Wolfram|Alpha的计算结果](http://www.wolframalpha.com/share/clip?f=d41d8cd98f00b204e9800998ecf8427efh6p47n86i)
 
-{{% figure caption="TI-89 Titanium的计算结果" src="/media/ti89-1.jpg" %}}
+{{% figure caption="TI-89 Titanium的计算结果" src="/media/ti89-1.png" %}}
