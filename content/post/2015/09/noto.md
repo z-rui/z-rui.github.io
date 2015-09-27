@@ -13,13 +13,16 @@ title: "Google的新字体noto"
 
 于是我卸载了文泉驿，改而安装Noto字体。
 
+[1]: http://www.virtualbox.org/
+[2]: http://www.freebsd.org/
+[3]: http://www.wenq.org/
+[4]: https://www.google.com/get/noto/
+
+<!--more-->
+
 顺便一提，`xorg`这个包太大了，包含了那些并不需要的过时字体。可以安装FreeBSD提供的`xorg-minimal`库，减少不必要的安装。桌面环境我也没有选择Gnome或者KDE，这两者安装完毕后所占用的空间分别是2GB和3GB。我选择了相对而言比较轻量的Xfce。
 
 安装完firefox之后(TL;DC)，就可以愉快地浏览WWW了。
 
 {{< figure src="/media/freebsd-1.png" >}}
 
-[1]: http://www.virtualbox.org/
-[2]: http://www.freebsd.org/
-[3]: http://www.wenq.org/
-[4]: https://www.google.com/get/noto/
