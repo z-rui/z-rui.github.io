@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.46 404" width="453pt" height="404pt" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g class="graph" id="graph1" transform="scale(1) rotate(0) translate(4 400)">
+<title>G</title>
+<polygon fill="white" stroke="white" points="-4,5 -4,-400 450.456,-400 450.456,5 -4,5" />
+<!-- gettext&#45;runtime -->
+<g class="node" id="node1"><title>gettext-runtime</title>
+<ellipse fill="none" stroke="black" cx="70" cy="-90" rx="70.3557" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="70" y="-85.8">gettext-runtime</text>
+</g>
+<!-- iconv -->
+<g class="node" id="node3"><title>iconv</title>
+<ellipse fill="none" stroke="black" cx="70" cy="-18" rx="32.2385" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="70" y="-13.8">iconv</text>
+</g>
+<!-- gettext&#45;runtime&#45;&gt;iconv -->
+<g class="edge" id="edge2"><title>gettext-runtime-&gt;iconv</title>
+<path fill="none" stroke="black" d="M 70 -71.6966 C 70 -63.9827 70 -54.7125 70 -46.1124" />
+<polygon fill="black" stroke="black" points="73.5001,-46.1043 70,-36.1043 66.5001,-46.1044 73.5001,-46.1043" />
+</g>
+<!-- glib -->
+<g class="node" id="node4"><title>glib</title>
+<ellipse fill="none" stroke="black" cx="154" cy="-162" rx="27" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="154" y="-157.8">glib</text>
+</g>
+<!-- glib&#45;&gt;gettext&#45;runtime -->
+<g class="edge" id="edge4"><title>glib-&gt;gettext-runtime</title>
+<path fill="none" stroke="black" d="M 137.804 -147.503 C 126.434 -138.028 110.944 -125.12 97.6393 -114.033" />
+<polygon fill="black" stroke="black" points="99.6172,-111.125 89.6943,-107.412 95.1358,-116.503 99.6172,-111.125" />
+</g>
+<!-- libffi -->
+<g class="node" id="node24"><title>libffi</title>
+<ellipse fill="none" stroke="black" cx="189" cy="-90" rx="30.02" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="189" y="-85.8">libffi</text>
+</g>
+<!-- glib&#45;&gt;libffi -->
+<g class="edge" id="edge26"><title>glib-&gt;libffi</title>
+<path fill="none" stroke="black" d="M 162.118 -144.765 C 166.298 -136.404 171.492 -126.016 176.197 -116.606" />
+<polygon fill="black" stroke="black" points="179.342,-118.143 180.683,-107.633 173.081,-115.012 179.342,-118.143" />
+</g>
+<!-- atk -->
+<g class="node" id="node6"><title>atk</title>
+<ellipse fill="none" stroke="black" cx="72" cy="-234" rx="27" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="72" y="-229.8">atk</text>
+</g>
+<!-- atk&#45;&gt;gettext&#45;runtime -->
+<g class="edge" id="edge6"><title>atk-&gt;gettext-runtime</title>
+<path fill="none" stroke="black" d="M 71.7588 -215.871 C 71.4179 -191.67 70.7917 -147.211 70.3858 -118.393" />
+<polygon fill="black" stroke="black" points="73.8827,-118.139 70.2421,-108.189 66.8834,-118.238 73.8827,-118.139" />
+</g>
+<!-- atk&#45;&gt;glib -->
+<g class="edge" id="edge28"><title>atk-&gt;glib</title>
+<path fill="none" stroke="black" d="M 88.2006 -219.17 C 100.183 -208.942 116.691 -194.849 130.175 -183.338" />
+<polygon fill="black" stroke="black" points="132.779,-185.717 138.112,-176.563 128.234,-180.394 132.779,-185.717" />
+</g>
+<!-- gdk&#45;pixbuf -->
+<g class="node" id="node8"><title>gdk-pixbuf</title>
+<ellipse fill="none" stroke="black" cx="247" cy="-234" rx="53.4241" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="247" y="-229.8">gdk-pixbuf</text>
+</g>
+<!-- gdk&#45;pixbuf&#45;&gt;gettext&#45;runtime -->
+<g class="edge" id="edge8"><title>gdk-pixbuf-&gt;gettext-runtime</title>
+<path fill="none" stroke="black" d="M 239.883 -216.141 C 230.845 -196.502 213.546 -164.178 190 -144 C 171.17 -127.863 146.649 -115.865 124.684 -107.404" />
+<polygon fill="black" stroke="black" points="125.721,-104.056 115.128,-103.879 123.298,-110.624 125.721,-104.056" />
+</g>
+<!-- gdk&#45;pixbuf&#45;&gt;glib -->
+<g class="edge" id="edge30"><title>gdk-pixbuf-&gt;glib</title>
+<path fill="none" stroke="black" d="M 225.897 -217.116 C 212.099 -206.73 193.997 -193.105 179.409 -182.125" />
+<polygon fill="black" stroke="black" points="181.379,-179.227 171.285,-176.01 177.17,-184.82 181.379,-179.227" />
+</g>
+<!-- libpng -->
+<g class="node" id="node12"><title>libpng</title>
+<ellipse fill="none" stroke="black" cx="323" cy="-90" rx="35.5757" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="323" y="-85.8">libpng</text>
+</g>
+<!-- gdk&#45;pixbuf&#45;&gt;libpng -->
+<g class="edge" id="edge20"><title>gdk-pixbuf-&gt;libpng</title>
+<path fill="none" stroke="black" d="M 256.017 -216.153 C 269.158 -191.6 293.685 -145.773 309.134 -116.908" />
+<polygon fill="black" stroke="black" points="312.362,-118.293 313.995,-107.825 306.19,-114.99 312.362,-118.293" />
+</g>
+<!-- zlib -->
+<g class="node" id="node14"><title>zlib</title>
+<ellipse fill="none" stroke="black" cx="323" cy="-18" rx="27" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="323" y="-13.8">zlib</text>
+</g>
+<!-- gdk&#45;pixbuf&#45;&gt;zlib -->
+<g class="edge" id="edge14"><title>gdk-pixbuf-&gt;zlib</title>
+<path fill="none" stroke="black" d="M 247.479 -215.657 C 248.929 -185.147 254.741 -120.511 278 -72 C 283.489 -60.5511 292.065 -49.5627 300.264 -40.5893" />
+<polygon fill="black" stroke="black" points="302.894,-42.9034 307.285,-33.2613 297.839,-38.0605 302.894,-42.9034" />
+</g>
+<!-- gtk+ -->
+<g class="node" id="node10"><title>gtk+</title>
+<ellipse fill="none" stroke="black" cx="190" cy="-378" rx="28.2376" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="190" y="-373.8">gtk+</text>
+</g>
+<!-- gtk+&#45;&gt;gettext&#45;runtime -->
+<g class="edge" id="edge10"><title>gtk+-&gt;gettext-runtime</title>
+<path fill="none" stroke="black" d="M 165.83 -368.2 C 143.866 -359.381 111.412 -344.216 88 -324 C 58.1234 -298.203 48.1447 -289.558 36 -252 C 21.025 -205.688 41.042 -149.709 56.1076 -117.443" />
+<polygon fill="black" stroke="black" points="59.3626,-118.752 60.58,-108.227 53.065,-115.696 59.3626,-118.752" />
+</g>
+<!-- gtk+&#45;&gt;glib -->
+<g class="edge" id="edge36"><title>gtk+-&gt;glib</title>
+<path fill="none" stroke="black" d="M 173.7 -363.065 C 163.595 -353.3 151.523 -339.298 146 -324 C 129.794 -279.108 138.731 -222.577 146.503 -189.837" />
+<polygon fill="black" stroke="black" points="149.91,-190.64 148.952,-180.088 143.121,-188.934 149.91,-190.64" />
+</g>
+<!-- gtk+&#45;&gt;atk -->
+<g class="edge" id="edge42"><title>gtk+-&gt;atk</title>
+<path fill="none" stroke="black" d="M 168.366 -366.282 C 151.474 -357.016 128.365 -342.249 113 -324 C 97.4891 -305.578 86.5956 -280.316 79.9557 -261.412" />
+<polygon fill="black" stroke="black" points="83.2711,-260.289 76.7858,-251.911 76.631,-262.505 83.2711,-260.289" />
+</g>
+<!-- gtk+&#45;&gt;gdk&#45;pixbuf -->
+<g class="edge" id="edge46"><title>gtk+-&gt;gdk-pixbuf</title>
+<path fill="none" stroke="black" d="M 205.167 -362.685 C 214.72 -352.76 226.447 -338.722 233 -324 C 241.68 -304.501 245.084 -280.503 246.371 -262.342" />
+<polygon fill="black" stroke="black" points="249.877,-262.315 246.917,-252.142 242.887,-261.94 249.877,-262.315" />
+</g>
+<!-- cairo -->
+<g class="node" id="node16"><title>cairo</title>
+<ellipse fill="none" stroke="black" cx="349" cy="-234" rx="30.0071" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="349" y="-229.8">cairo</text>
+</g>
+<!-- gtk+&#45;&gt;cairo -->
+<g class="edge" id="edge40"><title>gtk+-&gt;cairo</title>
+<path fill="none" stroke="black" d="M 206.766 -363.267 C 219.568 -352.692 237.574 -337.625 253 -324 C 278.451 -301.52 306.895 -274.963 326.169 -256.746" />
+<polygon fill="black" stroke="black" points="328.729,-259.143 333.581,-249.724 323.914,-254.061 328.729,-259.143" />
+</g>
+<!-- pango -->
+<g class="node" id="node28"><title>pango</title>
+<ellipse fill="none" stroke="black" cx="190" cy="-306" rx="34.455" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="190" y="-301.8">pango</text>
+</g>
+<!-- gtk+&#45;&gt;pango -->
+<g class="edge" id="edge44"><title>gtk+-&gt;pango</title>
+<path fill="none" stroke="black" d="M 190 -359.697 C 190 -351.983 190 -342.712 190 -334.112" />
+<polygon fill="black" stroke="black" points="193.5,-334.104 190,-324.104 186.5,-334.104 193.5,-334.104" />
+</g>
+<!-- libepoxy -->
+<g class="node" id="node37"><title>libepoxy</title>
+<ellipse fill="none" stroke="black" cx="364" cy="-306" rx="44.2515" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="364" y="-301.8">libepoxy</text>
+</g>
+<!-- gtk+&#45;&gt;libepoxy -->
+<g class="edge" id="edge48"><title>gtk+-&gt;libepoxy</title>
+<path fill="none" stroke="black" d="M 213.466 -367.559 C 241.75 -356.181 289.732 -336.878 323.92 -323.124" />
+<polygon fill="black" stroke="black" points="325.638,-326.206 333.609,-319.226 323.025,-319.711 325.638,-326.206" />
+</g>
+<!-- libpng&#45;&gt;zlib -->
+<g class="edge" id="edge12"><title>libpng-&gt;zlib</title>
+<path fill="none" stroke="black" d="M 323 -71.6966 C 323 -63.9827 323 -54.7125 323 -46.1124" />
+<polygon fill="black" stroke="black" points="326.5,-46.1043 323,-36.1043 319.5,-46.1044 326.5,-46.1043" />
+</g>
+<!-- cairo&#45;&gt;glib -->
+<g class="edge" id="edge32"><title>cairo-&gt;glib</title>
+<path fill="none" stroke="black" d="M 325.426 -222.647 C 320.057 -220.382 314.355 -218.051 309 -216 C 267.54 -200.125 219.008 -183.903 187.446 -173.661" />
+<polygon fill="black" stroke="black" points="188.417,-170.296 177.825,-170.553 186.265,-176.957 188.417,-170.296" />
+</g>
+<!-- cairo&#45;&gt;libpng -->
+<g class="edge" id="edge24"><title>cairo-&gt;libpng</title>
+<path fill="none" stroke="black" d="M 345.864 -215.871 C 341.433 -191.67 333.292 -147.211 328.016 -118.393" />
+<polygon fill="black" stroke="black" points="331.391,-117.395 326.147,-108.189 324.506,-118.656 331.391,-117.395" />
+</g>
+<!-- cairo&#45;&gt;zlib -->
+<g class="edge" id="edge16"><title>cairo-&gt;zlib</title>
+<path fill="none" stroke="black" d="M 375.855 -225.494 C 397.44 -217.886 426.333 -203.776 440 -180 C 447.974 -166.128 445.878 -158.881 440 -144 C 421.89 -98.1507 378.142 -59.2462 349.574 -37.5305" />
+<polygon fill="black" stroke="black" points="351.359,-34.4968 341.241,-31.3544 347.191,-40.1207 351.359,-34.4968" />
+</g>
+<!-- pixman -->
+<g class="node" id="node18"><title>pixman</title>
+<ellipse fill="none" stroke="black" cx="391" cy="-162" rx="40.0067" ry="18" />
+<text font-family="Times,serif" font-size="14" text-anchor="middle" x="391" y="-157.8">pixman</text>
+</g>
+<!-- cairo&#45;&gt;pixman -->
+<g class="edge" id="edge22"><title>cairo-&gt;pixman</title>
+<path fill="none" stroke="black" d="M 358.741 -216.765 C 363.81 -208.317 370.12 -197.799 375.813 -188.312" />
+<polygon fill="black" stroke="black" points="378.876,-190.009 381.02,-179.633 372.874,-186.408 378.876,-190.009" />
+</g>
+<!-- pixman&#45;&gt;libpng -->
+<g class="edge" id="edge18"><title>pixman-&gt;libpng</title>
+<path fill="none" stroke="black" d="M 375.57 -145.116 C 366.577 -135.858 355.083 -124.027 345.138 -113.789" />
+<polygon fill="black" stroke="black" points="347.38,-111.074 337.902,-106.34 342.359,-115.952 347.38,-111.074" />
+</g>
+<!-- pango&#45;&gt;glib -->
+<g class="edge" id="edge34"><title>pango-&gt;glib</title>
+<path fill="none" stroke="black" d="M 185.658 -287.871 C 179.495 -263.564 168.151 -218.819 160.848 -190.013" />
+<polygon fill="black" stroke="black" points="164.208,-189.022 158.358,-180.189 157.423,-190.743 164.208,-189.022" />
+</g>
+<!-- pango&#45;&gt;cairo -->
+<g class="edge" id="edge38"><title>pango-&gt;cairo</title>
+<path fill="none" stroke="black" d="M 215.546 -293.753 C 242.874 -281.722 286.307 -262.601 316.157 -249.459" />
+<polygon fill="black" stroke="black" points="317.592,-252.652 325.334,-245.419 314.772,-246.245 317.592,-252.652" />
+</g>
+</g>
+</svg>
