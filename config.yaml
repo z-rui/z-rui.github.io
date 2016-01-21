@@ -6,4 +6,8 @@ languageCode: "zh-CN"
 theme: "shiori"
 
 params:
-  github_username: "z-rui"
+    github_username: z-rui
+    CopyrightHTML: |
+        &copy; 2015.
+        使用<a href="http://gohugo.io/">Hugo</a>和<a href="https://github.com/chibicode/hugo-theme-shiori">Shiori 主题</a>构建.
+
