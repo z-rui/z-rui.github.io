@@ -10,4 +10,5 @@ params:
     CopyrightHTML: |
         &copy; 2015.
         使用<a href="http://gohugo.io/">Hugo</a>和<a href="https://github.com/chibicode/hugo-theme-shiori">Shiori 主题</a>构建.
+        字体由<a href="http://typekit.com/colophons/lgv3lge">Adobe Typekit</a>提供支持.
 
