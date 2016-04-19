@@ -8,7 +8,7 @@ title: CMOS三角波生成器
 ## 原理
 
 要生成三角波，可以考虑用电流源给电容器充电/放电。因为电容的伏安关系式为
-\\[i = {{\rm d}u\over{\rm d}t},\\]
+\\[i = C{{\rm d}u\over{\rm d}t},\\]
 所以只要通过的电流恒定，电容两端的电压就会线性地变化。
 
 {{<figure src="/media/cmos-triangle-wave-generator-2.svg" >}}
