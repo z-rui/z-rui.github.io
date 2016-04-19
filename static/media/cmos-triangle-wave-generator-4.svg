@@ -1,0 +1,70 @@
+<?xml version='1.0'?>
+<!-- created using Vector Blocks (http://bretmulvey.com/VectorBlocks) -->
+<svg xmlns='http://www.w3.org/2000/svg' width='144' height='176'>
+    <g stroke='#000' stroke-width='2'>
+        <path d='m 96,88 16,0' />
+        <path d='m 40,64 0,16' />
+        <path d='m 40,96 0,16' />
+    </g>
+    <g transform='translate(-1056 -1104)' style='font-family: Sans-Serif' stroke-width='2' stroke='#000' fill='none'>
+        <g transform='translate(1104 1136)  '>
+            <path d='m 0,24 21,0' />
+            <path d='m 21,10 0,28' />
+            <path d='m 40,0 0,12 -13,0' />
+            <path d='m 40,48 0,-12 -13,0' />
+            <path d='m 26.5,5 0,38' stroke-width='3' />
+            <path d='m 40,36 -8,4 0,-8 z' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(1136 1184)  '>
+            <path d='m 8,0 0,16' />
+            <path d='m 8,8 8,0' />
+            <circle r='3' cx='8' cy='8' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(1088 1152)  '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(1088 1184) matrix(-1 0 0 -1 16 16) '>
+            <path d='m 8,0 0,16' />
+            <path d='m 8,8 8,0' />
+            <circle r='3' cx='8' cy='8' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(1104 1200)  '>
+            <path d='m 0,24 21,0' />
+            <path d='m 21,10 0,28' />
+            <path d='m 40,0 0,12 -13,0' />
+            <path d='m 40,48 0,-12 -13,0' />
+            <path d='m 26.5,5 0,38' stroke-width='3' />
+            <path d='m 28,12 8,4 0,-8 z' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(1088 1216) matrix(0 -1 1 0 0 16) '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g fill='#FFF' transform='translate(1072 1184) matrix(-1 0 0 -1 16 16) '>
+            <path d='m 0,8 5,0' />
+            <rect width='6' height='6' x='5' y='5' />
+        </g>
+        <g transform='translate(1168 1184) matrix(0 1 -1 0 16 0) '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(1168 1200) matrix(0 1 -1 0 16 0) '>
+            <path d='m 0,8 5,0' />
+            <circle r='3' cx='8' cy='8' fill='#FFF' />
+        </g>
+        <g transform='translate(1168 1232) matrix(0 -1 1 0 0 16) '>
+            <path d='m 0,8 5,0' />
+            <circle r='3' cx='8' cy='8' fill='#FFF' />
+        </g>
+        <g transform='translate(1168 1248)  '>
+            <path d='m 8,0 0,8' />
+            <path d='m 0,8 16,0' />
+        </g>
+        <g transform='translate(1136 1120) matrix(0 -1 1 0 0 16) '>
+            <path d='m 0,8 5,0' />
+            <circle r='3' cx='8' cy='8' fill='#FFF' />
+        </g>
+        <g transform='translate(1136 1248) matrix(0 1 -1 0 16 0) '>
+            <path d='m 0,8 5,0' />
+            <circle r='3' cx='8' cy='8' fill='#FFF' />
+        </g>
+    </g>
+</svg>

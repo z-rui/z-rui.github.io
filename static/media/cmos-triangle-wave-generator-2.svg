@@ -1,0 +1,83 @@
+<?xml version='1.0'?>
+<!-- created using Vector Blocks (http://bretmulvey.com/VectorBlocks) -->
+<svg xmlns='http://www.w3.org/2000/svg' width='176' height='192'>
+    <g stroke='#000' stroke-width='2'>
+        <path d='m 80,72 80,0' />
+        <path d='m 96,104 16,0' />
+        <path d='m 72,80 0,16' />
+        <path d='m 120,112 0,16' />
+        <path d='m 168,80 0,16' />
+    </g>
+    <g transform='translate(-768 -992)' style='font-family: Sans-Serif' stroke-width='2' stroke='#000' fill='none'>
+        <g fill='#FFF' transform='translate(816 1072) matrix(-1 0 0 -1 48 48) '>
+            <path d='m 36,8 12,0' />
+            <circle r='3' cx='36' cy='8' />
+            <path d='m 36,40 12,0' />
+            <circle r='3' cx='36' cy='40' />
+            <path d='m 12,24 -12,0' />
+            <path d='m 12,24 27,12' />
+            <circle r='3' cx='12' cy='24' />
+        </g>
+        <g transform='translate(880 1088) matrix(0 1 -1 0 16 0) '>
+            <path d='m 8,0 0,16' />
+            <path d='m 8,8 8,0' />
+            <circle r='3' cx='8' cy='8' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(784 1024) matrix(0 1 -1 0 48 0) '>
+            <circle r='20' cx='24' cy='24' stroke-width='4' fill='#FFF' />
+            <path d='m 0,24 4,0' />
+            <path d='m 48,24 -4,0' />
+            <path d='m 34,24 -22,0' stroke-width='4' />
+            <path d='m 38,24 -10,-5 0,10 10,-5' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(784 1120) matrix(0 1 -1 0 48 0) '>
+            <circle r='20' cx='24' cy='24' stroke-width='4' fill='#FFF' />
+            <path d='m 0,24 4,0' />
+            <path d='m 48,24 -4,0' />
+            <path d='m 34,24 -22,0' stroke-width='4' />
+            <path d='m 38,24 -10,-5 0,10 10,-5' stroke='none' fill='#000' />
+        </g>
+        <g transform='translate(800 1072) matrix(0 -1 1 0 0 16) '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(800 1104)  '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(800 1008) matrix(0 -1 1 0 0 16) '>
+            <path d='m 0,8 5,0' />
+            <circle r='3' cx='8' cy='8' fill='#FFF' />
+        </g>
+        <g transform='translate(800 1168)  '>
+            <path d='m 8,0 0,8' />
+            <path d='m 0,8 16,0' />
+        </g>
+        <g transform='translate(832 1056)  '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(880 1168)  '>
+            <path d='m 8,0 0,8' />
+            <path d='m 0,8 16,0' />
+        </g>
+        <g transform='translate(880 1120) matrix(0 -1 1 0 0 48) '>
+            <path d='m 0,8 22,0' />
+            <path d='m 21,0 a 20,20 0 0 1 0,16' />
+            <path d='m 27,0 0,16' />
+            <path d='m 48,8 -21,0' />
+            <path d='m 32,-2 8,0' />
+            <path d='m 36,-6 0,8' />
+        </g>
+        <g fill='#FFF' transform='translate(896 1072)  '>
+            <path d='m 32,24 -31,-15 0,30 z' />
+        </g>
+        <g transform='translate(896 1088) matrix(1 0 0 -1 0 16) '>
+            <path d='m 3,12 8,0 4,-8' />
+            <path d='m 19,4 -8,0 -4,8' />
+        </g>
+        <g transform='translate(928 1088) matrix(-1 0 0 -1 16 16) '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+        <g transform='translate(928 1056) matrix(0 1 -1 0 16 0) '>
+            <path d='m 8,16 0,-8 8,0' />
+        </g>
+    </g>
+</svg>
