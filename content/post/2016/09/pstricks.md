@@ -15,6 +15,8 @@ title: 使用PSTricks作图
 
 {{<figure src="/media/sot223-1.svg" >}}
 
+<!--more-->
+
 我以前也用[MetaPost](http://www.tug.org/metapost.html)画图，画过最复杂的一张是一次作业里的插图：
 
 {{<figure src="/media/hw8-3.svg" >}}
@@ -48,7 +50,7 @@ MetaPost有一套不错的变量系统，可以用来储存所画的图像（并
 \begin{pspicture*}
 % PSTricks代码 ...
 \end{pspicture*}
-\end{document
+\end{document}
 ```
 
 ```
