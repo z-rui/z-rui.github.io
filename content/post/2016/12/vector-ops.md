@@ -3,7 +3,7 @@ date: 2016-12-13T21:55:00+08:00
 title: 复数和矢量运算
 ---
 
-在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re[\sqrt2\dot{A}]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\,\lower .56ex{\angle}\kern -.15ex\underline{\smash{#1}}}A\phase\varphi\\)表示，并且使用角度制。
+在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\\)表示，并且使用角度制。
 
 <img style="margin: auto;" src="/media/vector-1.png">
 
@@ -20,7 +20,7 @@ title: 复数和矢量运算
 \end{align}
 
 这种记法的物理意义很明显。并且用这种表示进行算术运算也具有明确的意义。例如，线电压
-\\[\dot{U}\_{AB} = \dot{U}\_A - \dot{U}\_B = 220\sqrt3\phase{30^\circ}\;.\\]
+\\[\dot{U}\_{AB} = \dot{U}\_A - \dot{U}\_B = 220\sqrt3\phase{30^\circ}\;\mathrm{V}.\\]
 可以直接从计算结果中读出它的幅值和相位。
 
 上面的计算因为涉及特殊角，所以可以笔算得出结果。甚至可以画出对应矢量的图形（恰好构成等腰三角形），用图解法来做。
@@ -79,7 +79,7 @@ title: 复数和矢量运算
 
 用矢量型的计算尺可以代替查表的工作。将角度化归到第一象限，以及根据象限确定\\(\varphi\\)取值的步骤和前面一样，此处省略。
 
-当\\(c=220\\), \\(\varphi=60^\circ\\)时，计算过程如下：
+当\\(r=220\\), \\(\varphi=60^\circ\\)时，计算过程如下：
 
 1. 移动滑尺使C刻度右端线对齐D刻度2.2；
 2. 将游标移至S刻度60，在D刻度读出1.905，得\\(y=190.5\\)；
