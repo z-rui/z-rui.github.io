@@ -101,7 +101,7 @@ Gibbon还指出，这个算法还有值得优化的地方。例如可以在恰�
 
 如Gibbons所言，这样的算法并非是最快的。这主要是因为所计算出来的分式线性映射的系数会迅速地变成特别大的整数。即便是我用C配合GMP编写的程序，最终也没有MPFR自带的求π的函数的速度快。但是这个算法很具有启发性，让我以一种全新的视角看待无穷级数、连分数这样的构造。把它们转换成分式线性映射、分式线性映射又用矩阵表示、计算有效数字转化为提取整数部分……这些转化的思想都妙不可言。
 
-话说回来，MPFR用的是什么算法呢？经过查看它的[文档](http://www.mpfr.org/algo.html)可知，求π用的是[高斯-拉格朗日算法]。是的，听着名字就是这么霸气。它的原理和这里所说的算法都不同，并不是基于某个无穷级数，而是基于算术-几何平均数的一些性质。此外，它是一种迭代算法，每次迭代都需要用到前面的计算结果，而不是每一位有效数字都是单独得到的。
+话说回来，MPFR用的是什么算法呢？经过查看它的[文档](http://www.mpfr.org/algo.html)可知，求π用的是[高斯-勒让德算法]。是的，听着名字就是这么霸气。它的原理和这里所说的算法都不同，并不是基于某个无穷级数，而是基于算术-几何平均数的一些性质。此外，它是一种迭代算法，每次迭代都需要用到前面的计算结果，而不是每一位有效数字都是单独得到的。
 
 ## 前向差分算子等式的证明
 
@@ -151,4 +151,4 @@ F(0)
 [Spigot算法]:		http://www.mathpropress.com/stan/bibliography/spigot.pdf
 [Gibbons]:		http://web.comlab.ox.ac.uk/oucl/work/jeremy.gibbons/publications/spigot.pdf
 [圆周率公式]:		http://mathworld.wolfram.com/PiFormulas.html
-[高斯-拉格朗日算法]:	http://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_algorithm
+[高斯-勒让德算法]:	http://en.wikipedia.org/wiki/Gauss%E2%80%93Legendre_algorithm
