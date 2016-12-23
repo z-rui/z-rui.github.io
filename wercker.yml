@@ -7,7 +7,7 @@ build:
         code: |
             git submodule update --init --recursive
     - arjen/hugo-build@1.13.1:
-        version: "0.17"
+        version: "0.18"
 
 deploy:
   steps:
