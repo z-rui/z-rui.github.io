@@ -5,7 +5,7 @@ title: 复数和矢量运算
 
 在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\\)表示，并且使用角度制。
 
-<img style="margin: auto;" src="/media/vector-1.png">
+<img style="margin: auto;" src="/media/vector-1.svg">
 
 <!--more-->
 
@@ -25,7 +25,7 @@ title: 复数和矢量运算
 
 上面的计算因为涉及特殊角，所以可以笔算得出结果。甚至可以画出对应矢量的图形（恰好构成等腰三角形），用图解法来做。
 
-<img style="margin: auto;" src="/media/vector-3.png">
+<img style="margin: auto;" src="/media/vector-2.svg">
 
 下面讨论一般的计算办法。
 
@@ -46,7 +46,7 @@ title: 复数和矢量运算
 
 为了求出幅值和相位，需要再转换为极坐标形式。一般地，可以归结为一个解直角三角形的问题。
 
-<img style="margin: auto;" src="/media/vector-2.png">
+<img style="margin: auto;" src="/media/vector-3.svg">
 
 设三边按从小到大的顺序分别为\\(a,\,b,\,c\\)，边\\(a\\)所对的角为\\(\alpha\\)。则\\(\alpha=\arctan\frac{a}{b}\\)。注意我们总用小数除以大数。
 \begin{array}{rrr}
