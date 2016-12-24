@@ -28,7 +28,7 @@ mathjax
 
 为了确定\\(\tan B \tan C\\)的取值范围，考虑到这是一个三角形，不妨采用以边代角的策略。因此作出\\(\triangle ABC\\)的图像。
 
-{{<figure src="/media/math-1.png">}}
+{{<figure src="/media/math-1.svg">}}
 
 过A作BC的垂线，垂足为D。并设\\(AD=h\\), \\(BD=a_1\\), \\(DC=a_2\\)。从图中可以直接读出\\(B\\)的\\(C\\)的三角函数。
 

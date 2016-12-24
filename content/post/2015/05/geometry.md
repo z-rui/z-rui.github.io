@@ -5,7 +5,7 @@ title: "一道几何题的证明"
 
 这是一道来自高中数学的几何题。值得纪念一下，因为它有好几种证明的办法。有的办法简单，有的办法麻烦。
 
-{{< figure src="/media/geometry-1.png" >}}
+{{<figure src="/media/geometry-1.svg">}}
 
 问题是这样的：如图，矩形的边长\\(AB=a, BC=b\\)，而\\(P\\)是\\(CD\\)上的动点。问：\\(\angle APB\\)什么时候最大？并说明理由。
 
@@ -90,7 +90,12 @@ x^2+(a-x)^2 &\geq {[x+(a-x)]^2 \over 2} = {a^2\over2}.
 }\\]
 
 所以
-\\[ \cos\angle APB \geq {x^2+(a-x)^2+2b^2-a^2 \over x^2+(a-x)^2+2b^2} = 1 - {a^2 \over x^2+(a-x)^2+2b^2} \geq 1-{a^2 \over {a^2\over2}+2b^2} = {4b^2-a^2 \over 4b^2+a^2}.\\]
+\begin{align}
+\cos\angle APB &\geq {x^2+(a-x)^2+2b^2-a^2 \over x^2+(a-x)^2+2b^2} \\\\ 
+&= 1 - {a^2 \over x^2+(a-x)^2+2b^2} \\\\ 
+&\geq 1-{a^2 \over {a^2\over2}+2b^2} \\\\ 
+&= {4b^2-a^2 \over 4b^2+a^2}.
+\end{align}
 
 当且仅当\\(x=a-x\\)即\\(x={a\over2}\\)时，两个不等式同时取等号，\\(\cos\angle APB\\)取得最小值。
 
@@ -100,7 +105,7 @@ x^2+(a-x)^2 &\geq {[x+(a-x)]^2 \over 2} = {a^2\over2}.
 
 最后，抛弃代数，用纯几何的办法，也可以证明这个结论。
 
-{{< figure src="/media/geometry-2.png" >}}
+{{<figure src="/media/geometry-2.svg">}}
 
 如图，取\\(CD\\)的中点\\(E\\)，作圆弧\\(\overset{\large\frown}{AEB}\\)。假设\\(P\\)不是\\(CD\\)的中点，那么设\\(\overset{\large\frown}{AEB}\\)和\\(AP\\)的交点是\\(Q\\)。连结\\(BQ\\)。根据圆周角定理，\\(\angle AQB = \angle AEB.\\)另一方面，因为\\(\angle AQB\\)是\\(\triangle PQB\\)的外角，有\\(\angle AQB > \angle APB.\\)所以\\[\angle APB < \angle AEB.\\]所以只有\\(P\\)是\\(CD\\)中点的时候，\\(\angle APB\\)才最大。
 
