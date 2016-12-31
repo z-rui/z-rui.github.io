@@ -12,7 +12,7 @@ title: "负反馈放大电路"
 
 已知：\\(R\_s\\)的值已经很高，可以略去。
 
-{{% figure src="/media/circuit-1.png" %}}
+{{<figure src="/media/circuit-1.svg" >}}
 
 <!--more-->
 
@@ -36,7 +36,7 @@ title: "负反馈放大电路"
 
 这题还有一种奇怪的解法。那就是利用上面所说的“虚断”和“虚短”条件，把基本放大电路接成运算放大器，如下
 
-{{% figure src="/media/circuit-2.png" %}}
+{{<figure src="/media/circuit-2.svg" >}}
 
 根据“瞬时极性法”，输出信号和输入信号是反相的。所以输入信号接在运算放大器的反相输入端。画出这个电路以后，使用运算放大器的知识不难求得答案。
 
