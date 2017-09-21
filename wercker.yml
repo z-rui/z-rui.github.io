@@ -1,4 +1,4 @@
-box: default
+box: golang
 
 build:
   steps:
