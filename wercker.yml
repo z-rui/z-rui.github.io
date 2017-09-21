@@ -1,4 +1,4 @@
-box: yesops/git
+box: wercker/default
 
 build:
   steps:
