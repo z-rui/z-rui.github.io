@@ -6,7 +6,7 @@ build:
         name: fetch submodules
         code: |
             git submodule update --init --recursive
-    - arjen/hugo-build@2.0.0:
+    - arjen/hugo-build@2.1.0:
         version: "0.41"
 
 deploy:
