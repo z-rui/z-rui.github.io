@@ -3,6 +3,8 @@ date: 2017-12-25T17:18:00-05:00
 title: Gentoo 除错日志
 ---
 
+**2018-6-9 更新：** 文中部分过时信息已用删除线划去。
+
 之前几天重新配置了我的 Gentoo 桌面环境。很遗憾的是官方源中的 Gnome 在不用 systemd 的情况下是无法顺利安装的，我暂时不打算更换整个 init 系统，所以我先装了 Xfce 凑合。（除了功能稍显单薄，Xfce 的各方面我都很喜欢，可能是因为它是我用过的第一个 Linux 桌面环境。）
 ```
 rui@localhost ~ $ uname -a
@@ -28,9 +30,10 @@ Xfce 和 elogind 可以和平共处，这样就不需要 ConsoleKit 了。
 ```
 USE='-consolekit elogind'
 ```
-但是 elogind 仍处在测试阶段，要去掉 mask 才能使用。
+<del>但是 elogind 仍处在测试阶段，要去掉 mask 才能使用。</del>
+elogind 目前已有稳定版本，直接安装即可。
 
-在有 ConsoleKit/elogind 的情况下，可以从图形界面直接睡眠/关机。否则，只能用 root 执行 `poweroff` 来关机。
+在有 ConsoleKit/elogind 以及 PolicyKit 的情况下，可以从图形界面直接睡眠/关机。否则，只能用 root 执行 `poweroff` 来关机。
 
 问题来了：我每次选择“睡眠”时，屏幕关闭，但系统要过 10 秒左右才进入睡眠状态。从睡眠状态恢复时，界面无响应约半分钟。
 
@@ -40,14 +43,15 @@ echo mem > /sys/power/state
 ```
 仍有同样的问题。因此可能是内核选项配置有误。我找了和电源管理有关的选项，没发现可疑的部分。网上查了很久 “freeze suspend” 相关内容，没有找到可用的解决方案。
 
-看 `dmesg -H`，发现睡眠前后有声卡驱动的错误信息。于是禁用声卡驱动启动，睡眠问题消失。至此确定是声卡驱动的锅。到网上查询该错误信息，得到解决方案：编辑 `/etc/modprobe.d/intel.conf`：
+看 `dmesg -H`，发现睡眠前后有声卡驱动的错误信息。于是禁用声卡驱动启动，睡眠问题消失。至此确定是声卡驱动的锅。到网上查询该错误信息，得到解决方案：<del>编辑 `/etc/modprobe.d/intel.conf`：</del>
 ```
 options snd-hda-intel single_cmd=1
 options snd-hda-intel probe_mask=1
 ```
-问题解决。该解决方案网上也极难找到。
+<del>问题解决。该解决方案网上也极难找到。</del>
+正确做法是在内核选项中同时开启`CONFIG_SND_HDA_CODEC_HDMI`和`CONFIG_SND_HDA_CODEC_CONEXANT`（只开后者便会出现上述问题）。
 
-安装 xfce4-power-manager 时，为了不引入 ConsoleKit 的依赖，需要启用 `systemd` USE 选项（此选项并不引入 systemd 依赖，见[#639432](https://bugs.gentoo.org/639432)）。当与 elogind 配合使用时，在笔记本盖子合上时无法自动进入睡眠状态。解决方案是
+安装 xfce4-power-manager 时，<del>为了不引入 ConsoleKit 的依赖，需要启用 `systemd` USE 选项（此选项并不引入 systemd 依赖，见[#639432](https://bugs.gentoo.org/639432)）。</del>当与 elogind 配合使用时，在笔记本盖子合上时无法自动进入睡眠状态。解决方案是
 ```
 xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/logind-handle-lid-switch -s false
 ```
