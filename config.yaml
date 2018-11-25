@@ -2,13 +2,18 @@ MetaDataFormat: "yaml"
 
 title: "睿"
 baseurl: "http://z-rui.github.io/"
-languageCode: "zh-CN"
-theme: "shiori"
+defaultContentLanguage: "zh"
+copyright: |
+    &copy; 2015---2018.
+    使用[Hugo](http://gohugo.io)构建.
+theme: "hugo-theme-bootstrap4-blog"
 
 params:
-    github_username: z-rui
-    CopyrightHTML: |
-        &copy; 2015.
-        使用<a href="http://gohugo.io/">Hugo</a>和<a href="https://github.com/chibicode/hugo-theme-shiori">Shiori 主题</a>构建.
-        字体由<a href="http://typekit.com/colophons/lgv3lge">Adobe Typekit</a>提供支持.
+    author: rui
+    header_visible: false
+    sidebar:
+        about: |
+            <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+        num_recent_posts: 4
 
+# vim: ts=4:sw=4:et

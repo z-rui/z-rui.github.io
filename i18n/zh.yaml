@@ -1,0 +1,38 @@
+- id: about
+  translation: "关于"
+
+- id: home
+  translation: "首页"
+
+- id: recentPosts
+  translation: "最近发布"
+
+- id: readMore
+  translation: "继续阅读 →"
+
+- id: translations
+  translation: "翻译"
+
+- id: share
+  translation: "分享"
+
+- id: paginatorPrevious
+  translation: "上一页"
+
+- id: paginatorNext
+  translation: "下一页"
+
+- id: cookieMessage
+  translation: "本站使用 cookies。"
+
+- id: cookieLink
+  translation: "进一步了解。"
+
+- id: cookieDismiss
+  translation: "知道了！"
+
+- id: backToTop
+  translation: "回到页首"
+
+- id: links
+  translation: "链接"

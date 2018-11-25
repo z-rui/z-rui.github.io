@@ -1,3 +1,6 @@
 [submodule "themes/shiori"]
 	path = themes/shiori
 	url = https://github.com/z-rui/hugo-theme-shiori.git
+[submodule "themes/hugo-theme-bootstrap4-blog"]
+	path = themes/hugo-theme-bootstrap4-blog
+	url = https://themes.gohugo.io/hugo-theme-bootstrap4-blog/
