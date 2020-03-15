@@ -4,7 +4,7 @@ title: "睿"
 baseurl: "http://z-rui.github.io/"
 defaultContentLanguage: "zh"
 copyright: |
-    &copy; 2015---2018.
+    &copy; 2015---2020.
     使用[Hugo](http://gohugo.io)构建.
 theme: "hugo-theme-bootstrap4-blog"
 
@@ -15,5 +15,10 @@ params:
         about: |
             <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
         num_recent_posts: 4
+
+markup:
+    goldmark:
+        renderer:
+            unsafe: true
 
 # vim: ts=4:sw=4:et
