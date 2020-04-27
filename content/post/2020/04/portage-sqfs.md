@@ -118,7 +118,7 @@ $ umount /usr/portage
 $ umount base
 $ mv gentoo.sfs gentoo.sfs~
 $ mv gentoo.sfs.1 gentoo.sfs
-$ find delta/ --delete
+$ find delta/ -delete
 ```
 
 ## 后续
