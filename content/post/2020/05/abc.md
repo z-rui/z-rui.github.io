@@ -41,6 +41,6 @@ L: 1/4
 K: G
    B>B d>e | d4       | B>A G>A | B4     |
    d>d g>g | (f3e)    | e>B e>d | d4     |
-   B>B d g | g>g   f2 | B>B B G | B>A A2 |
+   B>B d g | f>f   e2 | B>B B G | B>A A2 |
    d>d e f | g>a   b2 | a>e f d | g4     |
 ```
