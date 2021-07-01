@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="发现了MinGW GCC的一个bug" />
+<meta property="og:description" content="我今天发现MinGW内置的打印函数__mingw_printf在处理%a格式的时候会产生不正确的输出。下面这段程序体现了这个问题。
+#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+int main()
+{
+	printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	__mingw_printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	return 0;
+}
+输出是
+0x1.000000p&#43;0 0x1.19999ap&#43;0
+0x0p-63 0x8.cccccccccccdp-3
+因为浮点数1.0显然不能表示为0x0p-63，所以__mingw_printf是错的。
+这个错误我提交在 http://sourceforge.net/p/mingw-w64/bugs/459/ ，过几天我看看有没有人回应。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/02/mingw-bug/" />
+<meta property="article:published_time" content="2015-02-09T08:26:00+08:00" />
+<meta property="article:modified_time" content="2015-02-09T08:26:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="发现了MinGW GCC的一个bug"/>
+<meta name="twitter:description" content="我今天发现MinGW内置的打印函数__mingw_printf在处理%a格式的时候会产生不正确的输出。下面这段程序体现了这个问题。
+#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+int main()
+{
+	printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	__mingw_printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	return 0;
+}
+输出是
+0x1.000000p&#43;0 0x1.19999ap&#43;0
+0x0p-63 0x8.cccccccccccdp-3
+因为浮点数1.0显然不能表示为0x0p-63，所以__mingw_printf是错的。
+这个错误我提交在 http://sourceforge.net/p/mingw-w64/bugs/459/ ，过几天我看看有没有人回应。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "发现了MinGW GCC的一个bug",
+  "url": "http://z-rui.github.io/post/2015/02/mingw-bug/",
+  "wordCount": "44",
+  "datePublished": "2015-02-09T08:26:00+08:00",
+  "dateModified": "2015-02-09T08:26:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "keywords": "computing, MinGW, GCC, bug"
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/02/mingw-bug/">
+
+    <title>发现了MinGW GCC的一个bug | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/mingw-bug/">发现了MinGW GCC的一个bug</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-09T08:26:00+08:00">Mon Feb 9, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/mingw/" rel="tag">MinGW</a>, <a href="/tags/gcc/" rel="tag">GCC</a>, <a href="/tags/bug/" rel="tag">bug</a>
+
+</p>
+  </header>
+  <p>我今天发现MinGW内置的打印函数<code>__mingw_printf</code>在处理<code>%a</code>格式的时候会产生不正确的输出。下面这段程序体现了这个问题。</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+int main()
+{
+	printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	__mingw_printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	return 0;
+}
+</code></pre><p>输出是</p>
+<pre><code>0x1.000000p+0 0x1.19999ap+0
+0x0p-63 0x8.cccccccccccdp-3
+</code></pre><p>因为浮点数<code>1.0</code>显然不能表示为<code>0x0p-63</code>，所以<code>__mingw_printf</code>是错的。</p>
+<p>这个错误我提交在 <a href="http://sourceforge.net/p/mingw-w64/bugs/459/">http://sourceforge.net/p/mingw-w64/bugs/459/</a> ，过几天我看看有没有人回应。</p>
+<p>这个bug是在我玩弄Lua解释器的时候发现的，我尝试了</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">(<span style="color:#e6db74">&#39;%a %a&#39;</span>):format(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1.1</span>) <span style="color:#75715e">--&gt; 0x0p-63 0x8.cccccccccccdp-3</span>
+</code></pre></div><p>结果和预想的不一样。最初我以为是Lua在处理数值是把整型/浮点型给搞错了，后来对Lua解释器进行单步调试，发现Lua没有问题，可是<code>sprintf</code>输出的内容就是不对。</p>
+<p>于是我另外写了一个演示程序，使用<code>sprintf</code>来输出，结果发现输出的内容是正确的，真是奇了怪了。</p>
+<p>难道是Lua自己重新实现了一个<code>sprintf</code>？找了找代码，没找到。后来鬼使神差地用了<code>gcc -S</code>，把汇编代码给翻了出来，一看，好家伙，在Lua的解释器中，gcc用<code>__mingw_vsprintf</code>自行实现了<code>sprintf</code>，根本就没有调用C标准库里边的<code>sprintf</code>。而在我写的演示程序里，gcc又没有这样做。</p>
+<p>于是真相大白：问题出在<code>__mingw_*printf</code>函数，它对<code>%a</code>格式的实现应该是错的。</p>
+<p>寻找这个bug的经历说明几个问题：</p>
+<ol>
+<li>有错误的程序不一定是错的。</li>
+<li>很多问题的解决都有偶然因素在里边。</li>
+<li>尽管程序员不可信，有时候编译器也不可信。(本质上还是程序员不可信-_-。)</li>
+</ol>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fmingw-bug%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fmingw-bug%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fmingw-bug%2f&amp;text=%e5%8f%91%e7%8e%b0%e4%ba%86MinGW%20GCC%e7%9a%84%e4%b8%80%e4%b8%aabug" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

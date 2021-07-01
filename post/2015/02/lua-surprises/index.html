@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Lua语言中的“惊喜”" />
+<meta property="og:description" content="Lua在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &ldquo;gotcha&rdquo;)。根据我的经验，整理如下：
+
+不等号是~=，而不是!=。
+
+
+这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是!=(C家族)，还有一部分用&lt;&gt;(Pascal, Basic, SQL)。用~=真的只有Lua一家。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/02/lua-surprises/" />
+<meta property="article:published_time" content="2015-02-26T06:00:00+08:00" />
+<meta property="article:modified_time" content="2015-02-26T06:00:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lua语言中的“惊喜”"/>
+<meta name="twitter:description" content="Lua在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &ldquo;gotcha&rdquo;)。根据我的经验，整理如下：
+
+不等号是~=，而不是!=。
+
+
+这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是!=(C家族)，还有一部分用&lt;&gt;(Pascal, Basic, SQL)。用~=真的只有Lua一家。
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Lua语言中的“惊喜”",
+  "url": "http://z-rui.github.io/post/2015/02/lua-surprises/",
+  "wordCount": "34",
+  "datePublished": "2015-02-26T06:00:00+08:00",
+  "dateModified": "2015-02-26T06:00:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "keywords": "computing, Lua, 惊喜, bug"
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/02/lua-surprises/">
+
+    <title>Lua语言中的“惊喜” | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/lua-surprises/">Lua语言中的“惊喜”</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-26T06:00:00+08:00">Thu Feb 26, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>, <a href="/categories/lua/" rel="category tag">Lua</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E6%83%8A%E5%96%9C/" rel="tag">惊喜</a>, <a href="/tags/bug/" rel="tag">bug</a>
+
+</p>
+  </header>
+  <p><a href="http://www.lua.org/">Lua</a>在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &ldquo;gotcha&rdquo;)。根据我的经验，整理如下：</p>
+<ol>
+<li>不等号是<code>~=</code>，而不是<code>!=</code>。</li>
+</ol>
+<ul>
+<li>这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是<code>!=</code>(C家族)，还有一部分用<code>&lt;&gt;</code>(Pascal, Basic, SQL)。用<code>~=</code>真的只有Lua一家。</li>
+</ul>
+<ol start="2">
+<li>未用<code>local</code>声明的变量名都是全局变量。引用未定义的全局变量，得到的值是<code>nil</code>。</li>
+</ol>
+<ul>
+<li>这是我写Lua程序时bug的主要来源。Lua默认措施不利于排查无意中的错误，例如变量名的拼写错误。</li>
+<li>使用一个称为<code>strict</code>的模块有助于防止产生这方面的问题。</li>
+</ul>
+<ol start="3">
+<li>使用for语句循环一个表时，在<code>in</code>关键字后面必须是<code>pairs</code>或者<code>ipairs</code>。简单的<code>for x in tablename</code>是不对的。</li>
+</ol>
+<ul>
+<li>这个问题主要来自Python带来的习惯：<code>for x in seq:</code></li>
+</ul>
+<ol start="4">
+<li>如果<code>s = &quot;Hello, world&quot;</code>，则<code>s[5]</code>的值是<code>nil</code>。</li>
+</ol>
+<ul>
+<li>字符串不能通过下标操作获得某个位置的字节。这是一个大的惊喜，因为给字符串做下标操作看起来在自然不过了。</li>
+<li>如果想这么做，使用<code>s:sub(5, 5)</code>。(有点丑，尤其是当下标不是一个常数而是一个复杂的表达式时。)</li>
+</ul>
+<ol start="5">
+<li>表的起始下标默认是1，而不是0。</li>
+</ol>
+<ul>
+<li>这主要困扰C语言的使用者。以1作为起始下标其实并不是特别别扭的事，对C语言的重度使用者除外。</li>
+<li>与此相呼应，通常区间将表示为闭区间，而不是像以0作为起始下标时那样，表示为左闭右开区间。请参见<a href="http://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html">Dijkstra的文章</a>。</li>
+</ul>
+<ol start="6">
+<li>(Lua 5.3) 异或运算的符号是<code>~</code>，而不是<code>^</code>。</li>
+</ol>
+<ul>
+<li>事实上，<code>^</code>是乘方的符号。在一些计算器以及电子试算表软件中，这个符号的确表示乘方。但是，C语言程序员仍然表示不服。（C语言没有乘方运算符。<a href="http://www.python.org">Python</a>尊重C的约定，使用<code>^</code>表示异或运算，而<code>**</code>表示乘方(这个符号来自Fortran)。）</li>
+<li>单目运算符<strong>按位取反</strong>的符号也是<code>~</code>，这和C语言的约定一致。有趣的是，<a href="http://www.golang.org/">Go语言</a>和Lua恰好相反：在Go中，异或运算和按位取反的符号都是<code>^</code>，<code>~</code>符号未被使用。</li>
+</ul>
+<ol start="7">
+<li>没有<code>continue</code>。</li>
+</ol>
+<ul>
+<li>哈哈。</li>
+</ul>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2flua-surprises%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2flua-surprises%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2flua-surprises%2f&amp;text=Lua%e8%af%ad%e8%a8%80%e4%b8%ad%e7%9a%84%e2%80%9c%e6%83%8a%e5%96%9c%e2%80%9d" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

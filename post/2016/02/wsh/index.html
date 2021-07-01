@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Windows Script Host技巧二则" />
+<meta property="og:description" content="Windows Script Host (WSH)是Windows 98推出的脚本工具，至今已有18年历史，应该属于被淘汰的技术之一。尽管如此，微软的MSDN和TechNet上仍维护者相关的文档。
+相对于批处理这个更加古老的技术，WSH的优点是它使用VBScript或者JScript语言，语法更加接近通用的程序设计语言，因此更适合处理复杂问题。（参考perl和sh脚本之间的区别。）另一个优点是它可以直接利用所有现成的COM对象，操纵各种应用程序；不过COM也是一个有着20多年历史的老古董技术了。
+本文介绍WSH的两个使用功能。其中的代码均为JScript，将代码保存为.js文件，则运行脚本和运行一般的程序没有区别。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/02/wsh/" />
+<meta property="article:published_time" content="2016-02-04T04:04:00+08:00" />
+<meta property="article:modified_time" content="2016-02-04T04:04:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Windows Script Host技巧二则"/>
+<meta name="twitter:description" content="Windows Script Host (WSH)是Windows 98推出的脚本工具，至今已有18年历史，应该属于被淘汰的技术之一。尽管如此，微软的MSDN和TechNet上仍维护者相关的文档。
+相对于批处理这个更加古老的技术，WSH的优点是它使用VBScript或者JScript语言，语法更加接近通用的程序设计语言，因此更适合处理复杂问题。（参考perl和sh脚本之间的区别。）另一个优点是它可以直接利用所有现成的COM对象，操纵各种应用程序；不过COM也是一个有着20多年历史的老古董技术了。
+本文介绍WSH的两个使用功能。其中的代码均为JScript，将代码保存为.js文件，则运行脚本和运行一般的程序没有区别。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Windows Script Host技巧二则",
+  "url": "http://z-rui.github.io/post/2016/02/wsh/",
+  "wordCount": "24",
+  "datePublished": "2016-02-04T04:04:00+08:00",
+  "dateModified": "2016-02-04T04:04:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/02/wsh/">
+
+    <title>Windows Script Host技巧二则 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/02/wsh/">Windows Script Host技巧二则</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-02-04T04:04:00+08:00">Thu Feb 4, 2016</time> by rui</p>
+  </header>
+  <p>Windows Script Host (WSH)是Windows 98推出的脚本工具，至今已有18年历史，应该属于被淘汰的技术之一。尽管如此，微软的<a href="https://msdn.microsoft.com/en-us/library/9bbdkx3k.aspx">MSDN</a>和<a href="https://technet.microsoft.com/library/ee156603.aspx">TechNet</a>上仍维护者相关的文档。</p>
+<p>相对于批处理这个更加古老的技术，WSH的优点是它使用VBScript或者JScript语言，语法更加接近通用的程序设计语言，因此更适合处理复杂问题。（参考perl和sh脚本之间的区别。）另一个优点是它可以直接利用所有现成的<a href="https://en.wikipedia.org/wiki/Component_Object_Model">COM</a>对象，操纵各种应用程序；不过COM也是一个有着20多年历史的老古董技术了。</p>
+<p>本文介绍WSH的两个使用功能。其中的代码均为JScript，将代码保存为<code>.js</code>文件，则运行脚本和运行一般的程序没有区别。</p>
+<h2 id="以隐藏模式运行程序">以隐藏模式运行程序</h2>
+<p>使用<code>WshShell.Run</code>方法可以运行程序，并且设置程序窗口的显示模式，其中就包含隐藏这一种模式。具体做法是</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">CreateObject</span>(<span style="color:#e6db74">&#34;WScript.Shell&#34;</span>).<span style="color:#a6e22e">Run</span>(<span style="color:#e6db74">&#34;daemon.exe&#34;</span>, <span style="color:#ae81ff">0</span>);
+</code></pre></div><p>第二个参数0即表示隐藏窗口。也可以设置成其他值，对应不同的模式。</p>
+<p>[WshShell](<a href="https://msdn.microsoft.com/en-us/subscriptions/aew9yb99(v=vs.84">https://msdn.microsoft.com/en-us/subscriptions/aew9yb99(v=vs.84</a>).aspx)还有其他一些有用的方法，例如<code>SendKeys</code>向窗口中发送按键，配合<code>WshShell.Run</code>使用，可以实现自动操作某些程序的功能。</p>
+<h2 id="获取网页内容">获取网页内容</h2>
+<p>使用称为<code>MSXML2.XMLHTTP</code>对象可以发送HTTP请求，从而获得网页内容。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">req</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">WScript</span>.<span style="color:#a6e22e">CreateObject</span>(<span style="color:#e6db74">&#34;MSXML2.XMLHTTP&#34;</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">open</span>(<span style="color:#e6db74">&#34;Get&#34;</span>, <span style="color:#e6db74">&#34;http://zhr.io/ip&#34;</span>, <span style="color:#ae81ff">0</span>);
+<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">send</span>();
+<span style="color:#a6e22e">WScript</span>.<span style="color:#a6e22e">Echo</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">responseText</span>);
+</code></pre></div>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f02%2fwsh%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f02%2fwsh%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f02%2fwsh%2f&amp;text=Windows%20Script%20Host%e6%8a%80%e5%b7%a7%e4%ba%8c%e5%88%99" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

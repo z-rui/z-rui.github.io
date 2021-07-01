@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="睿" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="睿"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link active" href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/bypass-xauth/">免xauth进行X11转发</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-20T00:00:00Z">Tue Oct 20, 2015</time> by rui</p>
+  </header>
+  <p>之前谈到如何通过SSH进行X11转发。其中有一个前提，即主机B上要装有<code>xauth</code>。事实上，X11的转发和普通的TCP端口转发并无差别。如果主机B中未安装<code>xauth</code>，则需要用户手动设置远程TCP端口转发，并设置主机B的<code>DISPLAY</code>变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hostA$ ssh -R6010:localhost:6000 user@hostB
+hostB$ export DISPLAY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;:10&#39;</span>
+</code></pre></div><p>在图形界面客户端例如PuTTY或者<a href="https://www.bitvise.com/tunnelier">Bitvise Tunnelier</a>中，也都有远程TCP端口转发的设置。</p>
+<p>在主机A中，仍然启动X服务器的TCP监听。不同的是，由于没有<code>.Xauthority</code>认证文件，需要用<code>xhost</code>允许本地主机(即SSH客户端)连接X服务器。在Cygwin中：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hostA$ startxwin -- :0 -multiwindow -listen tcp &amp;
+hostA$ xhost +localhost
+</code></pre></div><p>具体采用哪一种办法见仁见智。建议在主机B中安装<code>xauth</code>，这样可以免去手工设置远程端口转发和<code>DISPLAY</code>变量。</p>
+  <a href='http://z-rui.github.io/post/2015/10/bypass-xauth/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/x11forward/">通过SSH进行X11转发</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-18T00:00:00Z">Sun Oct 18, 2015</time> by rui</p>
+  </header>
+  <pre><code>          Host A                                         Host B           
++--------------------+------+                +------+--------------------+
+| +------------+     |      |                |      |     +------------+ |
+| |            |     | SSH  |    Internet    | SSH  |     |            | |
+| |            +-----&gt; Port +----------------&gt; Port +-----&gt;            | |
+| |            &lt;-----+      &lt;----------------+      &lt;-----+            | |
+| |    SSH     |     |      |                | 22   |     |    SSH     | |
+| |   Client   |     +------+                +------+     |   Server   | |
+| |            &lt;-----+      |                |      &lt;-----+            | |
+| |            +-----&gt;      |                |      +-----&gt;            | |
+| +------------+     | X11  |                | X11  |     +------------+ |
+| +------------+     | Port |                | Port |     +------------+ |
+| | X11 Server +-----&gt;      |                |      +-----&gt; X11 Client | |
+| |            &lt;-----+ 6000 |                | 6010 &lt;-----+            | |
+| +------------+     |      |                |      |     +------------+ |
++--------------------+------+                +------+--------------------+
+</code></pre>
+  <a href='http://z-rui.github.io/post/2015/10/x11forward/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/openssh/">诡异的OpenSSH行为</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-14T00:00:00Z">Wed Oct 14, 2015</time> by rui</p>
+  </header>
+  <p>最近几天在FreeBSD上尝试搭建SSH服务器，主要是想利用SSH的<a href="https://en.wikipedia.org/wiki/Port_forwarding">端口转发</a>功能。然而却遇到了一个诡异的问题，耗费了我许多时间。</p>
+<p>我希望限制每个用户的登录数，即，同一用户在同一时间只能在一个主机上连接SSH服务器进行端口转发。网上查了老半天，基本上没有什么有用的信息。</p>
+<p>据说Linux中可以使用<code>/etc/security/limits.conf</code>来限制用户的登录数量。也有资料说这个办法只能限制shell的登录数量，对不需要shell的端口转发连接无效。</p>
+<p><code>limits.conf</code>通过<code>pam_limits</code>模块产生作用，FreeBSD无此模块，因此我无法尝试。受此启发，我找到了<code>pam_exec</code>模块，允许我在开启/关闭会话的时候执行任意的脚本。这样我只需要自己编写一个脚本来检测是否存在重复登录即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span><span style="color:#75715e"># file: pam_session.sh</span>
+<span style="color:#75715e"># prevent multiple ssh connections from a single user</span>
+
+USER_SESSION<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/run/</span><span style="color:#e6db74">${</span>PAM_USER<span style="color:#e6db74">}</span><span style="color:#e6db74">.ssh_session&#34;</span>
+LOG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/log/ssh_session.log&#34;</span>
+
+echo <span style="color:#e6db74">`</span>date<span style="color:#e6db74">`</span> <span style="color:#e6db74">&#34;</span>$PAM_USER<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$PAM_RHOST<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$PAM_SM_FUNC<span style="color:#e6db74">&#34;</span> &gt;&gt; $LOG
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$PAM_SM_FUNC<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pam_sm_open_session&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -f $USER_SESSION <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+                echo BLOCKED by <span style="color:#e6db74">`</span>cat $USER_SESSION<span style="color:#e6db74">`</span> &gt;&gt; $LOG
+                exit <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">fi</span>
+        echo <span style="color:#e6db74">&#34;</span>$PAM_RHOST<span style="color:#e6db74">&#34;</span> &gt; $USER_SESSION
+<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$PAM_SM_FUNC<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;pam_sm_close_session&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+        rm -f $USER_SESSION
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><p>保存为<code>/etc/ssh/pam_session.sh</code>，然后在<code>/etc/pam.d/sshd</code>中添加一行</p>
+<pre><code>session	required	pam_exec.so	/etc/ssh/pam_session.sh
+</code></pre><p>即告成功。诡异的事现在发生了：我在一个主机上登录SSH，然后在另一个主机上也登录SSH，但后者只进行端口转发，不登录shell。结果后者也登录成功了！</p>
+<p>我在Windows上用<a href="https://www.bitvise.com/ssh-client">Bitvise的SSH客户端</a>，连接并没有中断。</p>
+<p>我在Android上用<a href="https://play.google.com/store/apps/details?id=org.connectbot">ConnectBot</a>连接，在不登录shell的情况下，连接也没有中断。</p>
+<p>我的脚本工作正常，PAM的Session应该是认证失败的(系统日志中有<code>Permission Denied</code>的记录)。也就是说，OpenSSH忽略了PAM会话认证失败而继续保持着连接！</p>
+<p>沿着这样的思路，我尝试了其他各种方法，试图阻断重复的SSH连接，均告失败。绝望的我去查看了OpenSSH的源代码，想搞清楚作者为什么指定了这样的行为。</p>
+<p>看到<a href="https://github.com/openssh/openssh-portable/blob/8408218c1ca88cb17d15278174a24a94a6f65fe1/auth-pam.c#L1052">第1052行</a>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">	sshpam_err <span style="color:#f92672">=</span> pam_open_session(sshpam_handle, <span style="color:#ae81ff">0</span>);
+	<span style="color:#66d9ef">if</span> (sshpam_err <span style="color:#f92672">==</span> PAM_SUCCESS)
+		sshpam_session_open <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#66d9ef">else</span> {
+		sshpam_session_open <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#75715e">/*1052*/</span>	disable_forwarding();
+		error(<span style="color:#e6db74">&#34;PAM: pam_open_session(): %s&#34;</span>,
+		    pam_strerror(sshpam_handle, sshpam_err));
+	}
+</code></pre></div><p>瞬间释然，其实OpenSSH在PAM会话认证失败的情况下是会禁用端口转发的。至于连接为什么没有中断，我不知道。</p>
+<p>且不提OpenSSH的行为是否合适，仅仅因为连接没有中断就判定端口转发仍然可以进行，显然我陷入了惯性思维的陷阱，为此还浪费了大量的时间。应当引以为戒。</p>
+  <a href='http://z-rui.github.io/post/2015/10/openssh/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/toygc/">玩具垃圾收集器</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-04T00:00:00Z">Sun Oct 4, 2015</time> by rui</p>
+  </header>
+  <p>今天我写了一个<a href="https://github.com/z-rui/toygc">玩具垃圾收集器</a>，采用_标记-清除(<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection">Mark-Sweep</a>)_ 算法。</p>
+<p><a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection">Wikipedia</a>上的一张图片解释了该过程。<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif"/> 
+</figure>
+</p>
+<p>我写的垃圾收集器之所以称作玩具，是因为它采用了朴素实现。每次垃圾收集会打断其他例程的运行，进行一次完整的标记-清除周期。其缺点是容易造成周期性的延迟，影响程序运行的平顺度。</p>
+  <a href='http://z-rui.github.io/post/2015/10/toygc/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/09/noto/">Google的新字体noto</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-09-20T00:00:00Z">Sun Sep 20, 2015</time> by rui</p>
+  </header>
+  <p>最近我在<a href="http://www.virtualbox.org/">VirtualBox</a>上跑<a href="http://www.freebsd.org/">FreeBSD</a>系统。安装好X窗口系统后，自带的中文字体非常丑陋，所以有必要安装一些新的字体。</p>
+<p>根据我以往的经验，<a href="http://www.wenq.org/">文泉驿</a>提供了一套非常优质的中文字体，被许多Linux的发行版选作了默认的中文字体。在FreeBSD中也有<code>wqy</code>包可供安装。</p>
+<p>文泉驿有一款字体称为微米黑，其基于Google的Droid Sans Fallback，通过部件拼接来构造汉字，从而在保持字体体积较小的情况下包含大量的字符。文泉驿制作微米黑是为了补充Droid Sans Fallback缺失的字符。</p>
+<p>今天我查看Wikipedia页面的时候，看到Google发布了一款新的字体：<a href="https://www.google.com/get/noto/">Noto</a>。其名称有一个来源：浏览网页时，字体中不包含的字符通常会被显示为豆腐块。而Noto的目标是消灭豆腐块(<strong>No</strong> more <strong>to</strong>fu)。这个字体从2014年开工，一年不到就已完工，整个字体的体积高达460MB，其中绝大部分(400MB以上)是CJK字体。CJK字体包含了简体、繁体、日文和朝鲜文4种变体，以迎合不同地区的习惯。</p>
+<p>于是我卸载了文泉驿，改而安装Noto字体。</p>
+  <a href='http://z-rui.github.io/post/2015/09/noto/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/09/gcd/">和最大公约数有关的一个证明</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-09-01T00:00:00Z">Tue Sep 1, 2015</time> by rui</p>
+  </header>
+  <ol>
+<li>已知\(a&gt;1\), \(m &gt; n &gt; 0\)，求证\(\gcd(a^m-1, a^n-1) = a^{\gcd(m,n)} - 1\)；</li>
+<li>已知\(a&gt;b\), \(\gcd(a, b)=1\)，求证\(\gcd(a^m-b^m, a^n-b^n) = a^{\gcd(m,n)} - b^{\gcd(m,n)}\)。</li>
+</ol>
+  <a href='http://z-rui.github.io/post/2015/09/gcd/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/08/python-quines/">Python Quines</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-08-30T00:00:00Z">Sun Aug 30, 2015</time> by rui</p>
+  </header>
+  <p>Quine指的是一种特殊的程序，其输出内容等于其自身代码。想写出这样的程序需要动一番脑筋。</p>
+<p>如下代码即为Python的quine：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">s<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">;print(s</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">repr(s))&#39;</span>;<span style="color:#66d9ef">print</span>(s<span style="color:#f92672">%</span>repr(s))
+</code></pre></div>
+  <a href='http://z-rui.github.io/post/2015/08/python-quines/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/08/hide-developer-options-in-android/">在Android中关闭开发者选项</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-08-28T00:00:00Z">Fri Aug 28, 2015</time> by rui</p>
+  </header>
+  在Android中点击5次“内部版本号”即可激活开发者选项，其中可以设置USB调试等功能。今天我发现了关闭开发者选项的方法，如StackExchange所述，只需清除“设置”应用程序的数据即可。
+  <a href='http://z-rui.github.io/post/2015/08/hide-developer-options-in-android/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/08/ulbuf/">超轻量字符缓冲区库</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-08-02T01:31:00+08:00">Sun Aug 2, 2015</time> by rui</p>
+  </header>
+  <p>在写yasf项目的过程中遇到这样的需求：为了构造SQL语句，我必须将若干个字符串拼接起来。一个凑合的办法是，定义一个足够大的静态缓冲区，然后使用诸如<code>sprintf</code>这样的库函数来构造字符串。但是事实上，构造出来的字符串的总长度是没有上限的。因此，若使用固定长度的缓冲区则会带来缓冲区溢出的隐患(C语言最著名的缺陷之一)。</p>
+<p>大部分现代的语言的字符串功能都远强于C，字符串拼接更是非常基本的功能。选择C作为开发语言，那就不得不重复造轮子。我总抱着自己能造出更好的轮子的虚幻的指望。经过若干次试验，我得到了一种比较满意的实现方式。于是我把它从yasf项目中抽了出来，做成一个独立的模块，放在GitHub上，命名为<a href="https://www.github.com/z-rui/ulbuf">ulbuf</a>(__u__ltra __l__ightweight __buf__fer)。</p>
+<p>整个实现的代码不足百行，功能也是少之又少。我发现，只有这样才能保证最大的灵活性。</p>
+<p>整个库的特点：</p>
+<p><strong>简单</strong></p>
+<p>API非常简单，共4个函数。其中，2个用于缓冲区的创建和销毁，1个是为了便于使用而提供的便捷函数。因此，最关键的函数只有1个。</p>
+<p>API的参数和返回值的形式是经过仔细设计的。</p>
+<p><strong>灵活</strong></p>
+<p>在C语言中，用户常常通过增/减指针来表示向字符串中增添/删除字符。只要预留了空间，ulbuf仍允许他们这样做。</p>
+<p>在最初的实现中，ulbuf还保存了“缓冲区中已含有的字节数”这一个信息。并且只能向缓冲区中追加内容。对于yasf项目而言，已经足够。</p>
+<p>现在的实现中，ulbuf只负责管理缓冲区的容量(最多能容纳的字节数)，不储存已含有的字节数信息。既能简化实现，又能保证使用的灵活性。这可能是体现“少即是多”的一个例子。</p>
+<p><strong>鲁棒</strong></p>
+<p>当用户提示ulbuf需要向缓冲区中写入n个字符时，ulbuf会在第n+1个字符的位置写入字符<code>'\0'</code>。因此，缓冲区的内容永远是合法的C字符串。这样，使用C标准库操作缓冲区永远不会发生内存越界的错误。</p>
+<p><strong>协调</strong></p>
+<p>ulbuf创建的缓冲区是<code>char *</code>类型，可以把它当作正常的字符串，提供给诸如<code>strlen</code>、<code>strchr</code>这类标准库函数。</p>
+<p>只要预留了空间，那么也可以把缓冲区作为输出参数，提供给诸如<code>strcpy</code>、<code>sprintf</code>这类函数使用也是完全没有问题的。这类函数会在第n+1个字符的位置添上一个字符<code>'\0'</code>，仅仅是把ulbuf已经写入的<code>'\0'</code>覆写了一次，而没有发生内存越界访问。</p>
+<p><strong>高效</strong></p>
+<p>在我的平台上测试重复追加字符串的操作，ulbuf的运行速度略快于C++ STL的<code>string</code>类。</p>
+<p>因为STL通常是仔细编写的、深度优化的运行库，可见ulbuf的运行效率是很高的。(欲知具体情况，可以编译并运行代码仓库中的<code>example.cc</code>程序。)</p>
+  <a href='http://z-rui.github.io/post/2015/08/ulbuf/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/07/yasf/">YASF的进度</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-07-24T22:11:00+08:00">Fri Jul 24, 2015</time> by rui</p>
+  </header>
+  <p><a href="https://github.com/z-rui/yasf">yasf</a>是我正在写的一个SQLite的图形前端。目前写好了大体的图形界面。能够读取SQLite数据库（而不能编辑）。</p>
+<p>以下为未成品的截图。图中的对话框用于创建新的索引（仅仅是界面）。</p>
+<figure>
+    <img src="/media/yasf-1.png"/> 
+</figure>
+  <a href='http://z-rui.github.io/post/2015/07/yasf/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/page/7/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/page/9/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

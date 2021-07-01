@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="PIC微控制器" />
+<meta property="og:description" content="PIC是Microchip公司生产的微控制器，有8位、16位、32位的型号。其中PIC12系列为8引脚8位微控制器，它的引脚数非常少，很适合做一些小型项目。例如最简单的流水灯，如果用微控制器来做，那么就不需要其他IC芯片了（振荡器为微控制器自带，而移位寄存器的功能可以用软件实现）。
+我有一片PIC12F629和一片PIC12F675。两者功能基本一致，后者多了A/D功能。之前我尝试自制PIC编程器给629编程，试了很久也没有成功，只好买了一个正规的编程器来用，结果发现629似乎被我折腾坏了。现在只剩下一片675，我用它制作了两个小项目：音乐播放器和字符显示器。
+
+     
+
+
+图中：上为字符显示器，下为音乐播放器。音乐播放器中的PIC芯片被拔下来了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/10/pic_mcu/" />
+<meta property="article:published_time" content="2016-10-14T22:08:00+08:00" />
+<meta property="article:modified_time" content="2016-10-14T22:08:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PIC微控制器"/>
+<meta name="twitter:description" content="PIC是Microchip公司生产的微控制器，有8位、16位、32位的型号。其中PIC12系列为8引脚8位微控制器，它的引脚数非常少，很适合做一些小型项目。例如最简单的流水灯，如果用微控制器来做，那么就不需要其他IC芯片了（振荡器为微控制器自带，而移位寄存器的功能可以用软件实现）。
+我有一片PIC12F629和一片PIC12F675。两者功能基本一致，后者多了A/D功能。之前我尝试自制PIC编程器给629编程，试了很久也没有成功，只好买了一个正规的编程器来用，结果发现629似乎被我折腾坏了。现在只剩下一片675，我用它制作了两个小项目：音乐播放器和字符显示器。
+
+     
+
+
+图中：上为字符显示器，下为音乐播放器。音乐播放器中的PIC芯片被拔下来了。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PIC微控制器",
+  "url": "http://z-rui.github.io/post/2016/10/pic_mcu/",
+  "wordCount": "99",
+  "datePublished": "2016-10-14T22:08:00+08:00",
+  "dateModified": "2016-10-14T22:08:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/10/pic_mcu/">
+
+    <title>PIC微控制器 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/10/pic_mcu/">PIC微控制器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-10-14T22:08:00+08:00">Fri Oct 14, 2016</time> by rui</p>
+  </header>
+  <p>PIC是<a href="http://www.microchip.com/">Microchip</a>公司生产的微控制器，有8位、16位、32位的型号。其中PIC12系列为8引脚8位微控制器，它的引脚数非常少，很适合做一些小型项目。例如最简单的<a href="/post/2016/10/led_circuit/">流水灯</a>，如果用微控制器来做，那么就不需要其他IC芯片了（振荡器为微控制器自带，而移位寄存器的功能可以用软件实现）。</p>
+<p>我有一片PIC12F629和一片PIC12F675。两者功能基本一致，后者多了A/D功能。之前我尝试自制PIC编程器给629编程，试了很久也没有成功，只好买了一个正规的编程器来用，结果发现629似乎被我折腾坏了。现在只剩下一片675，我用它制作了两个小项目：音乐播放器和字符显示器。</p>
+<p><figure>
+    <img src="/media/picmcu-1.jpg"/> 
+</figure>
+
+图中：上为字符显示器，下为音乐播放器。音乐播放器中的PIC芯片被拔下来了。</p>
+<h2 id="音乐播放器">音乐播放器</h2>
+<figure>
+    <img src="/media/picmcu-2.png"/> 
+</figure>
+
+<p>这里我用了一个额外的555定时器产生节拍时钟。这个时钟控制音乐的节拍，改变电位器的值就可以改变音乐播放的速度。生成各个音的频率则使用PIC12F675内置的定时器。</p>
+<p>在PIC12F675内部，有两个定时器Timer0和Timer1，它们各自可以设置一个预分频器(prescaler)。这个功能很有用，例如本来是四分音符的时长为一拍，经过一级分频之后，就变成了二分音符的时长；对于音符而言，经过一级分频，频率降低一半，即降低一个八度。</p>
+<p>软件只需要实现最短的音符（我实现的是十六分音符）和最高的八度（我是实现的是音C7所在的八度），此外只需要调整预分频器的参数即可，非常方便。</p>
+<p>原理图中的蜂鸣器部分有所简化，实物中是一个由PNP管控制的蜂鸣器模块，主要是为了方便那些驱动能力不够的芯片。据我所知PIC12系列的IO引脚驱动能力有20mA，可以直接驱动蜂鸣器。调节和蜂鸣器串联的可调电阻可以控制音量。当然，如果用对数可调电阻，调节起来会显得比较“线性”。</p>
+<p>我也许会在以后将软件提交到我的GitHub代码仓库。</p>
+<p>这个电路在使用直流电源的时候，并联47μF的电容(也许可以更小，但我试过4.7μF，效果不好)可以有效防止干扰。当不并联电容时，蜂鸣器里只播出杂音而没有音乐。使用电池供电则没有这个问题。</p>
+<p>但是，在使用编程器给PIC芯片编程时，则需要去掉并联的电容，否则容易导致编程失败。</p>
+<h2 id="字符显示器">字符显示器</h2>
+<figure>
+    <img src="/media/picmcu-3.png"/> 
+</figure>
+
+<p>显示器是一块8×8的LED点阵。需要接16个引脚并使用扫描控制，不过PIC12F675只有6个IO引脚所以不可行。可以用74595这样的串入并出寄存器来减少IO口，但是扫描的逻辑还是需要由单片机完成。我这里用了一个现成的基于MAX7219的模块。MAX7219的功能很强，自带扫描和解码的逻辑，而且有驱动能力，可以驱动数码管、LED点阵等。微控制器通过类似SPI的串行通信将需要显示的内容发送到MAX7219，后者就可以生成驱动信号。用MAX7219做成的模块可以串接，不论串接多少块显示器，都只需要3根数据线。</p>
+<p>因为显示器的驱动由MAX7219完成，所以PIC中的程序就只剩下了最基本的逻辑、和MAX7219的通信，以及字符的点阵数据。</p>
+<p>PIC有一套自己的汇编语言，指令集比较精简。和MAX7219通信的一部分代码如下。</p>
+<pre><code>; 发送一个字节
+TX_BYTE
+    MOVLW D'8'
+    MOVWF TX_LEN	; TX_LEN初始化为8
+; 发送TX_LEN个比特
+TX_BITS
+    BCF GPIO, MOSI	; MOSI置零
+    RLF TX_DATA, F	; 将TX_DATA最高位取出
+    BTFSC STATUS, C	; 如果最高位是1
+    BSF GPIO, MOSI	;  则MOSI置一 (否则MOSI保持置零)
+    BSF GPIO, SCLK	; SCLK置零
+    BCF GPIO, SCLK	; SCLK置一，完成一个比特的写入
+    DECFSZ TX_LEN, F	; TX_LEN减一
+    GOTO TX_BITS	; 若TX_LEN不为零则回到TX_BITS
+    RETURN
+</code></pre><p>PIC的架构对编译器不够友好，市面上针对PIC架构的C语言编译器很少，主要是Microchip自家的MPLAB XC编译器。上面的程序也可以用C语言写，大概可以写成如下的样子(仅供意会)：</p>
+<pre><code>void TX_BYTE(uint8 TX_DATA)
+{
+	uint8 TX_LEN = 8;
+
+	do {
+		MOSI = TX_DATA &amp; 0x80;
+		TX_DATA &lt;&lt;= 1;
+		SCLK = 0;
+		SCLK = 1;
+	} while (--TXLEN);
+}
+</code></pre><p>不过对于这种低资源的芯片以及简单的项目而言，倒也没有必要使用C语言。使用汇编编写程序对我来说倒不是什么困难事，问题在于程序没有可移植性，如果需要移植到其他硬件则会是很大的麻烦。话说回来，即便是C程序，涉及到的硬件专有特性（特殊端口名称等）也是不可移植的。所以微控制器的程序移植似乎是一个问题。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f10%2fpic_mcu%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f10%2fpic_mcu%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f10%2fpic_mcu%2f&amp;text=PIC%e5%be%ae%e6%8e%a7%e5%88%b6%e5%99%a8" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

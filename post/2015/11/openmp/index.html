@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="使用OpenMP做并行计算" />
+<meta property="og:description" content="OpenMP是一套语言扩展规范，可以给C/C&#43;&#43;和Fortran提供并行计算的功能。今天我用OpenMP写了N皇后问题的并行计算程序。该程序使用经典的回溯搜索算法。
+程序如下：
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+unsigned all;
+unsigned count = 0;
+
+void search(unsigned row, unsigned ld, unsigned rd)
+{
+	unsigned pos, p;
+
+	if (row == all) {
+#pragma omp critical
+		&#43;&#43;count;
+		return;
+	}
+	pos = all &amp; ~(row|ld|rd);
+	while ((p = pos &amp; -pos)) {
+		pos ^= p;
+		if (p)
+			search(row | p, (ld | p) &lt;&lt; 1, (rd | p) &gt;&gt; 1);
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	int i;
+	int N = 8;
+
+	if (argc == 2)
+		sscanf(argv[1], &#34;%d&#34;, &amp;N);
+	all = (1 &lt;&lt; N) - 1;
+#pragma omp parallel for
+	for (i = 0; i &lt; N/2; i&#43;&#43;) {
+		unsigned p = 1 &lt;&lt; i;
+		search(p, p &lt;&lt; 1, p &gt;&gt; 1);
+	}
+	count &lt;&lt;= 1;
+	if (N &amp; 1) {
+		unsigned p = 1 &lt;&lt; (N/2);
+		search(p, p &lt;&lt; 1, p &gt;&gt; 1);
+	}
+	printf(&#34;%d\n&#34;, count);
+	return 0;
+}
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/11/openmp/" />
+<meta property="article:published_time" content="2015-11-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-11-04T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用OpenMP做并行计算"/>
+<meta name="twitter:description" content="OpenMP是一套语言扩展规范，可以给C/C&#43;&#43;和Fortran提供并行计算的功能。今天我用OpenMP写了N皇后问题的并行计算程序。该程序使用经典的回溯搜索算法。
+程序如下：
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+unsigned all;
+unsigned count = 0;
+
+void search(unsigned row, unsigned ld, unsigned rd)
+{
+	unsigned pos, p;
+
+	if (row == all) {
+#pragma omp critical
+		&#43;&#43;count;
+		return;
+	}
+	pos = all &amp; ~(row|ld|rd);
+	while ((p = pos &amp; -pos)) {
+		pos ^= p;
+		if (p)
+			search(row | p, (ld | p) &lt;&lt; 1, (rd | p) &gt;&gt; 1);
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	int i;
+	int N = 8;
+
+	if (argc == 2)
+		sscanf(argv[1], &#34;%d&#34;, &amp;N);
+	all = (1 &lt;&lt; N) - 1;
+#pragma omp parallel for
+	for (i = 0; i &lt; N/2; i&#43;&#43;) {
+		unsigned p = 1 &lt;&lt; i;
+		search(p, p &lt;&lt; 1, p &gt;&gt; 1);
+	}
+	count &lt;&lt;= 1;
+	if (N &amp; 1) {
+		unsigned p = 1 &lt;&lt; (N/2);
+		search(p, p &lt;&lt; 1, p &gt;&gt; 1);
+	}
+	printf(&#34;%d\n&#34;, count);
+	return 0;
+}
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "使用OpenMP做并行计算",
+  "url": "http://z-rui.github.io/post/2015/11/openmp/",
+  "wordCount": "197",
+  "datePublished": "2015-11-04T00:00:00+00:00",
+  "dateModified": "2015-11-04T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/11/openmp/">
+
+    <title>使用OpenMP做并行计算 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/11/openmp/">使用OpenMP做并行计算</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-11-04T00:00:00Z">Wed Nov 4, 2015</time> by rui</p>
+  </header>
+  <p><a href="http://openmp.org/wp/">OpenMP</a>是一套语言扩展规范，可以给C/C++和Fortran提供并行计算的功能。今天我用OpenMP写了<a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">N皇后问题</a>的并行计算程序。该程序使用经典的回溯搜索算法。</p>
+<p>程序如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;omp.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">unsigned</span> all;
+<span style="color:#66d9ef">unsigned</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search</span>(<span style="color:#66d9ef">unsigned</span> row, <span style="color:#66d9ef">unsigned</span> ld, <span style="color:#66d9ef">unsigned</span> rd)
+{
+	<span style="color:#66d9ef">unsigned</span> pos, p;
+
+	<span style="color:#66d9ef">if</span> (row <span style="color:#f92672">==</span> all) {
+<span style="color:#75715e">#pragma omp critical
+</span><span style="color:#75715e"></span>		<span style="color:#f92672">++</span>count;
+		<span style="color:#66d9ef">return</span>;
+	}
+	pos <span style="color:#f92672">=</span> all <span style="color:#f92672">&amp;</span> <span style="color:#f92672">~</span>(row<span style="color:#f92672">|</span>ld<span style="color:#f92672">|</span>rd);
+	<span style="color:#66d9ef">while</span> ((p <span style="color:#f92672">=</span> pos <span style="color:#f92672">&amp;</span> <span style="color:#f92672">-</span>pos)) {
+		pos <span style="color:#f92672">^=</span> p;
+		<span style="color:#66d9ef">if</span> (p)
+			search(row <span style="color:#f92672">|</span> p, (ld <span style="color:#f92672">|</span> p) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, (rd <span style="color:#f92672">|</span> p) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+	<span style="color:#66d9ef">int</span> i;
+	<span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>;
+
+	<span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+		sscanf(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>N);
+	all <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> N) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+<span style="color:#75715e">#pragma omp parallel for
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> N<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; i<span style="color:#f92672">++</span>) {
+		<span style="color:#66d9ef">unsigned</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> i;
+		search(p, p <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, p <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+	count <span style="color:#f92672">&lt;&lt;=</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#66d9ef">if</span> (N <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) {
+		<span style="color:#66d9ef">unsigned</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> (N<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
+		search(p, p <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, p <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+	printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, count);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p><code>#pragma omp</code>系列的杂注是OpenMP的语法。即便去掉它(或者编译器不理解它)，也不影响程序的逻辑，这是使用OpenMP写程序的一个吸引人的地方。</p>
+<ul>
+<li><code>#pragma omp critical</code>表明接下来的一个语句(<code>++count;</code>)是临界区段(<a href="https://en.wikipedia.org/wiki/Critical_section">critical section</a>)，以防出现竞争条件(<a href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>)。去掉这一行，则结果可能是非确定性(nondeterministic)的。</li>
+<li><code>#pragma omp parallel for</code>的作用是使得接下来的<code>for</code>循环的循环体在不同的线程中执行，从而实现并行计算。</li>
+</ul>
+<p>按照算法分析的经典理论，回溯算法的时间复杂度为\(O(n!)\)。这个程序用了一点位运算的小技俩，并且简单地利用了问题的解的对称性，实际上自身的运行速度已经要远高于书本上常见的回溯算法程序。感兴趣的人可以尝试自己写一个求解N皇后的解的个数（不需要记录解）的程序，然后设置N=16，看看需要运行多长时间。算法的正确性可以通过对照OEIS <a href="http://oeis.org/A000170">A000170</a>来实现。</p>
+<p>我的测试工具是：</p>
+<ul>
+<li>Intel(R) Core(TM) i5-3337U CPU @ 1.80GHz，1801 Mhz，2 个内核，4 个逻辑处理器</li>
+<li>gcc version 5.2.0 (Rev4, Built by MSYS2 project)</li>
+</ul>
+<p>测试若干种情况：</p>
+<ul>
+<li>编译器优化设置为<code>-O0</code>, <code>-O</code>, <code>-O2</code>, <code>-O3</code>。</li>
+<li>开启或关闭<code>-fopenmp</code>。</li>
+<li>N=16。</li>
+</ul>
+<p>测试结果如下：</p>
+<table>
+<tr>
+<th></th><th><code>-fopenmp</code>关 (1)</th><th><code>-fopenmp</code>开 (2)</th><th>(1)/(2)</th>
+</tr>
+<tr>
+<th><code>-O0</code></th><td>11.165s</td><td>4.255s</td><td>262%</td>
+</tr>
+<tr>
+<th><code>-O1</code></th><td>5.894s</td><td>2.875s</td><td>205%</td>
+</tr>
+<tr>
+<th><code>-O2</code></th><td>5.685s</td><td>2.569s</td><td>221%</td>
+</tr>
+<tr>
+<th><code>-O3</code></th><td>6.674s</td><td>2.702s</td><td>247%</td>
+</tr>
+</table>
+<p>看起来这个版本的gcc的<code>-O3</code>选项采用了较差的优化策略，使得程序的运行时间不降反升。我曾写过一个利用显式栈替代递归的等价的程序，对于那个程序，<code>-O3</code>选项可以极大地缩短程序的运行时间。</p>
+<p>从以上数据可以看出，在这个例子中，编译器优化是很有用的，可以减少约一半的程序运行时间。不使用OpenMP的程序在运行时，CPU的占用率维持在25%，这大概是因为4个线程只有1个占用了100%而另外3个都处于空闲状态。相反，使用OpenMP的程序在运行时，CPU的占用率维持在100%，说明4个线程全部处于繁忙状态。</p>
+<p>尽管开启了4个线程，但是只获得了2倍的运行速度，这是因为并行程序并不是完全并行的，有一部分必须按照顺序执行。另一方面，所谓4个逻辑处理器，指的是2个核心(core)的每个利用<a href="http://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html">超线程</a>技术实现2个线程同时运行。</p>
+<p>声明：我并不很了解超线程的具体机制，根据我的猜测，这种技术应该不能实现两个线程真正的“同时”运行，而只是能够在两个线程之间迅速地进行切换而已。例如，在一个线程的指令陷入stall状态的时候，就可以迅速地切换至另一个线程，相对没有这种技术的情况下，可以提升运行性能。</p>
+<p>如果处理器具有更多的内核，那么运行速度大体上也会按比例提高。所以，现在处理大规模计算的一种办法是，把计算任务平均分配给非常多的内核（甚至可以在不同的计算机上），让它们同时进行计算，以规模换速度。这和平时所说的“人多力量大”应该是一个道理。</p>
+<p>当然，算法层面的优化也是很重要的，例如这个程序利用解的对称性，立马就减少了约一半的计算量，也就是获得了2倍的运行速度。对于一些问题，如果算法上有所突破，获得了渐进时间复杂度层面的改进，那么所获得的运行速度的提升就不是以“多少倍”就能衡量的了的了。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fopenmp%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fopenmp%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fopenmp%2f&amp;text=%e4%bd%bf%e7%94%a8OpenMP%e5%81%9a%e5%b9%b6%e8%a1%8c%e8%ae%a1%e7%ae%97" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

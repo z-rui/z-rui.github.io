@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="判定给定边长可否构成三角形的一个定理" />
+<meta property="og:description" content="本定理来自一道算法竞赛题：
+
+给定任意多条边，每条边都是不超过1,000,000,000的正整数。请给出一个算法，判断其中是否存在3条边可以构成三角形。
+
+应用该定理可以有效地解决此问题。
+定理
+
+给定n个边长，如果其中最大的边长与最小的边长的比值小于第n个斐波那契数，那么其中必存在3个边长可以构成三角形。
+
+应用
+由题中条件可知，最大的边长和最短的边长的比值不超过\(1,000,000,000 &lt; F_{45}\)。所以，只要边的个数达到45，根据上述定理，就必然存在3条边可以构成三角形。如果边的个数少于45个，也很好办，穷举解决即可（\({45 \choose 3} = 14190\)，穷举量很小）。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/03/theorem/" />
+<meta property="article:published_time" content="2015-03-01T07:17:00+08:00" />
+<meta property="article:modified_time" content="2015-03-01T07:17:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="判定给定边长可否构成三角形的一个定理"/>
+<meta name="twitter:description" content="本定理来自一道算法竞赛题：
+
+给定任意多条边，每条边都是不超过1,000,000,000的正整数。请给出一个算法，判断其中是否存在3条边可以构成三角形。
+
+应用该定理可以有效地解决此问题。
+定理
+
+给定n个边长，如果其中最大的边长与最小的边长的比值小于第n个斐波那契数，那么其中必存在3个边长可以构成三角形。
+
+应用
+由题中条件可知，最大的边长和最短的边长的比值不超过\(1,000,000,000 &lt; F_{45}\)。所以，只要边的个数达到45，根据上述定理，就必然存在3条边可以构成三角形。如果边的个数少于45个，也很好办，穷举解决即可（\({45 \choose 3} = 14190\)，穷举量很小）。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "判定给定边长可否构成三角形的一个定理",
+  "url": "http://z-rui.github.io/post/2015/03/theorem/",
+  "wordCount": "64",
+  "datePublished": "2015-03-01T07:17:00+08:00",
+  "dateModified": "2015-03-01T07:17:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "keywords": "math, algorithm, 三角形, 斐波那契数"
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/03/theorem/">
+
+    <title>判定给定边长可否构成三角形的一个定理 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/03/theorem/">判定给定边长可否构成三角形的一个定理</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-03-01T07:17:00+08:00">Sun Mar 1, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/math/" rel="category tag">math</a>, <a href="/categories/algorithm/" rel="category tag">algorithm</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E4%B8%89%E8%A7%92%E5%BD%A2/" rel="tag">三角形</a>, <a href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/" rel="tag">斐波那契数</a>
+
+</p>
+  </header>
+  <p>本定理来自一道算法竞赛题：</p>
+<blockquote>
+<p>给定任意多条边，每条边都是不超过1,000,000,000的正整数。请给出一个算法，判断其中是否存在3条边可以构成三角形。</p>
+</blockquote>
+<p>应用该定理可以有效地解决此问题。</p>
+<h1 id="定理">定理</h1>
+<blockquote>
+<p>给定n个边长，如果其中最大的边长与最小的边长的比值小于第n个斐波那契数，那么其中必存在3个边长可以构成三角形。</p>
+</blockquote>
+<h1 id="应用">应用</h1>
+<p>由题中条件可知，最大的边长和最短的边长的比值不超过\(1,000,000,000 &lt; F_{45}\)。所以，只要边的个数达到45，根据上述定理，就必然存在3条边可以构成三角形。如果边的个数少于45个，也很好办，穷举解决即可（\({45 \choose 3} = 14190\)，穷举量很小）。</p>
+<h1 id="证明">证明</h1>
+<p>使用反证法，承认条件但否定结论，即假设给定的n个边长中的任意3个都不能构成三角形。将n条边以由小到大的顺序记作\(s_1, s_2, \dots, s_n\)。我们将用归纳法证明\(s_n / s_1 \geq F_n\)，其中\(F_n\)表示第n个斐波那契数。</p>
+<p>当\(k=1,2\)时，\(s_1 / s_1 = 1 \geq F_1, s_2 / s_1 \geq 1 \geq F_2\)显然成立。假设\(s_k / s_1 \geq F_k, s_{k+1} / s_1 \geq F_{k+1}\)成立，那么因为\(s_k, s_{k+1}, s_{k+2}\)三者不能构成三角形，所以最长的边不会小于另外两边之和。所以有\(s_{k+2}/s_1 \geq (s_k + s_{k+1}) / s_1 \geq F_k + F_{k+1} = F_{k+2}\)。接下来使用归纳法即可。</p>
+<p>我们所得到的结论和条件相矛盾：\(s_n / s_1 \geq F_n\)。这说明假设不成立，所以，定理是成立的。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f03%2ftheorem%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f03%2ftheorem%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f03%2ftheorem%2f&amp;text=%e5%88%a4%e5%ae%9a%e7%bb%99%e5%ae%9a%e8%be%b9%e9%95%bf%e5%8f%af%e5%90%a6%e6%9e%84%e6%88%90%e4%b8%89%e8%a7%92%e5%bd%a2%e7%9a%84%e4%b8%80%e4%b8%aa%e5%ae%9a%e7%90%86" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

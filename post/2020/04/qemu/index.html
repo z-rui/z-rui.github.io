@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="QEMU 笔记" />
+<meta property="og:description" content="我最近尝试了在 Gentoo 上用 QEMU
+运行 Windows 10。 我想把过程中的一些细节记录在这里。
+
+     
+
+
+Gentoo Wiki 和 ArchWiki 上的 QEMU 条目也是很好的参考。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2020/04/qemu/" />
+<meta property="article:published_time" content="2020-04-19T18:28:14-07:00" />
+<meta property="article:modified_time" content="2020-04-19T18:28:14-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="QEMU 笔记"/>
+<meta name="twitter:description" content="我最近尝试了在 Gentoo 上用 QEMU
+运行 Windows 10。 我想把过程中的一些细节记录在这里。
+
+     
+
+
+Gentoo Wiki 和 ArchWiki 上的 QEMU 条目也是很好的参考。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "QEMU 笔记",
+  "url": "http://z-rui.github.io/post/2020/04/qemu/",
+  "wordCount": "284",
+  "datePublished": "2020-04-19T18:28:14-07:00",
+  "dateModified": "2020-04-19T18:28:14-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2020/04/qemu/">
+
+    <title>QEMU 笔记 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/04/qemu/">QEMU 笔记</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-04-19T18:28:14-07:00">Sun Apr 19, 2020</time> by rui</p>
+  </header>
+  <p>我最近尝试了在 Gentoo 上用 <a href="https://qemu.org/">QEMU</a>
+运行 Windows 10。 我想把过程中的一些细节记录在这里。</p>
+<figure>
+    <img src="/media/qemu-1.png"/> 
+</figure>
+
+<p><a href="https://wiki.gentoo.org/wiki/QEMU">Gentoo Wiki</a> 和 <a href="https://wiki.gentoo.org/wiki/QEMU">ArchWiki</a> 上的 QEMU 条目也是很好的参考。</p>
+<h2 id="设置">设置</h2>
+<p>安装 <code>qemu-system-x86_64</code>。 启用编译选项 <code>gtk</code>。
+启用 Linux 内核中的 <code>KVM</code> 选项。
+<a href="https://www.linux-kvm.org/page/Main_Page">KVM</a> 极大地提高虚拟机的运行效率。</p>
+<p>创建磁盘镜像：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ qemu-img create -f qcow2 win10.qcow2 20G
+</code></pre></div><p>创建启动虚拟机的脚本文件 <code>start.sh</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+CMD<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;qemu-system-x86_64 &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-M q35 &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-accel kvm &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-cpu host &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-smp 4,sockets=1,cores=2,threads=2 &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-m 4G &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-hda win10.qcow2 &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-cdrom Win10_1909_English_x64.iso &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-net nic &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-net user &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-usb &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-device usb-tablet &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-rtc base=localtime &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-display gtk &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-daemonize &#34;</span>
+CMD<span style="color:#f92672">+=</span><span style="color:#e6db74">&#34;-name &#39;Windows 10&#39; &#34;</span>
+
+echo <span style="color:#e6db74">&#34;</span>$CMD<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&amp;&amp;</span> eval <span style="color:#e6db74">&#34;</span>$CMD<span style="color:#e6db74">&#34;</span>
+</code></pre></div><p>注：</p>
+<ul>
+<li><code>-smp</code> 选项应根据宿主机上的 CPU 的情况和虚拟机的需求而定。</li>
+<li><code>-m</code> 选项应根据宿主机上的 RAM 的情况和虚拟机的需求而定。</li>
+</ul>
+<p>运行此脚本并完成安装流程。 重启后可将 <code>-cdrom</code> 选项去除。</p>
+<h2 id="使用">使用</h2>
+<p>可以用上述 <code>start.sh</code> 启动虚拟机。 打开 GTK 界面中的 “Grab on hover” 选项。
+按 Ctrl+Alt+M 隐藏菜单， Ctrl+Alt+F 进入全屏。</p>
+<p>注： 如果不隐藏菜单， 全屏显示可能有位移。 但隐藏菜单后， Ctrl+Alt+G 失效。</p>
+<h3 id="usb-设备">USB 设备</h3>
+<p>要在虚拟机中使用宿主机上的 USB 设备， 先找到设备的总线(bus)和设备(device)编号：</p>
+<pre><code>$ lsusb
+Bus 001 Device 003: ID 04f2:b5ce Chicony Electronics Co., Ltd Integrated Camera
+</code></pre><p>在 QEMU 的 GTK 界面中按 Ctrl+Alt+2 进入控制台。 使用 <code>device_add</code> 命令：</p>
+<pre><code>(qemu) device_add usb-host,hostbus=1,hostaddr=3,id=usb1
+</code></pre><p>按 Ctrl+Alt+1 回到 VGA 显示。</p>
+<p>要移除设备， 使用 <code>device_del</code> 命令：</p>
+<pre><code>(qemu) device_del usb1
+</code></pre><p>用户需要有访问 USB 设备的权限（root， 或在 usb 组中）。</p>
+<h3 id="音频">音频</h3>
+<p>我在 QEMU 的命令行中加上了 <code>-soundhw all</code> 后可以在虚拟机中播放声音。
+效果比较差。 如果宿主机上有 PulseAudio， 可以参考 ArchWiki 中的描述。</p>
+<h2 id="镜像管理">镜像管理</h2>
+<h3 id="在宿主机上挂载">在宿主机上挂载</h3>
+<p>宿主机上应安装有 <code>nbd</code> 和 <code>ntfs</code> 内核模块。
+<a href="https://en.wikipedia.org/wiki/Network_block_device">nbd</a>
+是一种在用户态中实现块设备的方式。</p>
+<pre><code># modprobe nbd
+# qemu-nbd -c /dev/nbd0 win10.qcow2  # 将 qcow2 映射为一个 nbd
+# mount /dev/nbd0 /mnt/windows  # 挂载 nbd
+...
+# umount /dev/nbd0
+# qemu-nbd -d /dev/nbd0
+</code></pre><h3 id="扩张磁盘">扩张磁盘</h3>
+<p>我一开始使用了 10G 的磁盘镜像。 安装完后发现磁盘已满。 可以增加磁盘大小：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ qemu-img resize win10.qcow2 +10G
+</code></pre></div><p>然后调整分区大小， 在 Windows 中可以使用磁盘管理工具 (<code>diskmgmt.msc</code>) 完成。</p>
+<h3 id="压缩镜像">压缩镜像</h3>
+<p>当磁盘较大时， 即使虚拟机没有使用全部空间， 镜像文件也会随着使用越来越大。
+此时可以压缩镜像。 做此操作前应先尽可能释放虚拟机中的空间，
+例如删除不必要文件、进行磁盘清理 (<code>cleanmgr</code>) 和<a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/clean-up-the-winsxs-folder#dismexe">映像清理</a>。</p>
+<p>用 <code>qemu-img</code> 创建磁盘镜像的副本：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mv win10.qcow2 win10.qcow2~
+$ qemu-img convert -p -O qcow2 win10.qcow2~ win10.qcow2
+</code></pre></div><p>另外， 也可加上 <code>-c</code> 选项， 这样还会对磁盘中已被占用的部分应用压缩算法。</p>
+<p>启动虚拟机， 确认磁盘镜像无问题后， 可以删除旧的镜像。</p>
+<h2 id="后记">后记</h2>
+<p>QEMU 的作者是 <a href="https://bellard.org/">Fabrice Bellard</a>。这人还有许多其他有名的作品，包括 <a href="http://ffmpeg.org/">FFmpeg</a> （被广泛使用和<a href="https://zhuanlan.zhihu.com/p/25794414">抄袭</a>的媒体编码程序库） 和 <a href="https://bellard.org/tcc/">TinyCC</a>。
+他还发明了一种快速计算圆周率的<a href="https://bellard.org/pi/">算法</a>，并曾以此成为世界纪录保持者。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fqemu%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fqemu%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fqemu%2f&amp;text=QEMU%20%e7%ac%94%e8%ae%b0" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

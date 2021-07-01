@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="在Vultr上安装Gentoo" />
+<meta property="og:description" content="Vultr是和DigitalOcean类似的VPS服务提供商。它比后者多一个功能：挂载任意ISO镜像。这样就可以安装任意操作系统了。
+我用这个功能安装Gentoo。主要参考这篇文章，以及Gentoo的官方手册。
+我没有用Gentoo安装盘，而是用了Vultr的ISO library中已有的ArchLinux安装盘。这样省去了上传ISO镜像的步骤。而且事实上ArchLinux的安装盘好用得多。
+分区、格式化、下载和解包stage3……等等步骤，都没有太多需要注意的地方。chroot之前要记得复制/etc/resolv.conf，否则之后无法连网。然后就是emerge一些东西，也没什么难度。
+值得注意的是内核编译选项。文章中明显提到了要启用VIRTIO_PCI和VIRTIO_MMIO，实际上还要启用VIRTIO_BLK和VIRTIO_NET，才能访问硬盘和网络。很多其它硬件驱动都可以禁用。
+最后按照文章里写的配置好系统就可以了。安装GRUB启动器，如果/dev等虚拟目录没有正确挂载到chroot的根目录下也会安装失败。重启之前记得运行passwd设置root密码。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/01/gentoo-vultr/" />
+<meta property="article:published_time" content="2017-01-20T16:08:00+08:00" />
+<meta property="article:modified_time" content="2017-01-20T16:08:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在Vultr上安装Gentoo"/>
+<meta name="twitter:description" content="Vultr是和DigitalOcean类似的VPS服务提供商。它比后者多一个功能：挂载任意ISO镜像。这样就可以安装任意操作系统了。
+我用这个功能安装Gentoo。主要参考这篇文章，以及Gentoo的官方手册。
+我没有用Gentoo安装盘，而是用了Vultr的ISO library中已有的ArchLinux安装盘。这样省去了上传ISO镜像的步骤。而且事实上ArchLinux的安装盘好用得多。
+分区、格式化、下载和解包stage3……等等步骤，都没有太多需要注意的地方。chroot之前要记得复制/etc/resolv.conf，否则之后无法连网。然后就是emerge一些东西，也没什么难度。
+值得注意的是内核编译选项。文章中明显提到了要启用VIRTIO_PCI和VIRTIO_MMIO，实际上还要启用VIRTIO_BLK和VIRTIO_NET，才能访问硬盘和网络。很多其它硬件驱动都可以禁用。
+最后按照文章里写的配置好系统就可以了。安装GRUB启动器，如果/dev等虚拟目录没有正确挂载到chroot的根目录下也会安装失败。重启之前记得运行passwd设置root密码。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "在Vultr上安装Gentoo",
+  "url": "http://z-rui.github.io/post/2017/01/gentoo-vultr/",
+  "wordCount": "12",
+  "datePublished": "2017-01-20T16:08:00+08:00",
+  "dateModified": "2017-01-20T16:08:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/01/gentoo-vultr/">
+
+    <title>在Vultr上安装Gentoo | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/01/gentoo-vultr/">在Vultr上安装Gentoo</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-01-20T16:08:00+08:00">Fri Jan 20, 2017</time> by rui</p>
+  </header>
+  <p><a href="http://www.vultr.com/?ref=7089997-3B">Vultr</a>是和DigitalOcean类似的VPS服务提供商。它比后者多一个功能：挂载任意ISO镜像。这样就可以安装任意操作系统了。</p>
+<p>我用这个功能安装Gentoo。主要参考<a href="https://www.vultr.com/docs/installing-gentoo-linux-on-a-vultr-server">这篇文章</a>，以及Gentoo的官方手册。</p>
+<p>我没有用Gentoo安装盘，而是用了Vultr的ISO library中已有的ArchLinux安装盘。这样省去了上传ISO镜像的步骤。而且事实上ArchLinux的安装盘好用得多。</p>
+<p>分区、格式化、下载和解包stage3……等等步骤，都没有太多需要注意的地方。chroot之前要记得复制<code>/etc/resolv.conf</code>，否则之后无法连网。然后就是emerge一些东西，也没什么难度。</p>
+<p>值得注意的是内核编译选项。文章中明显提到了要启用<code>VIRTIO_PCI</code>和<code>VIRTIO_MMIO</code>，实际上还要启用<code>VIRTIO_BLK</code>和<code>VIRTIO_NET</code>，才能访问硬盘和网络。很多其它硬件驱动都可以禁用。</p>
+<p>最后按照文章里写的配置好系统就可以了。安装GRUB启动器，如果<code>/dev</code>等虚拟目录没有正确挂载到chroot的根目录下也会安装失败。重启之前记得运行<code>passwd</code>设置root密码。</p>
+<hr>
+<p>换用Vultr的原因是最近我的网络访问DigitalOcean的速度不理想。我尝试更换机房，但是更换的时候出现了新的问题：DigitalOcean的FreeBSD主机无法联网。</p>
+<p>发了support ticket，工作人员给的解答是<code>/etc/rc.digitalocean.d/droplet.conf</code>的符号链接可能失效了。我看了一下，确实如此。把它更正之后重启，问题并未解决，而且符号链接再次失效。</p>
+<p>观察启动过程我发现一些可疑的错误消息，找不到python的动态链接库之类。经分析，这个错误信息应该是<code>/etc/rc.d/digitalocean</code>产生的。我尝试在这个文件的<code>REQUIRE:</code>一行增加了<code>ldconfig</code>，问题解决。</p>
+<p>我不太确定以后是不是仍然会产生类似的故障。总之目前来说已经不太愿意再用DigitalOcean上的FreeBSD了。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fgentoo-vultr%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fgentoo-vultr%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fgentoo-vultr%2f&amp;text=%e5%9c%a8Vultr%e4%b8%8a%e5%ae%89%e8%a3%85Gentoo" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

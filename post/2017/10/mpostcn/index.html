@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="在MetaPost中使用中文标签" />
+<meta property="og:description" content="MetaPost是非常经典的矢量图绘制工具。1
+之前我用 PSTricks 配合 XeTeX 绘制含中文标签的图形，因为 MetaPost 中不方便使用中文标签。确实如此。
+TL; DR  目前比较简单的办法是用 LuaTeX，因为它内置了 MetaPost 库 MPLib，可以直接输出 PDF，字体部分由 LuaTeX 负责处理。
+
+     
+            使用 LuaTeX &#43; MPLib 绘制的矢量图
+        
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/10/mpostcn/" />
+<meta property="article:published_time" content="2017-10-02T20:44:00-04:00" />
+<meta property="article:modified_time" content="2017-10-02T20:44:00-04:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在MetaPost中使用中文标签"/>
+<meta name="twitter:description" content="MetaPost是非常经典的矢量图绘制工具。1
+之前我用 PSTricks 配合 XeTeX 绘制含中文标签的图形，因为 MetaPost 中不方便使用中文标签。确实如此。
+TL; DR  目前比较简单的办法是用 LuaTeX，因为它内置了 MetaPost 库 MPLib，可以直接输出 PDF，字体部分由 LuaTeX 负责处理。
+
+     
+            使用 LuaTeX &#43; MPLib 绘制的矢量图
+        
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "在MetaPost中使用中文标签",
+  "url": "http://z-rui.github.io/post/2017/10/mpostcn/",
+  "wordCount": "243",
+  "datePublished": "2017-10-02T20:44:00-04:00",
+  "dateModified": "2017-10-02T20:44:00-04:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/10/mpostcn/">
+
+    <title>在MetaPost中使用中文标签 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/10/mpostcn/">在MetaPost中使用中文标签</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-10-02T20:44:00-04:00">Mon Oct 2, 2017</time> by rui</p>
+  </header>
+  <p><a href="http://www.tug.org/metapost.html">MetaPost</a>是非常经典的矢量图绘制工具。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+之前我用 PSTricks 配合 XeTeX 绘制含中文标签的图形，因为 MetaPost 中不方便使用中文标签。确实如此。</p>
+<p><strong>TL; DR</strong>  目前比较简单的办法是用 LuaTeX，因为它内置了 MetaPost 库 MPLib，可以直接输出 PDF，字体部分由 LuaTeX 负责处理。</p>
+<figure>
+    <img src="/media/mplib-1.svg"
+         alt="使用 LuaTeX &#43; MPLib 绘制的矢量图"/> <figcaption>
+            <p>使用 LuaTeX + MPLib 绘制的矢量图</p>
+        </figcaption>
+</figure>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#66d9ef">\input</span> luamplib.sty
+<span style="color:#75715e">% 设置中文字体，例如载入 luaotfload.sty 并定义相关的字体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">\mplibcode</span>
+input figures.mp;
+<span style="color:#75715e">% --- 或者 ---
+</span><span style="color:#75715e">% （直接输入 metapost 代码）
+</span><span style="color:#75715e"></span>input boxes;
+beginfig(1);
+boxit.a(btex 动物界 etex);
+
+boxjoin(a.s - b.n = (0, 12pt));
+boxit.b1(btex 脊索动物门 etex);
+boxit.b2(btex 哺乳纲 etex);
+boxit.b3(btex 灵长目 etex);
+boxit.b4(btex 人科 etex);
+boxit.b5(btex 人属 etex);
+boxit.b6(btex 智人 etex);
+
+boxjoin(a.s - b.n = (0, 12pt));
+boxit.c1(btex 节肢动物门 etex);
+boxit.c2(btex 昆虫纲 etex);
+boxit.c3(btex 双翅目 etex);
+boxit.c4(btex 果蝇科 etex);
+boxit.c5(btex 果蝇属 etex);
+boxit.c6(btex 黑腹果蝇 etex);
+
+a.s - b1.n = (a.s - c1.n) xscaled -1 = (whatever, 16pt);
+b1.e - c1.w = (-12pt, 0);
+
+drawboxed(a);
+for i = 1 upto 6: drawboxed(b[i], c[i]); endfor
+linecap := butt;
+drawarrow a.s -- b1.n;
+drawarrow a.s -- c1.n;
+for i = 1 upto 5:
+  drawarrow b[i].s -- b[i+1].n;
+  drawarrow c[i].s -- c[i+1].n;
+endfor
+endfig;
+<span style="color:#66d9ef">\endmplibcode</span>
+<span style="color:#66d9ef">\bye</span>
+</code></pre></div><p>通过恰当地设置输出例程，可以让每个图像正好占据一个 PDF 页面（且页面大小正好为图像大小）。很多新的 TeX 引擎（PDFTeX、XeTeX、LuaTeX）支持嵌入 PDF 内容。这样，可以单独编译 MetaPost 代码，之后把图片嵌入正文中，就不必反复编译了。</p>
+<p>要注意一个问题：如果使用 <code>TEX()</code> 动态生成标签，则不要 <code>input TEX;</code>。因为 mplib 自带了 <code>TEX()</code>；用 <code>TEX.mp</code> 里面定义的 <code>TEX()</code> 反而会引起问题。</p>
+<p>LuaTeX 也有它的缺点。TrueType/OpenType 的字体支持是通过 luaotfload 宏包实现的。它的载入速度相当慢。我自定义了一个预先载入中文字体的格式，这使得编译时间缩短了几秒（代价是不能随意更换字体），但是仍然比传统的 TeX/MetaPost 慢很多。</p>
+<p>这个办法还有一个缺点，就是错误消息非常难读，不像传统的 MetaPost 以交互式的方式显示错误信息。可能是我设置的不对，我可以再研究一下。</p>
+<hr>
+<p>我另外写了一个非常方便的 <code>boxpages.tex</code>，它可以把文档中的每个 box 作为单独的一页输出到 PDF 文件中，且页面的大小正好等于 box 的大小。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#66d9ef">\vsize</span>=0pt
+<span style="color:#66d9ef">\hoffset</span>=-1in
+<span style="color:#66d9ef">\voffset</span>=-1in
+
+<span style="color:#66d9ef">\output</span>={
+  <span style="color:#66d9ef">\setbox</span>0=<span style="color:#66d9ef">\vbox</span>{<span style="color:#66d9ef">\unvbox</span>255<span style="color:#66d9ef">\global\setbox</span>1<span style="color:#66d9ef">\lastbox</span>}
+  <span style="color:#66d9ef">\pagewidth\wd</span>1
+  <span style="color:#66d9ef">\pageheight\ht</span>1
+  <span style="color:#66d9ef">\advance\pageheight\dp</span>1
+  <span style="color:#66d9ef">\shipout\box</span>1
+  <span style="color:#66d9ef">\advancepageno</span>}
+</code></pre></div><p>这样也方便接下来的处理， 例如将 TeX 输出转换为图片。</p>
+<hr>
+<p>传统的 MetaPost 程序是独立运行的，生成若干 Encapsulated PostScript 文件。它只认识 TeX 字体，需要读取 TFM 文件（才能知道文字占多少空间）。TFM 是一种古老的格式，每种字体只支持 256 个字符，所以不适合描述中文字体。</p>
+<p>要改善这个尴尬情况，最理想的办法是修改 TeX 引擎使其在每种字体中支持更多字符。
+不幸的是 TeX （以及 TFM 格式）是一个冻结的项目，不可能有多大改变。</p>
+<p>中华儿女多奇志。就算不改 TeX 引擎，也有办法：生成多套字体，通过某种处理（预处理程序，或者玩弄 TeX 的 <code>\catcode</code> 机制），把每个汉字转换成“切换字体”、“当前字体内该汉字对应的序号”（0-255）、“其他调整”（间距、断行等）三个部分。做完这些处理之后，TeX 就可以开心地排版中文文档了。</p>
+<p>这大概就是 CCT 和 LaTeX 的 CJK 宏包的原理。这些做法不仅繁琐，而且配置起来非常麻烦。理论上讲，把这些方法应用于 MetaPost，那么也可以排版处含中文标签的图像。我没有试过。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>另外两个非常流行的矢量图绘制工具是<a href="http://tug.org/PSTricks/main.cgi/">PSTricks</a>和<a href="http://pgf.sourceforge.net/">PGF/TikZ</a>。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f10%2fmpostcn%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f10%2fmpostcn%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f10%2fmpostcn%2f&amp;text=%e5%9c%a8MetaPost%e4%b8%ad%e4%bd%bf%e7%94%a8%e4%b8%ad%e6%96%87%e6%a0%87%e7%ad%be" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

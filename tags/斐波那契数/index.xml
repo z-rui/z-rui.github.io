@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>斐波那契数 on 睿</title>
+    <link>http://z-rui.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/</link>
+    <description>Recent content in 斐波那契数 on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Sun, 01 Mar 2015 07:17:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>判定给定边长可否构成三角形的一个定理</title>
+      <link>http://z-rui.github.io/post/2015/03/theorem/</link>
+      <pubDate>Sun, 01 Mar 2015 07:17:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/03/theorem/</guid>
+      <description>&lt;p&gt;本定理来自一道算法竞赛题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定任意多条边，每条边都是不超过1,000,000,000的正整数。请给出一个算法，判断其中是否存在3条边可以构成三角形。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;应用该定理可以有效地解决此问题。&lt;/p&gt;
+&lt;h1 id=&#34;定理&#34;&gt;定理&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定n个边长，如果其中最大的边长与最小的边长的比值小于第n个斐波那契数，那么其中必存在3个边长可以构成三角形。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;应用&#34;&gt;应用&lt;/h1&gt;
+&lt;p&gt;由题中条件可知，最大的边长和最短的边长的比值不超过\(1,000,000,000 &amp;lt; F_{45}\)。所以，只要边的个数达到45，根据上述定理，就必然存在3条边可以构成三角形。如果边的个数少于45个，也很好办，穷举解决即可（\({45 \choose 3} = 14190\)，穷举量很小）。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

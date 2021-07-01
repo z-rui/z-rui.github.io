@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="扑克中的概率论问题" />
+<meta property="og:description" content="前天下午打牌，触景生情想起了一个概率论的问题：3个人打一副扑克（A23456789 10 JQK各4张&#43;大小王=54张牌），随机发牌，每人拿18张。设随机变量X表示三个手中的炸弹（指4张点数相同的牌）的总数，求X的分布律。
+这样的问题理论上应该可以使用古典概型来求解。但是我想了一会之后就放弃了。为了对这个问题有一个大概的了解，我写了一段程序模拟洗牌和发牌的过程并且统计其中的炸弹个数。
+从程序的输出中我得到了一个有趣的结果。下面是某一百万次试验中得到的统计结果：
+685121
+259261
+49135
+5935
+520
+28
+0
+从上到下依次是X=0,1,2……的频数。6个炸弹以上的情况没有出现。
+下面是条形统计图，可见，随着炸弹数增加，频数迅速减小。概率最大的事件是没有炸弹。炸弹个数不超过1个的频率高达94%，这和我平时打牌的常识相符合。
+
+     
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/07/probablity-in-poker-game/" />
+<meta property="article:published_time" content="2015-07-13T16:56:00+08:00" />
+<meta property="article:modified_time" content="2015-07-13T16:56:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="扑克中的概率论问题"/>
+<meta name="twitter:description" content="前天下午打牌，触景生情想起了一个概率论的问题：3个人打一副扑克（A23456789 10 JQK各4张&#43;大小王=54张牌），随机发牌，每人拿18张。设随机变量X表示三个手中的炸弹（指4张点数相同的牌）的总数，求X的分布律。
+这样的问题理论上应该可以使用古典概型来求解。但是我想了一会之后就放弃了。为了对这个问题有一个大概的了解，我写了一段程序模拟洗牌和发牌的过程并且统计其中的炸弹个数。
+从程序的输出中我得到了一个有趣的结果。下面是某一百万次试验中得到的统计结果：
+685121
+259261
+49135
+5935
+520
+28
+0
+从上到下依次是X=0,1,2……的频数。6个炸弹以上的情况没有出现。
+下面是条形统计图，可见，随着炸弹数增加，频数迅速减小。概率最大的事件是没有炸弹。炸弹个数不超过1个的频率高达94%，这和我平时打牌的常识相符合。
+
+     
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "扑克中的概率论问题",
+  "url": "http://z-rui.github.io/post/2015/07/probablity-in-poker-game/",
+  "wordCount": "87",
+  "datePublished": "2015-07-13T16:56:00+08:00",
+  "dateModified": "2015-07-13T16:56:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/07/probablity-in-poker-game/">
+
+    <title>扑克中的概率论问题 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/07/probablity-in-poker-game/">扑克中的概率论问题</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-07-13T16:56:00+08:00">Mon Jul 13, 2015</time> by rui</p>
+  </header>
+  <p>前天下午打牌，触景生情想起了一个概率论的问题：3个人打一副扑克（A23456789 10 JQK各4张+大小王=54张牌），随机发牌，每人拿18张。设随机变量X表示三个手中的炸弹（指4张点数相同的牌）的总数，求X的分布律。</p>
+<p>这样的问题理论上应该可以使用古典概型来求解。但是我想了一会之后就放弃了。为了对这个问题有一个大概的了解，我写了一段程序模拟洗牌和发牌的过程并且统计其中的炸弹个数。</p>
+<p>从程序的输出中我得到了一个有趣的结果。下面是某一百万次试验中得到的统计结果：</p>
+<pre><code>685121
+259261
+49135
+5935
+520
+28
+0
+</code></pre><p>从上到下依次是X=0,1,2……的频数。6个炸弹以上的情况没有出现。</p>
+<p>下面是条形统计图，可见，随着炸弹数增加，频数迅速减小。概率最大的事件是没有炸弹。炸弹个数不超过1个的频率高达94%，这和我平时打牌的常识相符合。</p>
+<figure>
+    <img src="/media/barchart-1.png"/> 
+</figure>
+
+<p>对此数据稍加分析，就会得到有趣的结果。这学期我学了《概率论与数理统计》这门课程。对于离散型的随机变量，讲过好几种典型的分布。对于图中这种迅速下降的情况，看上去有点像泊松分布。那么，有没有可能是泊松分布呢？</p>
+<p>假设X服从泊松分布，那么分布律是\(P\{X=k\}={\lambda^k{\rm e}^{-\lambda}\over k!}\)。可以使用最大似然估计法估计其中参数\(\lambda\)的值。做法如下：</p>
+<p>根据已给出的样本，做出似然函数
+\[L(\lambda) = \prod_{k=0}^\infty (P\{X=k\})^{f_k}\]
+其中，\(f_k\)是事件\(X=k\)的频数。注意，形式上有无穷个因子，但实际上因为\(f_k\)只有有限项不为0，实际上只是有限个因子的乘积。</p>
+<p>取对数
+\[ \ln L(\lambda) = \sum_{k=0}^\infty f_k \ln P\{X=k\} = \sum_{k=0}^\infty f_k (k\ln\lambda - \lambda - \ln{k!})\]</p>
+<p>求导
+\[ {{\rm d} \over {\rm d}\lambda} \ln{L(\lambda)} = \sum_{k=0}^\infty f_k \left({k\over\lambda} - 1\right) \]</p>
+<p>令导数等于0，可以解得参数的估计值
+\[ \hat\lambda = {\sum_{k=0}^\infty k f_k \over \sum_{k=0}^\infty f_k} \]</p>
+<p>到此，我发现泊松分布的参数估计是一个非常简单的表达式，即炸弹个数的加权平均数。这个估计是有道理的，因为在泊松分布中，\(\lambda\)的意义是总体的期望值。用样本(的平均值)估计总体(的期望值)，就是统计学的原理。</p>
+<p>代入数值得
+\[\hat\lambda = {0\cdot685121 + 1\cdot259261 + 2\cdot49135 + 3\cdot5935 + 4\cdot520 + 5\cdot28 \over 1000000} = 0.377556\]</p>
+<p>将这个估计参数代入泊松分布的表达式，得到的分布律和统计数据非常吻合（特别是X较小的情况）。因为我没有学过分布拟合检验，所以现在没法检验这个分布的拟合程度。我用Excel随便算了一下，以供参考：</p>
+<figure>
+    <img src="/media/excel-1.png"/> 
+</figure>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f07%2fprobablity-in-poker-game%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f07%2fprobablity-in-poker-game%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f07%2fprobablity-in-poker-game%2f&amp;text=%e6%89%91%e5%85%8b%e4%b8%ad%e7%9a%84%e6%a6%82%e7%8e%87%e8%ae%ba%e9%97%ae%e9%a2%98" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

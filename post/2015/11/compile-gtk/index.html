@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="编译GTK&#43;" />
+<meta property="og:description" content="GTK&#43;是一个流行的图形界面工具包，它的结构比较复杂，有很多外部依赖：
+
+     
+
+
+而我今天要尝试的是，在Windows上编译最新的GTK&#43; 3.19.1。所有外部依赖均从源代码开始编译。为何想到从源码编译GTK&#43;，是因为市面上难以找到最新版的GTK&#43;用于Windows的安装包。GTK&#43; for Windows Runtime Environment是一个很好的安装包，但是只更新到GTK&#43; 2.24，在2012年后就再没有更新。
+由依赖关系图可知，这个编译过程会非常痛苦。而选择Windows平台无疑使得难度更高。我没有安装Visual Studio，所以我没有研究过使用Visual Studio的构建方案。这篇文章可能有用。
+我选择以Msys2为构建平台，并且为此编写了一个自动化构建脚本。由Make来解析其中的依赖关系（其实写成shell脚本也可以，只要按照拓扑排序的顺序构建就可以了。）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/11/compile-gtk/" />
+<meta property="article:published_time" content="2015-11-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-11-08T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编译GTK&#43;"/>
+<meta name="twitter:description" content="GTK&#43;是一个流行的图形界面工具包，它的结构比较复杂，有很多外部依赖：
+
+     
+
+
+而我今天要尝试的是，在Windows上编译最新的GTK&#43; 3.19.1。所有外部依赖均从源代码开始编译。为何想到从源码编译GTK&#43;，是因为市面上难以找到最新版的GTK&#43;用于Windows的安装包。GTK&#43; for Windows Runtime Environment是一个很好的安装包，但是只更新到GTK&#43; 2.24，在2012年后就再没有更新。
+由依赖关系图可知，这个编译过程会非常痛苦。而选择Windows平台无疑使得难度更高。我没有安装Visual Studio，所以我没有研究过使用Visual Studio的构建方案。这篇文章可能有用。
+我选择以Msys2为构建平台，并且为此编写了一个自动化构建脚本。由Make来解析其中的依赖关系（其实写成shell脚本也可以，只要按照拓扑排序的顺序构建就可以了。）"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "编译GTK+",
+  "url": "http://z-rui.github.io/post/2015/11/compile-gtk/",
+  "wordCount": "36",
+  "datePublished": "2015-11-08T00:00:00+00:00",
+  "dateModified": "2015-11-08T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/11/compile-gtk/">
+
+    <title>编译GTK&#43; | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/11/compile-gtk/">编译GTK+</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-11-08T00:00:00Z">Sun Nov 8, 2015</time> by rui</p>
+  </header>
+  <p><a href="http://www.gtk.org/">GTK+</a>是一个流行的图形界面工具包，它的结构比较复杂，有很多外部依赖：</p>
+<figure>
+    <img src="/media/gtk-dependency-1.svg"
+         alt="GTK&#43; dependency graph"/> 
+</figure>
+
+<p>而我今天要尝试的是，在Windows上编译最新的GTK+ 3.19.1。所有外部依赖均从源代码开始编译。为何想到从源码编译GTK+，是因为市面上难以找到最新版的GTK+用于Windows的安装包。<a href="http://gtk-win.sourceforge.net/home/">GTK+ for Windows Runtime Environment</a>是一个很好的安装包，但是只更新到GTK+ 2.24，在2012年后就再没有更新。</p>
+<p>由依赖关系图可知，这个编译过程会非常痛苦。而选择Windows平台无疑使得难度更高。我没有安装Visual Studio，所以我没有研究过使用Visual Studio的构建方案。<a href="https://wiki.gnome.org/action/show/Projects/GTK+/Win32/MSVCCompilationOfGTKStack">这篇文章</a>可能有用。</p>
+<p>我选择以Msys2为构建平台，并且为此编写了一个<a href="https://gist.github.com/z-rui/61a6722d3c858197d0d8">自动化构建脚本</a>。由Make来解析其中的依赖关系（其实写成shell脚本也可以，只要按照拓扑排序的顺序构建就可以了。）</p>
+<p>要使用此脚本，需要做准备如下：</p>
+<ul>
+<li><a href="http://msys2.github.io/">Msys2</a>。</li>
+<li>gcc, make, tar, curl, git和autotools(用Msys2的包管理器<code>pacman</code>安装)。</li>
+<li>约1.5GB的剩余磁盘空间。</li>
+</ul>
+<p>准备好后，在Msys2中执行</p>
+<pre><code>git clone https://gist.github.com/61a6722d3c858197d0d8.git
+cd 61a6722d3c858197d0d8
+make -f gtk-build.mak
+</code></pre>
+<p>若相信自己的人品，则该命令开始执行后，即可出门散步，半晌后回来就可以看到所有需要构建的东西都已经全部安装到了<code>$(prefix)</code>目录中(默认为当前目录的<code>gtk-root</code>子目录 )。不过，这个命令很有可能中途失败。若是如此，则需凭借自己的聪明才智加以解决。解决后，到我的<a href="https://gist.github.com/z-rui/61a6722d3c858197d0d8">Gist页面</a>上提交一个评论，指出构建脚本的哪里应当改正。</p>
+<p>注意：以上构建脚本不会构建<code>libgcc</code>以及<code>pthread</code>兼容库。以MINGW64为例，需要手动复制</p>
+<pre><code>cp /mingw64/bin/lib{gcc_s_seh,winpthread}-1.dll $(prefix)/bin
+</code></pre>
+<p>我为了编写这个自动构建脚本，自己手工测试了各个包的编译方式和选项，中间自然是走了不少弯路，花了差不多有2天的时间。编译完成后运行<code>gtk3-demo.exe</code>，效果如下：</p>
+<figure>
+    <img src="/media/gtk3-1.png"
+         alt="GTK&#43; 3 Windows"/> 
+</figure>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fcompile-gtk%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fcompile-gtk%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f11%2fcompile-gtk%2f&amp;text=%e7%bc%96%e8%af%91GTK%2b" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

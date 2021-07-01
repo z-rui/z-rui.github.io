@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on 睿</title>
+    <link>http://z-rui.github.io/categories/</link>
+    <description>Recent content in Categories on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Fri, 15 May 2015 15:02:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>computing</title>
+      <link>http://z-rui.github.io/categories/computing/</link>
+      <pubDate>Fri, 15 May 2015 15:02:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/computing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hack</title>
+      <link>http://z-rui.github.io/categories/hack/</link>
+      <pubDate>Fri, 15 May 2015 15:02:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/hack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>playing</title>
+      <link>http://z-rui.github.io/categories/playing/</link>
+      <pubDate>Wed, 22 Apr 2015 13:06:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/playing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>http://z-rui.github.io/categories/math/</link>
+      <pubDate>Fri, 10 Apr 2015 16:52:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>algorithm</title>
+      <link>http://z-rui.github.io/categories/algorithm/</link>
+      <pubDate>Sun, 01 Mar 2015 07:17:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lua</title>
+      <link>http://z-rui.github.io/categories/lua/</link>
+      <pubDate>Thu, 26 Feb 2015 07:01:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/lua/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thinking</title>
+      <link>http://z-rui.github.io/categories/thinking/</link>
+      <pubDate>Thu, 29 Jan 2015 14:16:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/thinking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>diary</title>
+      <link>http://z-rui.github.io/categories/diary/</link>
+      <pubDate>Tue, 27 Jan 2015 03:58:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/diary/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bootstrap</title>
+      <link>http://z-rui.github.io/categories/bootstrap/</link>
+      <pubDate>Sun, 25 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://z-rui.github.io/categories/bootstrap/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="用SquashFS存储Portage树" />
+<meta property="og:description" content="Gentoo系统中的Portage树存储了软件仓库中所有软件的元信息。其中最主要的是Ebuild脚本，它记载了软件的编译方法、依赖关系等。它通常位于/usr/portage。
+可想而知，这个树中包含了大量的文件，因此占用了很大的磁盘空间。根据我最近的测量，
+
+所有文件的大小总和超过300MiB；
+实际占用磁盘空间超过600MiB (ext4)。
+
+但实际上，其中大部分文件都比较小，且属于较易被压缩的文本文件。因此，值得考虑使用一种压缩的文件系统存放Portage树。
+SquashFS是一种可压缩的只读文件系统。将Portage树的全部内容放在其中，只需约50MiB的存储空间。
+在配置SquashFS的过程中，走了一些弯路。因此，我把操作过程记录在这里，以便日后参考。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2020/04/portage-sqfs/" />
+<meta property="article:published_time" content="2020-04-26T21:17:43-07:00" />
+<meta property="article:modified_time" content="2020-04-26T21:17:43-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用SquashFS存储Portage树"/>
+<meta name="twitter:description" content="Gentoo系统中的Portage树存储了软件仓库中所有软件的元信息。其中最主要的是Ebuild脚本，它记载了软件的编译方法、依赖关系等。它通常位于/usr/portage。
+可想而知，这个树中包含了大量的文件，因此占用了很大的磁盘空间。根据我最近的测量，
+
+所有文件的大小总和超过300MiB；
+实际占用磁盘空间超过600MiB (ext4)。
+
+但实际上，其中大部分文件都比较小，且属于较易被压缩的文本文件。因此，值得考虑使用一种压缩的文件系统存放Portage树。
+SquashFS是一种可压缩的只读文件系统。将Portage树的全部内容放在其中，只需约50MiB的存储空间。
+在配置SquashFS的过程中，走了一些弯路。因此，我把操作过程记录在这里，以便日后参考。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "用SquashFS存储Portage树",
+  "url": "http://z-rui.github.io/post/2020/04/portage-sqfs/",
+  "wordCount": "160",
+  "datePublished": "2020-04-26T21:17:43-07:00",
+  "dateModified": "2020-04-26T21:17:43-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2020/04/portage-sqfs/">
+
+    <title>用SquashFS存储Portage树 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/04/portage-sqfs/">用SquashFS存储Portage树</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-04-26T21:17:43-07:00">Sun Apr 26, 2020</time> by rui</p>
+  </header>
+  <p>Gentoo系统中的<a href="https://wiki.gentoo.org/wiki/Ebuild_repository">Portage树</a>存储了软件仓库中<strong>所有</strong>软件的元信息。其中最主要的是<a href="https://wiki.gentoo.org/wiki/Ebuild">Ebuild脚本</a>，它记载了软件的编译方法、依赖关系等。它通常位于<code>/usr/portage</code>。</p>
+<p>可想而知，这个树中包含了大量的文件，因此占用了很大的磁盘空间。根据我最近的测量，</p>
+<ul>
+<li>所有文件的大小总和超过300MiB；</li>
+<li>实际占用磁盘空间超过600MiB (ext4)。</li>
+</ul>
+<p>但实际上，其中大部分文件都比较小，且属于较易被压缩的文本文件。因此，值得考虑使用一种压缩的文件系统存放Portage树。</p>
+<p><a href="https://www.kernel.org/doc/Documentation/filesystems/squashfs.txt">SquashFS</a>是一种可压缩的只读文件系统。将Portage树的全部内容放在其中，只需约50MiB的存储空间。</p>
+<p>在配置SquashFS的过程中，走了一些弯路。因此，我把操作过程记录在这里，以便日后参考。</p>
+<h2 id="准备工作">准备工作</h2>
+<p>传统上，Portage把源码包 (distfiles) 和二进制包 (packages) 都放在<code>/usr/portage</code>目录下。它们占用比较大的空间，但不应该被放进SquashFS中。因此，修改<code>make.conf</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">DISTDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/cache/distfiles&#34;</span>
+PKGDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/cache/binpkgs&#34;</span>
+</code></pre></div><p>并把它们移到其他位置：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mv /usr/portage/distfiles /var/cache
+$ mv /usr/portage/packages /var/cache/binpkgs
+</code></pre></div><h2 id="只读portage树">只读Portage树</h2>
+<p>最简单的配置方案是使用只读的Portage树。要使用SquashFS，应在内核选项中启用<code>CONFIG_SQUASHFS</code>。</p>
+<h3 id="创建squashfs">创建SquashFS</h3>
+<p>Gentoo的<a href="http://distfiles.gentoo.org/snapshots/squashfs/">官方镜像</a>维护着每天更新的SquashFS镜像。因此，简单的解决方案是从镜像获取SquashFS：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ wget http://distfiles.gentoo.org/snapshots/squashfs/gentoo-current.xz.sqfs
+</code></pre></div><p>手动创建SquashFS的方法是，先更新Portage树，然后使用<code>mksquashfs</code>命令（需安装squashfs-tools）：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mksquashfs /usr/portage gentoo.sfs -comp xz
+</code></pre></div><p>更多选项参见<a href="https://manpages.debian.org/jessie/squashfs-tools/mksquashfs.1.en.html">mksquashfs(1)</a>。
+有了SquashFS镜像，就可以删除文件系统中的Portage树了。</p>
+<h3 id="挂载squashfs">挂载SquashFS</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mount -v -o loop gentoo.sfs /usr/portage
+</code></pre></div><p>这样得到的是只读的Portage树。可以在此条件下使用Portage管理软件包，但不能更新Portage树。如果要更新，则应该卸载后重新创建/获取SquashFS镜像。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ umount -v /usr/portage
+$ wget ...
+$ mount ...
+</code></pre></div><h2 id="可写portage树">可写Portage树</h2>
+<p>利用<a href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">overlay文件系统</a>，可以在节省磁盘空间的前提下实现一个可写的Portage树。
+其原理是，配置一个由两个文件系统复合的文件系统：</p>
+<ul>
+<li>下层：SquashFS，只读。</li>
+<li>上层：ext4或其他任何可写文件系统。</li>
+</ul>
+<p>向这个文件系统中写入内容时，写入上层文件系统。读取时，先看上层是否有对应文件，如果没有，则在下层中查找。
+当Portage树更新时，只有变化的部分写入了上层。</p>
+<p>要使用overlay文件系统，应启用<code>CONFIG_OVERLAY_FS</code>内核选项。</p>
+<h3 id="创建overlay">创建Overlay</h3>
+<p>首先准备3个空目录供overlay使用：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mkdir base delta tmp
+$ chown portage:portage base delta tmp
+</code></pre></div><p>它们的用处是：SquashFS将被挂载到<code>base</code>，overlay中的修改将被写入<code>delta</code>，而<code>tmp</code>是overlay内部使用的工作目录（须和<code>delta</code>位于同一文件系统）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mount -v -o loop gentoo.sfs base
+$ mount -v -t overlay none /usr/portage <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>	-o lowerdir<span style="color:#f92672">=</span>base,upperdir<span style="color:#f92672">=</span>delta,workdir<span style="color:#f92672">=</span>tmp
+</code></pre></div><p>这时检查<code>/usr/portage</code>的所有者，应为<code>portage</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ stat -c%U:%G /usr/portage/
+portage:portage
+</code></pre></div><h3 id="更新portage树">更新Portage树</h3>
+<p>禁用Portage的硬链接功能，因为<a href="https://www.gentoo.org/support/news-items/2018-07-11-portage-sync-allow-hardlinks.html">它和overlay不兼容</a>：编辑<code>/etc/portage/repos.conf/gentoo.conf</code>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[gentoo]</span>
+<span style="color:#a6e22e">...</span>
+<span style="color:#a6e22e">sync-allow-hardlinks</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">no</span>
+</code></pre></div><p>之后就可以像使用普通文件系统一样，更新Portage树：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ emerge --sync
+$ du -hd0 gentoo.sfs delta/
+51M     gentoo.sfs
+17M     delta/
+</code></pre></div><p>上面的例子中，一次更新带来了17M的变化。</p>
+<h3 id="合成新squashfs">合成新SquashFS</h3>
+<p>当上层文件系统中的内容较多时，可以考虑合成一个新的SquashFS镜像，并丢弃上层文件系统。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ mksquashfs /usr/portage gentoo.sfs.1 -comp xz
+$ umount /usr/portage
+$ umount base
+$ mv gentoo.sfs gentoo.sfs~
+$ mv gentoo.sfs.1 gentoo.sfs
+$ find delta/ -delete
+</code></pre></div><h2 id="后续">后续</h2>
+<p>可以写init scripts，实现：</p>
+<ul>
+<li>开机加载overlay；</li>
+<li>关机卸载overlay；</li>
+<li><code>delta/</code>超过一定大小后，生成新的SquashFS镜像。</li>
+</ul>
+<p>这样，对用户来说就是透明的。</p>
+<p>即使是只读Portage树，在crontab中写一个每天定时更新SquashFS镜像的任务，也可以起到很好的效果。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fportage-sqfs%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fportage-sqfs%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f04%2fportage-sqfs%2f&amp;text=%e7%94%a8SquashFS%e5%ad%98%e5%82%a8Portage%e6%a0%91" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

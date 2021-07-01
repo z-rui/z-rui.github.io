@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="CMOS三角波生成器" />
+<meta property="og:description" content="
+     
+
+
+原理
+要生成三角波，可以考虑用电流源给电容器充电/放电。因为电容的伏安关系式为
+\[i = C{{\rm d}u\over{\rm d}t},\]
+所以只要通过的电流恒定，电容两端的电压就会线性地变化。
+
+     
+
+
+如图所示的原理电路中，左边是两个方向相反的电流源（通常，从电源抽取电流的称为电流源，将电流流入地的称为电流阱），经过一个单刀双掷开关，轮流地给电容充放电。
+但是这个开关要能实现自动地切换，才能实现给电容轮流充放电的功能。所以希望这个开关是受电压控制的开关，当控制电压为高电平时开关拨向上面，而低电平时拨向下面。
+这个控制信号可以由施密特触发器产生。如图所示，电容上端电平送入一个反相的施密特触发器，当输入电平上升至上门限电压时，施密特触发器输出突变为低电平，当输入电平下降至下门限电压时，输出突变为高电平。这样就实现了控制信号的生成。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/" />
+<meta property="article:published_time" content="2016-04-19T01:29:00+08:00" />
+<meta property="article:modified_time" content="2016-04-19T01:29:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CMOS三角波生成器"/>
+<meta name="twitter:description" content="
+     
+
+
+原理
+要生成三角波，可以考虑用电流源给电容器充电/放电。因为电容的伏安关系式为
+\[i = C{{\rm d}u\over{\rm d}t},\]
+所以只要通过的电流恒定，电容两端的电压就会线性地变化。
+
+     
+
+
+如图所示的原理电路中，左边是两个方向相反的电流源（通常，从电源抽取电流的称为电流源，将电流流入地的称为电流阱），经过一个单刀双掷开关，轮流地给电容充放电。
+但是这个开关要能实现自动地切换，才能实现给电容轮流充放电的功能。所以希望这个开关是受电压控制的开关，当控制电压为高电平时开关拨向上面，而低电平时拨向下面。
+这个控制信号可以由施密特触发器产生。如图所示，电容上端电平送入一个反相的施密特触发器，当输入电平上升至上门限电压时，施密特触发器输出突变为低电平，当输入电平下降至下门限电压时，输出突变为高电平。这样就实现了控制信号的生成。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CMOS三角波生成器",
+  "url": "http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/",
+  "wordCount": "33",
+  "datePublished": "2016-04-19T01:29:00+08:00",
+  "dateModified": "2016-04-19T01:29:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/">
+
+    <title>CMOS三角波生成器 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/">CMOS三角波生成器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-04-19T01:29:00+08:00">Tue Apr 19, 2016</time> by rui</p>
+  </header>
+  <figure>
+    <img src="/media/cmos-triangle-wave-generator-1.svg"/> 
+</figure>
+
+<h2 id="原理">原理</h2>
+<p>要生成三角波，可以考虑用电流源给电容器充电/放电。因为电容的伏安关系式为
+\[i = C{{\rm d}u\over{\rm d}t},\]
+所以只要通过的电流恒定，电容两端的电压就会线性地变化。</p>
+<figure>
+    <img src="/media/cmos-triangle-wave-generator-2.svg"/> 
+</figure>
+
+<p>如图所示的原理电路中，左边是两个方向相反的电流源（通常，从电源抽取电流的称为电流源，将电流流入地的称为电流阱），经过一个单刀双掷开关，轮流地给电容充放电。</p>
+<p>但是这个开关要能实现自动地切换，才能实现给电容轮流充放电的功能。所以希望这个开关是受电压控制的开关，当控制电压为高电平时开关拨向上面，而低电平时拨向下面。</p>
+<p>这个控制信号可以由施密特触发器产生。如图所示，电容上端电平送入一个反相的施密特触发器，当输入电平上升至上门限电压时，施密特触发器输出突变为低电平，当输入电平下降至下门限电压时，输出突变为高电平。这样就实现了控制信号的生成。</p>
+<h2 id="实现">实现</h2>
+<p>下面用CMOS电路依次实现各个组成部分。</p>
+<h3 id="电流源">电流源</h3>
+<p>电流源可以用PMOS构成，其结构如下。</p>
+<figure>
+    <img src="/media/cmos-triangle-wave-generator-3.svg"/> 
+</figure>
+
+<p>M1和M2因为\(V_{GS}\)相等，所以当它们都处于饱和区时，它们的源极电流一定相等。对于M1而言，因为漏极和栅极短接，所以总是处于饱和区。 而M2在漏极电位较低(对于三角波生成器而言，即所接入的电容还未充满，其上的电压较小)，\(\left|V_{DS}\right|\)足够大，也工作在饱和区。</p>
+<p>M3是有源负载，作用是确定基准电流\(I_{REF}\)。此处也可以用一个电阻，电阻越大，则\(I_{REF}\)越小。因此电流源的电流可以根据需要设置。当电流源工作时，M1和M2源极电流都等于\(I_{REF}\)，因此这个电路也称为<strong>镜像电流源</strong>。</p>
+<p>电流阱则对称地用NMOS构成。</p>
+<h3 id="压控开关">压控开关</h3>
+<p>压控开关使用一对MOSFET实现，其结构如下。</p>
+<figure>
+    <img src="/media/cmos-triangle-wave-generator-4.svg"/> 
+</figure>
+
+<p>当栅极为高电平而源极为低电平时，上面的NMOS导通，下面的PMOS截止；反之亦然。</p>
+<p>对于三角波生成电路而言，当电容电压较低时，电路应该处于充电过程，所以压控开关的控制电压为较高；反之亦然。这样的工作情况使得此压控开关总能够正常工作。</p>
+<h3 id="施密特触发器">施密特触发器</h3>
+<p>施密特触发器的CMOS电路如下。</p>
+<figure>
+    <img src="/media/cmos-triangle-wave-generator-5.svg"/> 
+</figure>
+
+<p>对该电路做如下分析：</p>
+<ol>
+<li>输入高电平，输出为低电平。这是一个稳定状态。M1~M4的栅极为高电平，因此PMOS截止，NMOS导通。但是因为M6的栅极为低电平截止，M3和M4的漏、源极之间没有偏压，所以没有电流流过。M5的栅极为低电平，\(V_{GD}=0\)，使得M1的漏极被拉至低电平。(如果M1的漏极电平比较高，则M5将工作于饱和状态，会有电流通过M5流至地，但是M1和M2都是截止状态，不可能有这个电流。)</li>
+<li>输入从高电平开始下降，M1开始导通，但是因为M5工作在饱和状态，拉低了M1的漏极(M2的源极)电平，M2没有导通的机会。</li>
+<li>输入电平继续下降，M1导通程度增加，M1的漏极(M2的源极)电平也逐渐升高。直到M2的\(-V_{GS}\)足够大，则M2开始导通，造成M5的栅极电压上升，从而M2开始截止，造成M2的源极电平进一步升高……这是一个正反馈过程，因此电路状态会在瞬间发生突变：输出变成高电平。这时的输入电平称为下门限电压\(V_{T-}\)。</li>
+<li>输出变成低电平以后，电路为另一个稳定状态。即使这时输入电平立刻回升，电路的输出也不会立刻变回去。这是因为输出突变成高电平后，M5截止，而M1, M2导通，所以M2的源极电平也比突变之前增大了很多，输入电平即使回升，\(-V_{GS}\)也足够大而不足以使得M2截止，所以电路不会立刻回到之前的状态。</li>
+<li>输入电平如果继续下降，则电路维持稳态，对此不做分析。现在设输入电平上升，则M6工作在饱和状态，M4导通程度增加，M3电平开始下降。输入电平不断上升直到M3的\(V_{GS}\)足够大，M3开始导通，另一个正反馈过程开始，电路状态又一次发生突变。这时的输入电平称为上门限电压\(V_{T+}\)。</li>
+</ol>
+<p>调节M1、M4（或者M5、M6）的宽长比(W/L)，可以调节上下门限电压。定性地说，M1的宽长比越大（或者M5的宽长比越小），则\(V_{T-}\)越高，M4的宽长比越大（或者M6的宽长比越小），则\(V_{T+}\)越低。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f04%2fcmos-triangle-wave-generator%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f04%2fcmos-triangle-wave-generator%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f04%2fcmos-triangle-wave-generator%2f&amp;text=CMOS%e4%b8%89%e8%a7%92%e6%b3%a2%e7%94%9f%e6%88%90%e5%99%a8" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

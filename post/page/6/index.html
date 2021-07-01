@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/post/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/post/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/post/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/06/vala/">Vala语言</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-06-08T02:17:00+08:00">Wed Jun 8, 2016</time> by rui</p>
+  </header>
+  <p>Vala是一个建立在GLib上的语言。GLib是基于C语言的基础功能库，和Boost之于C++的地位有几分类似。GLib除了提供了一些数据结构、线程操作、输入输出外，还有一套完全基于C语言的对象系统GObject。在此基础之上，才有了GTK+，这个在Linux上比较流行的图形工具包。</p>
+<p>GLib很不错，善用之可以避免重新造很多轮子。GObject可能是摆脱C++后不得已的选择，因为图形界面这样的东西太依赖于面向对象的特性了。它们都基于C，设计得或许很漂亮，可用起来就比较麻烦了，因为C编译器不像C++那样能自动生成代码。例如，C++的<code>shared_ptr</code>可以以几乎透明的方式实现引用计数：每一份拷贝在进入和退出作用域的地方，C++编译器可以自动插入增加引用和减少引用的代码。换作C的话，则需要在代码中明确写出来。</p>
+<p>为了减轻开发人员的负担，提高开发效率，Vala被发明出来，它模仿C#的语法，在语法层面上支持面向对象。值得指出的是，Vala的编译器先将vala源文件转换成C源文件，然后调用C编译器来编译。因为幕后是C语言，所以一方面不会带来性能上的退化，另一方面也不会引入兼容性的困难。</p>
+  <a href='http://z-rui.github.io/post/2016/06/vala/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/05/gentoo/">Gentoo构建日志</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-05-14T18:06:00+08:00">Sat May 14, 2016</time> by rui</p>
+  </header>
+  <p>我对虚拟机中运行的FreeBSD总是很满意。所以产生了在真实环境中运行的念头。但是我天真了。尝试了才发现FreeBSD并不能驱动我的无线网卡，上不了网的话其他的也不要谈了。</p>
+<p>只好乖乖地转投了Linux对怀抱。在Arch和Gentoo之间选择了一会儿。Arch很好很方便，我还用了装上去用了一会儿。它的软件版本之新也着实把我吓了一跳(例如gcc已经更新到了6.1.0版本)。</p>
+<p>我最终选择了更加折腾的Gentoo。Gentoo配置起来更麻烦一些，所以有必要把相关步骤记录下来，以供日后参考。</p>
+  <a href='http://z-rui.github.io/post/2016/05/gentoo/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/05/suckless/">suckless.org</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-05-10T14:21:00+08:00">Tue May 10, 2016</time> by rui</p>
+  </header>
+  <p><a href="http://suckless.org">suckless.org</a>有两个小程序：dwm和surf。我很喜欢。</p>
+<p>现在的软件有一个不好的趋势，那就是越做越大。这可能和计算机资源越来越充裕有关系。随随便便就有一个上百GB的硬盘，那么占用5GB甚至更多的空间安装一个Gnome桌面环境也未尝不可。</p>
+<p>软件之间互相依赖。我只需要A软件的功能，但是A需要B的功能X，所以我还得安装B。然而B却自带了其他与之不相关的功能Y, Z, &hellip;功能Y, Z又依赖其他的软件C, D, &hellip;这样下去就没完没了了。</p>
+  <a href='http://z-rui.github.io/post/2016/05/suckless/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/05/numerical-diffeq/">微分方程的简单数值解法</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-05-05T22:27:00+08:00">Thu May 5, 2016</time> by rui</p>
+  </header>
+  <p>微分方程的数值解法是一个庞大的话题。这里描述一种简单的、容易想到的数值解法，它可以用简单的计算机程序实现。</p>
+<p>以微分方程
+\[\frac{dv}{dt} + v = \sin t\]
+为例，这是一个一阶线性微分方程。求解的时候，把时间离散化，即\(t=n\Delta T\)，\(\Delta T\)是最小的时间单位。假设我们只关心\(t\geq 0\)时的解，那么\(n\)是自然数。</p>
+<p>考虑导数的定义
+\[\frac{dv}{dt} = \lim_{\Delta t \to 0} \frac{\Delta v}{\Delta t} = \lim_{\Delta t \to 0} \frac{v(t)-v(t-\Delta t)}{\Delta t}.\]
+在离散化的时间里，我们不可能让\(\Delta t\)无穷小，最小也只能等于时间单位\(\Delta T\)。所以时间离散化以后，我们用\(\frac{\Delta v}{\Delta T}\)来代替导数\(\frac{dv}{dt}\)。</p>
+<p>在一个\(\Delta T\)内，\(v\)的增量\(\Delta v = v(t) - v(t-\Delta T)\)。为了书写方便，我们用记号\(v[n]\)表示\(v(n\Delta T)\)。考虑到\(t=n\Delta T\)，有
+\[\Delta v = v[n] - v[n-1].\]</p>
+<p>于是，原来的微分方程就可以写成离散的形式
+\[\frac{v[n]-v[n-1]}{\Delta T} + v[n] = \sin t.\]
+将\(v[n]\)解出，得
+\[v[n] = \frac{v[n-1] + \Delta T\sin t}{1+\Delta T}.\]
+这就是一个递推式，给定初始值\(v[0]\)，就可以递推地计算出后续的所有\(v[n]\).</p>
+  <a href='http://z-rui.github.io/post/2016/05/numerical-diffeq/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/">CMOS三角波生成器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-04-19T01:29:00+08:00">Tue Apr 19, 2016</time> by rui</p>
+  </header>
+  <figure>
+    <img src="/media/cmos-triangle-wave-generator-1.svg"/> 
+</figure>
+
+<h2 id="原理">原理</h2>
+<p>要生成三角波，可以考虑用电流源给电容器充电/放电。因为电容的伏安关系式为
+\[i = C{{\rm d}u\over{\rm d}t},\]
+所以只要通过的电流恒定，电容两端的电压就会线性地变化。</p>
+<figure>
+    <img src="/media/cmos-triangle-wave-generator-2.svg"/> 
+</figure>
+
+<p>如图所示的原理电路中，左边是两个方向相反的电流源（通常，从电源抽取电流的称为电流源，将电流流入地的称为电流阱），经过一个单刀双掷开关，轮流地给电容充放电。</p>
+<p>但是这个开关要能实现自动地切换，才能实现给电容轮流充放电的功能。所以希望这个开关是受电压控制的开关，当控制电压为高电平时开关拨向上面，而低电平时拨向下面。</p>
+<p>这个控制信号可以由施密特触发器产生。如图所示，电容上端电平送入一个反相的施密特触发器，当输入电平上升至上门限电压时，施密特触发器输出突变为低电平，当输入电平下降至下门限电压时，输出突变为高电平。这样就实现了控制信号的生成。</p>
+  <a href='http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/04/opamp-rs-latch/">使用运算放大器构造RS锁存器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-04-15T12:27:00+08:00">Fri Apr 15, 2016</time> by rui</p>
+  </header>
+  <p>如图，使用两个运算放大器可以实现RS锁存器的功能。</p>
+<figure>
+    <img src="/media/opamp-rs-latch-1.svg"/> 
+</figure>
+
+<p>可以使用<a href="http://www.falstad.com/circuit/circuitjs.html?cct=$+0+0.0000049999999999999995+10.20027730826997+50+15+72%0Aa+224+192+304+192+0+15+-15+1000000%0Aa+336+208+416+208+0+15+-15+1000000%0AL+176+176+128+176+0+0+true+5+0%0AL+176+208+128+208+0+0+true+5+0%0Ad+256+144+224+144+1+0.805904783%0Ar+256+144+304+144+0+400000%0Aw+224+144+224+176+0%0Ad+256+240+224+240+1+0.805904783%0Ar+256+240+304+240+0+400000%0Aw+224+240+224+208+0%0Aw+304+240+304+192+0%0Ar+224+208+176+208+0+100000%0Ar+224+176+176+176+0+100000%0Aw+416+144+416+208+0%0Ag+336+224+336+240+0%0Aw+416+144+304+144+0%0A162+480+208+480+256+1+5+1+0+0%0Ar+416+208+480+208+0+500%0Ag+480+256+480+272+0%0Aw+336+192+304+192+0%0A">Falstad的电路模拟器</a>观察该电路的行为。</p>
+  <a href='http://z-rui.github.io/post/2016/04/opamp-rs-latch/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/04/dynamic-circuit/">运算法求解动态电路</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-04-08T20:39:00+08:00">Fri Apr 8, 2016</time> by rui</p>
+  </header>
+  <p>如图所示的电路，在\(t=0\)时刻，有\(i_{L_r}(0)=I_0\), \(u_{C_r}(0)=0\)。试求\(t&gt;0\)时的\(i_{L_r}(t)\)和\(u_{C_r}(t)\)。</p>
+<figure>
+    <img src="/media/dynamic-circuit-1.svg"/> 
+</figure>
+
+<p>这电路含有动态元件，可以使用运算法来求解。</p>
+  <a href='http://z-rui.github.io/post/2016/04/dynamic-circuit/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/03/ds1302/">DS1302计时芯片和串行通信</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-03-30T14:03:00Z">Wed Mar 30, 2016</time> by rui</p>
+  </header>
+  <p>我的FPGA开发板上有一个DS1302芯片，这是Dallas公司生产的计时芯片。它可以记录年、月、日、星期、时、分、秒信息，并且可以在断电时通过后备电源(电池)保持时钟的运行。</p>
+<p>所以我打算利用这个芯片的功能做设计一个数字钟电路。首先需要解决的问题是和该芯片的通信。DS1302采用串行端口进行通信，因此我需要研究进行串口通信的方法。</p>
+<p>研究DS1302的通信时序图，</p>
+<figure>
+    <img src="/media/ds1302-1.png"/> 
+</figure>
+
+<p>看似简单的时序图其实包含了大量的信息，值得仔细地研究。</p>
+  <a href='http://z-rui.github.io/post/2016/03/ds1302/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/03/nios/">构建Nios II系统</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-03-25T18:41:00+08:00">Fri Mar 25, 2016</time> by rui</p>
+  </header>
+  <p>我最近找了一块载有<a href="https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/hb/cyclone-iv/cyiv-51001.pdf">EP4CE6F17C8</a>的FPGA开发板，并试图在上面构建Nios II系统，做着玩玩。</p>
+<figure>
+    <img src="/media/nios-1.jpg"/> 
+</figure>
+
+<p>因为没有经验，所以走了很多弯路，记录在这里，供以后查阅。</p>
+  <a href='http://z-rui.github.io/post/2016/03/nios/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/02/qc20/">QC2.0协议和9V直充</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-02-15T20:24:00+08:00">Mon Feb 15, 2016</time> by rui</p>
+  </header>
+  <p>我的手机使用QC2.0快速充电协议，能以9V 1.67A (15W)的速度充电。有意思的是，手机内部有一块电压为3.85V、电量为2550mAh的锂离子电池。这样一来，充电电流将达到将近4A (1.5C)，很大。</p>
+<p>QC2.0协议使得充电器在先输出5V电压——以免损坏普通设备——的情况下，与被充电的设备通信，识别成功以后充电器将输出更高的电压，如我的手机使用的9V。</p>
+<p>网络上有人问到，<a href="http://www.chongdiantou.com/thread-2283-1-1.html">如果直接接入9V电压，将会是什么情况</a>。我做了一个试验，我的手机可以充电，电流约为1.2A。当电压超过9V以后，输入被切断，充电停止。我用另一个不支持快速充电的手机试验，电流为零。</p>
+<p>对于支持9V电压输入的手机而言，可以想象它的元件耐压必然是达到9V的，所以能够充电，并不特别出乎意料。有些意外的是，两个手机都对输入电压过高做了保护。输入电压异常，这看起来是充电器的责任。有些手机充着充着电就爆炸了，除了充电器和电池的质量可疑以外，不知道是不是保护电路也做得不完善。</p>
+<p>这个试验给我的另一个启发是，其实我并不需要QC2.0升压板，就可以用调压电源直接给我的手机充电，只不过在连接其他USB设备之前，务必将电压调回标准的5V。升压板在没有调压电源，例如使用电池供电时，才有用处。</p>
+  <a href='http://z-rui.github.io/post/2016/02/qc20/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/post/page/5/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/post/page/7/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

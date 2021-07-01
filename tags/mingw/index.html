@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="MinGW" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/tags/mingw/" />
+<meta property="og:updated_time" content="2015-02-09T08:26:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MinGW"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+      
+    
+
+    <link rel="canonical" href="http://z-rui.github.io/tags/mingw/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/tags/mingw/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/mingw-bug/">发现了MinGW GCC的一个bug</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-09T08:26:00+08:00">Mon Feb 9, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/mingw/" rel="tag">MinGW</a>, <a href="/tags/gcc/" rel="tag">GCC</a>, <a href="/tags/bug/" rel="tag">bug</a>
+
+</p>
+  </header>
+  <p>我今天发现MinGW内置的打印函数<code>__mingw_printf</code>在处理<code>%a</code>格式的时候会产生不正确的输出。下面这段程序体现了这个问题。</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+int main()
+{
+	printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	__mingw_printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	return 0;
+}
+</code></pre><p>输出是</p>
+<pre><code>0x1.000000p+0 0x1.19999ap+0
+0x0p-63 0x8.cccccccccccdp-3
+</code></pre><p>因为浮点数<code>1.0</code>显然不能表示为<code>0x0p-63</code>，所以<code>__mingw_printf</code>是错的。</p>
+<p>这个错误我提交在 <a href="http://sourceforge.net/p/mingw-w64/bugs/459/">http://sourceforge.net/p/mingw-w64/bugs/459/</a> ，过几天我看看有没有人回应。</p>
+  <a href='http://z-rui.github.io/post/2015/02/mingw-bug/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

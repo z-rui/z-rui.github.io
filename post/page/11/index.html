@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/post/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/post/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/post/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/01/llk/">连连看游戏中的配对路径搜索</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-01-29T14:16:00+08:00">Thu Jan 29, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/algorithm/" rel="category tag">algorithm</a>, <a href="/categories/thinking/" rel="category tag">thinking</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E8%BF%9E%E8%BF%9E%E7%9C%8B/" rel="tag">连连看</a>, <a href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag">游戏</a>, <a href="/tags/bfs/" rel="tag">BFS</a>, <a href="/tags/dfs/" rel="tag">DFS</a>
+
+</p>
+  </header>
+  <p>在连连看游戏中，两个图案可以消去的条件是：</p>
+<ol>
+<li>两者图案相同。</li>
+<li>两种直接存在一条通路，它是一条只经过没有图案的地方、且转折点不超过2个的折线。满足此条件的两个图案被称为是可相连的。</li>
+</ol>
+<p>要判断条件1非常容易，所以主要考虑怎样判断条件2。举一个具体的例子如下，图中空格表示没有图案的地方，字母和<code>#</code>表示图案，<code>-+|</code>表示路径。</p>
+<pre><code>          
+ ### ##A# 
+ # ### |# 
+ +-----+# 
+ A####### 
+          
+</code></pre><p>在这个例子中，A和A是可相连的。图中所给出的路径含有两个转折点。</p>
+<p>对于此类问题，能否给出一个普遍的判断方法？在实际问题中（例如在连连看游戏里），如果判定两个图案是可相连的，还要指出一条具体的路径。</p>
+  <a href='http://z-rui.github.io/post/2015/01/llk/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/01/physics_letter/">物理老师的信</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-01-27T03:58:00+08:00">Tue Jan 27, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/diary/" rel="category tag">diary</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E7%89%A9%E7%90%86/" rel="tag">物理</a>, <a href="/tags/%E8%80%81%E5%B8%88/" rel="tag">老师</a>, <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a>, <a href="/tags/%E8%80%83%E8%AF%95/" rel="tag">考试</a>
+
+</p>
+  </header>
+  <p>今天是大学物理课期末考试的日子。大约是昨天，物理老师在他和学生的邮箱里发了一封邮件，内容主要是回应网络上出现的针对他的，以及针对物理教学的一些错误言论。有些内容看起来真是可笑而可悲。</p>
+<p>他讲的课，钻研和探究的成分要多一些。有的时候也会偏离主题，谈到他的人生经历和感悟上面去——同学们称之为“扯淡”。由于过多的钻研和“扯淡”，我们班的课程比其他班慢了许多。有的同学不满意，在网上开帖子骂他。</p>
+<p>理想的情况是老师和学生应当保持一种平等的关系——在网上攻击老师，显然不是这种关系的体现。但是现状是，考试是第一位的，对于班里众多的优秀学生而言尤其如此。在他们看来，好的老师应该做的，就是尽他所能让学生考出高的分数。选择自己的教学模式本应是教师的基本权利，现在却因为必须迎合学生的需求，变成了mission impossible。这难道不算是大学教育乃至整个教育体制的一种悲哀？</p>
+  <a href='http://z-rui.github.io/post/2015/01/physics_letter/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/01/settlement/">定居GitHub.io</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-01-25T00:00:00Z">Sun Jan 25, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/bootstrap/" rel="category tag">bootstrap</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/git/" rel="tag">git</a>, <a href="/tags/github/" rel="tag">github</a>
+
+</p>
+  </header>
+  <p>我需要一个可靠的地方存放我的文字。曾经试过很多办法，无论是纸质的、电子的或是基于网络的形式，都感觉不太靠谱：</p>
+<ul>
+<li>纸质的记事本，某一天弄丢了，就找不回来了。</li>
+<li>在本机记录的文本，不方便保存历史记录，在更换电脑的时候有可能忘记迁移数据。</li>
+<li>基于网络的内容管理系统，服务的稳定性是一个很大的问题，当我需要从一个平台迁移到另一个平台的时候，导入/导出也是一个艰巨的工作。</li>
+</ul>
+<p>现在我用Git来管理我这些文字，并且上传到GitHub服务器中。利用GitHub.io提供的Web服务进行展示。我认为有如下的好处。</p>
+  <a href='http://z-rui.github.io/post/2015/01/settlement/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  
+  <a class="btn btn-outline-primary" href="/post/page/10/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary disabled" href="#" role="button" aria-disabled="true">下一页</a>
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lua on 睿</title>
+    <link>http://z-rui.github.io/categories/lua/</link>
+    <description>Recent content in Lua on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Thu, 26 Feb 2015 07:01:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/categories/lua/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>减小Lua的二进制体积</title>
+      <link>http://z-rui.github.io/post/2015/02/minimal-lua/</link>
+      <pubDate>Thu, 26 Feb 2015 07:01:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/minimal-lua/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.lua.org&#34;&gt;Lua&lt;/a&gt;本身已经是一个十分轻量级的脚本语言。在我的64位Windows上编译出来的&lt;code&gt;lua53.dll&lt;/code&gt;仅248K。(参照物：&lt;code&gt;python34.dll&lt;/code&gt;为3963K。)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.lua.org/notes/ltn001.html&#34;&gt;Lua Technical Note 1&lt;/a&gt;介绍了通过删减功能来进一步减小Lua的二进制体积的方法。这篇文章针对的是Lua 3.2，16年前的版本，尽管如此，它仍然给了我很大的启发。&lt;/p&gt;
+&lt;p&gt;首先看Lua 5.3中哪些模块占用的二进制体积最多：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;size	%all	%core	file
+23571	7%	12%	lauxlib.o
+20909	6%	11%	lparser.o
+20256	6%	11%	lapi.o
+18403	5%	10%	lvm.o
+14413	4%	8%	llex.o
+13526	4%	7%	lcode.o
+12584	4%	7%	lgc.o
+10214	3%	5%	ldebug.o
+8967	3%	5%	lobject.o
+8776	2%	5%	ldo.o
+7002	2%	4%	ltable.o
+5087	1%	3%	lundump.o
+4887	1%	3%	lstate.o
+3970	1%	2%	ltm.o
+3832	1%	2%	ldump.o
+2818	1%	1%	lstring.o
+2525	1%	1%	lfunc.o
+2170	1%	1%	linit.o
+1810	1%	1%	lopcodes.o
+1498	0%	1%	lmem.o
+1406	0%	1%	lzio.o
+860	0%	0%	lctype.o
+189484	54%	100%	(core)
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Lua语言中的“惊喜”</title>
+      <link>http://z-rui.github.io/post/2015/02/lua-surprises/</link>
+      <pubDate>Thu, 26 Feb 2015 06:00:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/lua-surprises/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.lua.org/&#34;&gt;Lua&lt;/a&gt;在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &amp;ldquo;gotcha&amp;rdquo;)。根据我的经验，整理如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不等号是&lt;code&gt;~=&lt;/code&gt;，而不是&lt;code&gt;!=&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是&lt;code&gt;!=&lt;/code&gt;(C家族)，还有一部分用&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;(Pascal, Basic, SQL)。用&lt;code&gt;~=&lt;/code&gt;真的只有Lua一家。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

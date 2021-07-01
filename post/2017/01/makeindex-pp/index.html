@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="makeindex预处理" />
+<meta property="og:description" content="makeindex是用来编制索引的工具。在\(\LaTeX\)文档中，用\index在文中标记索引，排版时将生成相应的.idx文件，每一个\index命令对应一行。
+makeindex对.idx文件进行排序和格式化，然后生成.ind文件，该文件就是索引部分的\(\LaTeX\)代码。之后只需再运行一次\(\LaTeX\)程序即可将索引包含在文档内。
+这个过程本身已经有些复杂了，现在遇到一件更麻烦的事：怎样编制中文索引。汉字没有明确的排序依据，通用的做法是按拼音或者笔画排序。zhmakeindex提供了这些功能。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/01/makeindex-pp/" />
+<meta property="article:published_time" content="2017-01-19T16:11:00+08:00" />
+<meta property="article:modified_time" content="2017-01-19T16:11:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="makeindex预处理"/>
+<meta name="twitter:description" content="makeindex是用来编制索引的工具。在\(\LaTeX\)文档中，用\index在文中标记索引，排版时将生成相应的.idx文件，每一个\index命令对应一行。
+makeindex对.idx文件进行排序和格式化，然后生成.ind文件，该文件就是索引部分的\(\LaTeX\)代码。之后只需再运行一次\(\LaTeX\)程序即可将索引包含在文档内。
+这个过程本身已经有些复杂了，现在遇到一件更麻烦的事：怎样编制中文索引。汉字没有明确的排序依据，通用的做法是按拼音或者笔画排序。zhmakeindex提供了这些功能。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "makeindex预处理",
+  "url": "http://z-rui.github.io/post/2017/01/makeindex-pp/",
+  "wordCount": "19",
+  "datePublished": "2017-01-19T16:11:00+08:00",
+  "dateModified": "2017-01-19T16:11:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/01/makeindex-pp/">
+
+    <title>makeindex预处理 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/01/makeindex-pp/">makeindex预处理</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-01-19T16:11:00+08:00">Thu Jan 19, 2017</time> by rui</p>
+  </header>
+  <p>makeindex是用来编制索引的工具。在\(\LaTeX\)文档中，用<code>\index</code>在文中标记索引，排版时将生成相应的<code>.idx</code>文件，每一个<code>\index</code>命令对应一行。</p>
+<p>makeindex对<code>.idx</code>文件进行排序和格式化，然后生成<code>.ind</code>文件，该文件就是索引部分的\(\LaTeX\)代码。之后只需再运行一次\(\LaTeX\)程序即可将索引包含在文档内。</p>
+<p>这个过程本身已经有些复杂了，现在遇到一件更麻烦的事：怎样编制中文索引。汉字没有明确的排序依据，通用的做法是按拼音或者笔画排序。<a href="https://github.com/leo-liu/zhmakeindex">zhmakeindex</a>提供了这些功能。</p>
+<p>就汉字的本质来说，似乎按笔画排序更为科学。但我的感觉是拼音检索更加方便。汉语拼音方案已经标准化了，而且普及率很高。相比之下，为了检索一个字特意数一遍它有几画是比较麻烦的(另：“杂”字的起笔是“丿”还是“乙”？)。</p>
+<p>按照拼音顺序排列的一个问题是多音字。“长度”应排在C音序下，而“长辈”应排在Z音序下。如果要实现多音字的自动识别(据我所知目前还没有程序做到这一点)，那么需要有汉语的词汇表。然而，即便有了词汇表，也不能保证读音一定正确：</p>
+<blockquote>
+<p>海水朝朝朝朝朝朝朝落；
+浮云长长长长长长长消。</p>
+</blockquote>
+<p>编制英文索引时，makeindex只将各拉丁字母当作符号处理，它并不认得任何英语。只是为了编制中文索引，有必要引入这么多语言学的内容吗？(参见<a href="http://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html">Yak shaving</a>，给牦牛剪毛。)所以科学的中文排序方法真的是一个值得探讨的话题。</p>
+<p>zhmakeindex没有提供多音字的解决方案。“长度”会被排序到Z音序下面。作者表示，可以在源文件中用诸如<code>\index{常度@长度}</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>来手工指定读音。这么做虽然很丑，但是有效。我的观点是读音不应该指定在文档中，可以单独设置一个文件，保存所有特殊读音的条目。不然的话，我可以直接在文档中写<code>\index{chang2 du4@长度}</code>和<code>\index{zhang4 bei4@长辈}</code>，即，我手动指定所有关键词的读音。然后直接用makeindex编制索引就完事了。</p>
+<p>这样做很枯燥无聊，效率很低。但是给了我一个启示：我不需要重新实现一遍makeindex所有的功能，我可以只写一个预处理程序，把<code>.idx</code>文件中的所有类似<code>\index{中文}</code>的条目<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>改写成<code>\index{zhong1 wen2@中文}</code>。剩下的事交给makeindex去做，就可以了。</p>
+<p>所以我写了<a href="https://github.com/z-rui/idxpp">idxpp</a>，实现了上述功能。特别照顾了一下多音字。仅靠预处理，在原理上是不太可能实现按笔画排序的。另外，中英文的混排也是一个问题。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>在makeindex的语法中，<code>@</code>符号前面的部分是用于排序的关键字，后面的部分是显示在索引中的形式。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>仅为说明概念。<code>.idx</code>文件实际的格式并非如此。 <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fmakeindex-pp%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fmakeindex-pp%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f01%2fmakeindex-pp%2f&amp;text=makeindex%e9%a2%84%e5%a4%84%e7%90%86" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="TCP聊天室" />
+<meta property="og:description" content="我用Go编写了一个简单的聊天室程序。这个程序分为服务器端和客户端两部分。
+服务器端用于监听主机上的端口，以便接受来自其他主机的连接。建立连接后，服务器从客户端处收集消息，然后广播到所有客户端。
+客户端用于消息的输入和显示。当成功建立起到主机的连接后，输入的消息将被发送至服务器，而服务器发来的消息将被显示在屏幕上。
+我用termui编写客户端的界面。虽然还有一些小问题，总体来说效果不错。
+
+     
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/09/chatroom/" />
+<meta property="article:published_time" content="2016-09-12T21:56:00+08:00" />
+<meta property="article:modified_time" content="2016-09-12T21:56:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TCP聊天室"/>
+<meta name="twitter:description" content="我用Go编写了一个简单的聊天室程序。这个程序分为服务器端和客户端两部分。
+服务器端用于监听主机上的端口，以便接受来自其他主机的连接。建立连接后，服务器从客户端处收集消息，然后广播到所有客户端。
+客户端用于消息的输入和显示。当成功建立起到主机的连接后，输入的消息将被发送至服务器，而服务器发来的消息将被显示在屏幕上。
+我用termui编写客户端的界面。虽然还有一些小问题，总体来说效果不错。
+
+     
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "TCP聊天室",
+  "url": "http://z-rui.github.io/post/2016/09/chatroom/",
+  "wordCount": "16",
+  "datePublished": "2016-09-12T21:56:00+08:00",
+  "dateModified": "2016-09-12T21:56:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/09/chatroom/">
+
+    <title>TCP聊天室 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/09/chatroom/">TCP聊天室</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-09-12T21:56:00+08:00">Mon Sep 12, 2016</time> by rui</p>
+  </header>
+  <p>我用Go编写了一个简单的<a href="https://github.com/z-rui/chatroom">聊天室</a>程序。这个程序分为服务器端和客户端两部分。</p>
+<p>服务器端用于监听主机上的端口，以便接受来自其他主机的连接。建立连接后，服务器从客户端处收集消息，然后广播到所有客户端。</p>
+<p>客户端用于消息的输入和显示。当成功建立起到主机的连接后，输入的消息将被发送至服务器，而服务器发来的消息将被显示在屏幕上。</p>
+<p>我用<a href="https://github.com/gizak/termui">termui</a>编写客户端的界面。虽然还有<a href="https://github.com/gizak/termui/issues/99">一些小问题</a>，总体来说效果不错。</p>
+<figure>
+    <img src="/media/chatroom-1.png"/> 
+</figure>
+
+<p>(字符颜色只是termui的一个trick，并非我的程序用于区分身份的方式)</p>
+<p>程序以Go写成，保证了良好的可移植性，以及对Unicode的支持。任何能够监听端口的主机都可以运行服务器。因此，这个聊天室也适合点对点通信的情况（把服务器运行在其中一个节点即可）。</p>
+<p>当然，这个聊天室程序还很简陋，目前最大的问题是没法区分消息记录中的说话人。当然很容易解决，只要服务器端在每条广播出去的消息前面加上来源（如IP地址）即可。当然更好的办法是为每个来源分配一个标识符（用户名），这样更容易分辨。</p>
+<p>另外一个问题是安全性。这是多方面的。首先，聊天内容通过TCP明文传输，不能保证通信安全。其次，缺少认证机制。任何主机都可以不经认证地连接到服务器，从而加入聊天室。最后，服务器的抗压能力尚未得到确认。如果遭到大量主机发起的恶意连接，很可能耗尽服务器的资源。</p>
+<p>解决以上问题需要比较多的工作。我写这个聊天室程序只不过是为了演示，所以就没有付诸实践的打算。但是纸上谈兵还是可以的。因为我最近也在研究OpenPGP，所以我想将这两者结合应该是一个不错的办法。</p>
+<p>首先是身份认证问题。服务器端应当保存所有可以参加到聊天室的成员的公钥。建立连接时，服务器向客户端发送一随机字符串，客户端对其签名后返回服务器，服务器验证签名无误后即接受连接。如果认证无法通过，则应该中止连接。</p>
+<p>然后，聊天内容可以在客户端使用所有参与聊天的成员的公钥进行加密，然后发送到服务器，服务器广播到所有各个客户端，然后各个客户端再用自己的私钥解密。这样保证了通信安全。</p>
+<p>既然已经做了身份认证，那么每个客户端已经具备了一个标识符（公钥中包含姓名和邮箱等信息），区分说话人的问题也就迎刃而解了。</p>
+<p>Go语言已经有了现成的<a href="https://godoc.org/golang.org/x/crypto/openpgp">OpenPGP实现</a>，想要增加这些功能应该不算困难。本地的密钥管理可以依靠GnuPG工具来完成。</p>
+<p>除此以外还可以做一些锦上添花的工作，例如在消息记录中提供用户登入/登出的公告，或者更高级一点，能显示在线成员列表，等等。</p>
+<p>另一个思路是<a href="https://github.com/shazow/ssh-chat">SSH Chat</a>。身份认证、内容加密等问题直接通过SSH协议解决，不需要重复造轮子。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fchatroom%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fchatroom%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fchatroom%2f&amp;text=TCP%e8%81%8a%e5%a4%a9%e5%ae%a4" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

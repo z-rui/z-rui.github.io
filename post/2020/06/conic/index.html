@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="圆锥曲线的反射性质" />
+<meta property="og:description" content="当一束光从焦点发射，并在与圆锥曲线相交的点处发生反射时，反射的光线必定：
+
+穿过另一焦点（椭圆）；
+
+     
+
+
+反向延长后穿过另一焦点（双曲线）；
+
+     
+
+
+与对称轴平行（抛物线）。这个性质使得它的旋转曲面很适合用来发出/收集平行光。
+
+     
+
+
+
+证明的办法：先在曲线上任取一点P，作焦点和P的连线（如果是抛物线则另作一条过P且与对称轴平行的线），然后证明所作的线与法线（或切线）构成的锐（直）角相等即可。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2020/06/conic/" />
+<meta property="article:published_time" content="2020-06-23T21:25:27-07:00" />
+<meta property="article:modified_time" content="2020-06-23T21:25:27-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="圆锥曲线的反射性质"/>
+<meta name="twitter:description" content="当一束光从焦点发射，并在与圆锥曲线相交的点处发生反射时，反射的光线必定：
+
+穿过另一焦点（椭圆）；
+
+     
+
+
+反向延长后穿过另一焦点（双曲线）；
+
+     
+
+
+与对称轴平行（抛物线）。这个性质使得它的旋转曲面很适合用来发出/收集平行光。
+
+     
+
+
+
+证明的办法：先在曲线上任取一点P，作焦点和P的连线（如果是抛物线则另作一条过P且与对称轴平行的线），然后证明所作的线与法线（或切线）构成的锐（直）角相等即可。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "圆锥曲线的反射性质",
+  "url": "http://z-rui.github.io/post/2020/06/conic/",
+  "wordCount": "136",
+  "datePublished": "2020-06-23T21:25:27-07:00",
+  "dateModified": "2020-06-23T21:25:27-07:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2020/06/conic/">
+
+    <title>圆锥曲线的反射性质 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/06/conic/">圆锥曲线的反射性质</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-06-23T21:25:27-07:00">Tue Jun 23, 2020</time> by rui</p>
+  </header>
+  <p>当一束光从焦点发射，并在与圆锥曲线相交的点处发生反射时，反射的光线必定：</p>
+<ul>
+<li>穿过另一焦点（椭圆）；
+<figure>
+    <img src="/media/conic-1.png" width="50%"/> 
+</figure>
+</li>
+<li>反向延长后穿过另一焦点（双曲线）；
+<figure>
+    <img src="/media/conic-2.png" width="50%"/> 
+</figure>
+</li>
+<li>与对称轴平行（抛物线）。这个性质使得它的<a href="https://en.wikipedia.org/wiki/Parabolic_reflector">旋转曲面</a>很适合用来发出/收集平行光。
+<figure>
+    <img src="/media/conic-3.png" width="50%"/> 
+</figure>
+</li>
+</ul>
+<p>证明的办法：先在曲线上任取一点P，作焦点和P的连线（如果是抛物线则另作一条过P且与对称轴平行的线），然后证明所作的线与法线（或切线）构成的锐（直）角相等即可。</p>
+<p>以椭圆为例， 不失一般性， 设椭圆方程为
+\[{x^2\over a^2}+{y^2\over b^2}=1\qquad(a&gt;b&gt;0).\]
+则椭圆上的点可以用\(P(a\cos\theta, b\sin\theta)\)表示，而焦点为\(F_\pm(\pm c, 0)\)，其中\(c=\sqrt{a^2-b^2}\)。
+\[\eqalign{
+|\overrightarrow{F_\pm P}|
+&amp;= \sqrt{a^2\cos^2\theta \pm 2ac\cos\theta + c^2 + b^2\sin^2\theta}\cr
+&amp;= \sqrt{a^2 \pm 2ac\cos\theta + c^2\cos^2\theta}\cr
+&amp;= a \pm c\cos\theta.\cr
+}\]</p>
+<p>切向量可以通过对\(\overrightarrow{OP}\)求关于参数\(\theta\)的导数得到：
+\[\vec t = (-a\sin\theta, b\cos\theta).\]</p>
+<p>由平面向量夹角公式，
+\[\eqalign{
+\cos\langle\overrightarrow{F_\pm P},\vec t\rangle
+&amp;= {\overrightarrow{F_\pm P}\cdot\vec t \over |\overrightarrow{F_\pm P}| |\vec t|}\cr
+&amp;= {-a\sin\theta(a\cos\theta\pm c)+b^2\sin\theta\cos\theta \over (a\pm c\cos\theta)|\vec t|}\cr
+&amp;= {-c\sin\theta(\pm a + c\cos\theta) \over (a\pm c\cos\theta)|\vec t|}\cr
+&amp;= {\mp c\sin\theta \over |\vec t|}\cr
+}\]
+绝对值相等，这说明\(\overrightarrow{F_\pm P}\)与切线构成的锐（直）角相等。证毕。</p>
+<hr>
+<p>对于双曲线，可设其方程为
+\[{x^2\over a^2}-{y^2\over b^2}=1\qquad(a&gt;0,\,b&gt;0).\]
+双曲线位于\(y\)轴右侧一支上的点可用\(P(a\sec x, b\tan x)\)表示，而焦点为\((\pm c, 0)\)，其中\(c=\sqrt{a^2+b^2}\)。</p>
+<p>进行类似计算可知所构成的锐（直）角也相等。</p>
+<hr>
+<p>对于抛物线，可设其方程为
+\[y^2 = 4cx\qquad(c&gt;0).\]
+其上的点可用\(P(4ct^2, 4ct)\)表示，而焦点为\(F(c, 0)\)。</p>
+<p>\[\eqalign{
+|\overrightarrow{FP}|
+&amp;=\sqrt{(4ct^2-c)^2+(4ct)^2}\cr
+&amp;=(4t^2+1)c\cr
+}\]</p>
+<p>切向量（约去常数\(4c\)）
+\[\vec t=(2t, 1)\]</p>
+<p>因此
+\[\eqalign{
+\cos\langle\overrightarrow{FP},\vec t\rangle
+&amp;={(4ct^2-c)(2t) + (4ct) \over (4t^2+1)c|\vec t|}\cr
+&amp;={2t\over |\vec t|}\cr
+}\]</p>
+<p>与对称轴平行的向量\(\vec x=(1, 0)\)，
+\[\eqalign{
+\cos\langle\vec x,\vec t\rangle
+&amp;={2t\over |\vec t|}\cr
+}\]</p>
+<p>由此可知所作的两条线与切线所构成的锐（直）角相等。</p>
+<hr>
+<p>附：图的画法</p>
+<script type="application/javascript" src="https://gist.github.com/z-rui/4a159d6693edda12a9464e6f8880c513.js?file=conic.mp"></script>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f06%2fconic%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f06%2fconic%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f06%2fconic%2f&amp;text=%e5%9c%86%e9%94%a5%e6%9b%b2%e7%ba%bf%e7%9a%84%e5%8f%8d%e5%b0%84%e6%80%a7%e8%b4%a8" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

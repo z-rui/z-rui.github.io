@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="二叉树的作图" />
+<meta property="og:description" content="画图是观察数据结构的好办法。 二叉树是一种常见的数据结构， 我在调试的时候往往通过先序遍历把整个树的结构打印出来。 然后拿一张草稿纸， 根据打印出的信息， 用笔画出整个树的样子， 然后判断该进行什么操作 （或者我已经执行的操作是否正确）。
+为了偷懒， 我在想有没有办法能够让计算机自动生成二叉树的图像。
+我发现使用 MetaPost 可以方便地实现。
+
+     
+            用MetaPost画出的一棵二叉树
+        
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/11/drawtree/" />
+<meta property="article:published_time" content="2017-11-18T22:52:00-05:00" />
+<meta property="article:modified_time" content="2017-11-18T22:52:00-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="二叉树的作图"/>
+<meta name="twitter:description" content="画图是观察数据结构的好办法。 二叉树是一种常见的数据结构， 我在调试的时候往往通过先序遍历把整个树的结构打印出来。 然后拿一张草稿纸， 根据打印出的信息， 用笔画出整个树的样子， 然后判断该进行什么操作 （或者我已经执行的操作是否正确）。
+为了偷懒， 我在想有没有办法能够让计算机自动生成二叉树的图像。
+我发现使用 MetaPost 可以方便地实现。
+
+     
+            用MetaPost画出的一棵二叉树
+        
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "二叉树的作图",
+  "url": "http://z-rui.github.io/post/2017/11/drawtree/",
+  "wordCount": "212",
+  "datePublished": "2017-11-18T22:52:00-05:00",
+  "dateModified": "2017-11-18T22:52:00-05:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/11/drawtree/">
+
+    <title>二叉树的作图 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/11/drawtree/">二叉树的作图</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-11-18T22:52:00-05:00">Sat Nov 18, 2017</time> by rui</p>
+  </header>
+  <p>画图是观察数据结构的好办法。 二叉树是一种常见的数据结构， 我在调试的时候往往通过先序遍历把整个树的结构打印出来。 然后拿一张草稿纸， 根据打印出的信息， 用笔画出整个树的样子， 然后判断该进行什么操作 （或者我已经执行的操作是否正确）。</p>
+<p>为了偷懒， 我在想有没有办法能够让计算机自动生成二叉树的图像。
+我发现使用 MetaPost 可以方便地实现。</p>
+<figure>
+    <img src="/media/rbgraph-1.svg"
+         alt="用MetaPost画出的一棵二叉树" width="100%;"/> <figcaption>
+            <p>用MetaPost画出的一棵二叉树</p>
+        </figcaption>
+</figure>
+
+<p>用 MetaPost 作图时， 无需直接生成每个结点的作图指令， 而只需告诉 MetaPost 各个结点之间的相互关系。 首先， 按照从左到右的顺序将各结点编号。 上图中 11, 15, 16, &hellip; 结点分别编号为 1, 2, 3, &hellip; 然后告诉 MetaPost 各个结点的关键信息。
+例如， 我用 <code>V</code> 数组保存结点的值， <code>C</code> 数组保存结点的颜色， 则我只需写</p>
+<pre><code>V1:=&quot;11&quot;;
+C1:=red;
+V2:=&quot;15&quot;;
+C2:=black;
+%...
+</code></pre><p>此外我还必须描述结点之间的层次关系。 而一般的二叉树存储方式不同， 这里只需描述每个结点的父结点即可。 我用 <code>P</code> 数组保存这个信息。</p>
+<pre><code>P1:=2;
+%...
+</code></pre><p>图中的树共有 26 个结点。 当我描述完了所有结点后， 就调用我另外编写的宏</p>
+<pre><code>drawtree(26);
+</code></pre><p>来画出整个树。</p>
+<pre><code>input boxes;
+def drawtree(expr n) =
+	z1=(0,0);
+	for i = 2 upto n:
+		x[i] - x[i-1] = hoffset;
+	endfor
+	for i = 1 upto n:
+		if known P[i]:
+			y[P[i]] - y[i] = voffset;
+		fi
+	endfor
+
+	for i = 1 upto n:
+		circleit.X[i](V[i]);
+		X[i].c = z[i];
+		fixpos(X[i]);
+	endfor
+	for i = 1 upto n:
+		if known P[i]:
+			drawarrow z[P[i]]--z[i]
+				cutbefore bpath.X[P[i]]
+				cutafter bpath.X[i]
+				withcolor C[i];
+		fi
+	endfor
+	for i = 1 upto n:
+		if C[i]=red:
+			fill bpath.X[i] withcolor .3[white,red];
+		fi
+		draw bpath.X[i] withcolor C[i]
+			if C[i]=red: withpen thickpen fi;
+		drawunboxed(X[i]);
+	endfor
+enddef;
+</code></pre><p>其中， <code>hoffset</code> 是结点之间的横向间距而 <code>voffset</code> 是纵向间距。
+这些参数可以根据需要调整 （例如， 画结点较多的树时可能希望使用较大的纵向间距）。</p>
+<p>n 个点的坐标共有 2n 个未知数。 关于 x 我列了 n-1 个方程， 关于 y， 因为有一个结点没有父结点， 所以也列了 n-1 个方程。 这样， 我只需随意指定一个点的坐标 （如这里令第一个点坐标是 (0,0)）， MetaPost 就可以解出所有 n 个点的坐标。 这是 MetaPost 优于其他作图工具之处。</p>
+<p>之后， 就是利用 <code>boxes.mp</code> 里的工具， 画出 n 个结点， 以及父结点到子结点的连线。
+注意， 顺序是： 先画连线， 再涂色， 再画边框， 最后画结点中的文字。</p>
+<p>显然， 前面的 <code>V</code> <code>P</code> 等数组都是可以用程序生成的 （一遍中序遍历， 同时记录父结点即可）。 而画出的树的风格则可以通过修改 <code>drawtree</code> 宏来控制。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f11%2fdrawtree%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f11%2fdrawtree%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f11%2fdrawtree%2f&amp;text=%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e4%bd%9c%e5%9b%be" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

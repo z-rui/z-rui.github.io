@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/post/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/post/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/post/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/02/honesty-test/">诚实人和说谎者</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-02-04T15:58:00+08:00">Thu Feb 4, 2016</time> by rui</p>
+  </header>
+  <p>今天我收到这样一则问题：n人中有诚实人和说谎者。诚实人永远说真话，而说谎者既可能说真话也可能说假话。有一种提问方式可以在不知道对方身份的情况下获得一些信息，那就是找两个人提问，问的内容是“对方是诚实人还是说谎者？”如果双方的回答都是“对方是诚实人”，那么真实的情况或者是双方都是诚实人，或者都是说谎者。如果得到其他的回答，那么只能确定至少有一人是说谎者。</p>
+<p>为了进一步确定被调查者的身份，引入“高尚组”的定义：如果超过半数的人是诚实人，则称这一组人为“高尚组”。现在希望利用上述提问方式，做⌊n/2⌋次提问，并根据所获得的信息，找出一个新的“高尚组”，且人数不超过⌈n/2⌉。</p>
+  <a href='http://z-rui.github.io/post/2016/02/honesty-test/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/02/wsh/">Windows Script Host技巧二则</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-02-04T04:04:00+08:00">Thu Feb 4, 2016</time> by rui</p>
+  </header>
+  <p>Windows Script Host (WSH)是Windows 98推出的脚本工具，至今已有18年历史，应该属于被淘汰的技术之一。尽管如此，微软的<a href="https://msdn.microsoft.com/en-us/library/9bbdkx3k.aspx">MSDN</a>和<a href="https://technet.microsoft.com/library/ee156603.aspx">TechNet</a>上仍维护者相关的文档。</p>
+<p>相对于批处理这个更加古老的技术，WSH的优点是它使用VBScript或者JScript语言，语法更加接近通用的程序设计语言，因此更适合处理复杂问题。（参考perl和sh脚本之间的区别。）另一个优点是它可以直接利用所有现成的<a href="https://en.wikipedia.org/wiki/Component_Object_Model">COM</a>对象，操纵各种应用程序；不过COM也是一个有着20多年历史的老古董技术了。</p>
+<p>本文介绍WSH的两个使用功能。其中的代码均为JScript，将代码保存为<code>.js</code>文件，则运行脚本和运行一般的程序没有区别。</p>
+  <a href='http://z-rui.github.io/post/2016/02/wsh/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/01/dc-source-continued/">自制直流电源(续)</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-01-26T20:28:00+08:00">Tue Jan 26, 2016</time> by rui</p>
+  </header>
+  <p>最近备齐了一些组件，开始尝试把他们组装起来，做成一个可调的直流电源。</p>
+<p>首先，供电部分暂时采用笔记本附带的电源适配器，参数为20V 3.25A。输出接口是联想专用的方口，其格式为外负内正中信号，母座如下图所示。</p>
+<figure>
+    <img src="/media/dc-source/lenovo.png"/> 
+</figure>
+
+<p>使用方口母座引出直流电源的正负极，将它接到直流调压板上，其结构如下图所示。</p>
+<figure>
+    <img src="/media/dc-source/dcdc.png"/> 
+</figure>
+
+<p>直流调压版使用LTC 3780芯片进行自动升降压，相关参数为</p>
+<ul>
+<li>输入电压Vi：5-32V.</li>
+<li>输出电压Vo：1-30V.</li>
+<li>输出电流：8A (10A MAX).</li>
+<li>输出功率：80W (130W MAX).</li>
+<li>纹波：50mV (12V - 12V 5A).</li>
+</ul>
+  <a href='http://z-rui.github.io/post/2016/01/dc-source-continued/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/01/lighting-up-pencil-lead/">点亮铅笔芯</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-01-21T17:03:00+08:00">Thu Jan 21, 2016</time> by rui</p>
+  </header>
+  <p>铅笔芯中含有导电物质石墨，在两端加电压则有电流通过，电流足够大时，铅笔芯将发热发光。</p>
+<figure>
+    <img src="/media/lighting-up-pencil-lead-1.jpg"/> 
+</figure>
+  <a href='http://z-rui.github.io/post/2016/01/lighting-up-pencil-lead/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/01/dc-source/">自制直流电源</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-01-19T21:20:00+08:00">Tue Jan 19, 2016</time> by rui</p>
+  </header>
+  <p>怎么想到要自制（就是自己组装的意思）直流电源的呢，说来话长。首先是我的手机支持QC2.0快速充电协议，只能用原装的充电器来快速充电。理论上，用普通的5V 2A充电器也可以以较快的速度充电，但事实是充电非常慢（事后证明其实是USB线的问题，唉）。于是我开始寻找问题的解决方案。</p>
+<p>找啊找，慢慢地就偏离了原来的方向，先后买了一条QC2.0的升压板，一个台达5V 3A电源适配器，一个USB电压电流表。下面依次道来。</p>
+  <a href='http://z-rui.github.io/post/2016/01/dc-source/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/12/internet-speed-tool/">网速测试工具</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-12-25T10:05:00Z">Fri Dec 25, 2015</time> by rui</p>
+  </header>
+  <p><a href="http://www.testmy.net/">testmy.net</a>可以方便地用来进行网速测试。无需flash插件，在PC或者移动端都可以方便地进行。</p>
+<p>这个测试反映的是连接的真实速度。据我的经验，无线网络信号的好坏对数据传输速率有影响。</p>
+<p>下面是我在家里得到的测试结果。</p>
+<table>
+<thead>
+<tr>
+<th></th> <th>下载(Mbps)</th> <th>上载(Mbps)</th>
+</tr>
+</thead>
+<tr>
+<td>直接连接</td> <td>25.4</td> <td>5</td>
+</tr>
+<tr>
+<td>洋葱路由</td> <td>0.365</td> <td>0.603</td>
+</tr>
+<tr>
+<td>某公共代理</td> <td>2</td> <td>0.089</td>
+</tr>
+<tr>
+<td>我的DigitalOcean服务器</td> <td>2.1</td> <td>2.7</td>
+</tr>
+</table>
+<p>注：1 Mbps = 0.119 MiB/s = 122 KiB/s</p>
+  <a href='http://z-rui.github.io/post/2015/12/internet-speed-tool/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/12/laplace/">复习：拉普拉斯变换和z变换</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-12-09T19:03:00Z">Wed Dec 9, 2015</time> by rui</p>
+  </header>
+  <p>致EE120。</p>
+<p>拉普拉斯变换和z变换分别是连续时间和离散时间的傅里叶变换的推广。一方面，运用这些变换可以处理种类更加多的函数；另一方面，它们是分析线性时不变系统和求解微分/差分方程的有力工具。</p>
+  <a href='http://z-rui.github.io/post/2015/12/laplace/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/12/fourier/">复习：傅里叶级数和傅里叶变换</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-12-09T00:00:00Z">Wed Dec 9, 2015</time> by rui</p>
+  </header>
+  <p>致EE120。</p>
+<p>傅里叶级数和傅里叶变换是工程学领域里的一个重要工具。其思想也非常深刻：从频率的角度分析问题；把复杂函数分解成具有不同频率的分量；将函数在时域和频域之间进行转换。</p>
+  <a href='http://z-rui.github.io/post/2015/12/fourier/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/11/compile-gtk/">编译GTK+</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-11-08T00:00:00Z">Sun Nov 8, 2015</time> by rui</p>
+  </header>
+  <p><a href="http://www.gtk.org/">GTK+</a>是一个流行的图形界面工具包，它的结构比较复杂，有很多外部依赖：</p>
+<figure>
+    <img src="/media/gtk-dependency-1.svg"
+         alt="GTK&#43; dependency graph"/> 
+</figure>
+
+<p>而我今天要尝试的是，在Windows上编译最新的GTK+ 3.19.1。所有外部依赖均从源代码开始编译。为何想到从源码编译GTK+，是因为市面上难以找到最新版的GTK+用于Windows的安装包。<a href="http://gtk-win.sourceforge.net/home/">GTK+ for Windows Runtime Environment</a>是一个很好的安装包，但是只更新到GTK+ 2.24，在2012年后就再没有更新。</p>
+<p>由依赖关系图可知，这个编译过程会非常痛苦。而选择Windows平台无疑使得难度更高。我没有安装Visual Studio，所以我没有研究过使用Visual Studio的构建方案。<a href="https://wiki.gnome.org/action/show/Projects/GTK+/Win32/MSVCCompilationOfGTKStack">这篇文章</a>可能有用。</p>
+<p>我选择以Msys2为构建平台，并且为此编写了一个<a href="https://gist.github.com/z-rui/61a6722d3c858197d0d8">自动化构建脚本</a>。由Make来解析其中的依赖关系（其实写成shell脚本也可以，只要按照拓扑排序的顺序构建就可以了。）</p>
+  <a href='http://z-rui.github.io/post/2015/11/compile-gtk/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/11/openmp/">使用OpenMP做并行计算</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-11-04T00:00:00Z">Wed Nov 4, 2015</time> by rui</p>
+  </header>
+  <p><a href="http://openmp.org/wp/">OpenMP</a>是一套语言扩展规范，可以给C/C++和Fortran提供并行计算的功能。今天我用OpenMP写了<a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">N皇后问题</a>的并行计算程序。该程序使用经典的回溯搜索算法。</p>
+<p>程序如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;omp.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">unsigned</span> all;
+<span style="color:#66d9ef">unsigned</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search</span>(<span style="color:#66d9ef">unsigned</span> row, <span style="color:#66d9ef">unsigned</span> ld, <span style="color:#66d9ef">unsigned</span> rd)
+{
+	<span style="color:#66d9ef">unsigned</span> pos, p;
+
+	<span style="color:#66d9ef">if</span> (row <span style="color:#f92672">==</span> all) {
+<span style="color:#75715e">#pragma omp critical
+</span><span style="color:#75715e"></span>		<span style="color:#f92672">++</span>count;
+		<span style="color:#66d9ef">return</span>;
+	}
+	pos <span style="color:#f92672">=</span> all <span style="color:#f92672">&amp;</span> <span style="color:#f92672">~</span>(row<span style="color:#f92672">|</span>ld<span style="color:#f92672">|</span>rd);
+	<span style="color:#66d9ef">while</span> ((p <span style="color:#f92672">=</span> pos <span style="color:#f92672">&amp;</span> <span style="color:#f92672">-</span>pos)) {
+		pos <span style="color:#f92672">^=</span> p;
+		<span style="color:#66d9ef">if</span> (p)
+			search(row <span style="color:#f92672">|</span> p, (ld <span style="color:#f92672">|</span> p) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, (rd <span style="color:#f92672">|</span> p) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+{
+	<span style="color:#66d9ef">int</span> i;
+	<span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>;
+
+	<span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+		sscanf(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>N);
+	all <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> N) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+<span style="color:#75715e">#pragma omp parallel for
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> N<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>; i<span style="color:#f92672">++</span>) {
+		<span style="color:#66d9ef">unsigned</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> i;
+		search(p, p <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, p <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+	count <span style="color:#f92672">&lt;&lt;=</span> <span style="color:#ae81ff">1</span>;
+	<span style="color:#66d9ef">if</span> (N <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) {
+		<span style="color:#66d9ef">unsigned</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> (N<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
+		search(p, p <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, p <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>);
+	}
+	printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, count);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+  <a href='http://z-rui.github.io/post/2015/11/openmp/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/post/page/6/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/post/page/8/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

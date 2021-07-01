@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="减小Lua的二进制体积" />
+<meta property="og:description" content="Lua本身已经是一个十分轻量级的脚本语言。在我的64位Windows上编译出来的lua53.dll仅248K。(参照物：python34.dll为3963K。)
+Lua Technical Note 1介绍了通过删减功能来进一步减小Lua的二进制体积的方法。这篇文章针对的是Lua 3.2，16年前的版本，尽管如此，它仍然给了我很大的启发。
+首先看Lua 5.3中哪些模块占用的二进制体积最多：
+size	%all	%core	file
+23571	7%	12%	lauxlib.o
+20909	6%	11%	lparser.o
+20256	6%	11%	lapi.o
+18403	5%	10%	lvm.o
+14413	4%	8%	llex.o
+13526	4%	7%	lcode.o
+12584	4%	7%	lgc.o
+10214	3%	5%	ldebug.o
+8967	3%	5%	lobject.o
+8776	2%	5%	ldo.o
+7002	2%	4%	ltable.o
+5087	1%	3%	lundump.o
+4887	1%	3%	lstate.o
+3970	1%	2%	ltm.o
+3832	1%	2%	ldump.o
+2818	1%	1%	lstring.o
+2525	1%	1%	lfunc.o
+2170	1%	1%	linit.o
+1810	1%	1%	lopcodes.o
+1498	0%	1%	lmem.o
+1406	0%	1%	lzio.o
+860	0%	0%	lctype.o
+189484	54%	100%	(core)
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/02/minimal-lua/" />
+<meta property="article:published_time" content="2015-02-26T07:01:00+08:00" />
+<meta property="article:modified_time" content="2015-02-26T07:01:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="减小Lua的二进制体积"/>
+<meta name="twitter:description" content="Lua本身已经是一个十分轻量级的脚本语言。在我的64位Windows上编译出来的lua53.dll仅248K。(参照物：python34.dll为3963K。)
+Lua Technical Note 1介绍了通过删减功能来进一步减小Lua的二进制体积的方法。这篇文章针对的是Lua 3.2，16年前的版本，尽管如此，它仍然给了我很大的启发。
+首先看Lua 5.3中哪些模块占用的二进制体积最多：
+size	%all	%core	file
+23571	7%	12%	lauxlib.o
+20909	6%	11%	lparser.o
+20256	6%	11%	lapi.o
+18403	5%	10%	lvm.o
+14413	4%	8%	llex.o
+13526	4%	7%	lcode.o
+12584	4%	7%	lgc.o
+10214	3%	5%	ldebug.o
+8967	3%	5%	lobject.o
+8776	2%	5%	ldo.o
+7002	2%	4%	ltable.o
+5087	1%	3%	lundump.o
+4887	1%	3%	lstate.o
+3970	1%	2%	ltm.o
+3832	1%	2%	ldump.o
+2818	1%	1%	lstring.o
+2525	1%	1%	lfunc.o
+2170	1%	1%	linit.o
+1810	1%	1%	lopcodes.o
+1498	0%	1%	lmem.o
+1406	0%	1%	lzio.o
+860	0%	0%	lctype.o
+189484	54%	100%	(core)
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "减小Lua的二进制体积",
+  "url": "http://z-rui.github.io/post/2015/02/minimal-lua/",
+  "wordCount": "339",
+  "datePublished": "2015-02-26T07:01:00+08:00",
+  "dateModified": "2015-02-26T07:01:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "keywords": "hack, Lua"
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/02/minimal-lua/">
+
+    <title>减小Lua的二进制体积 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/minimal-lua/">减小Lua的二进制体积</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-26T07:01:00+08:00">Thu Feb 26, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/hack/" rel="category tag">hack</a>, <a href="/categories/lua/" rel="category tag">Lua</a>
+
+
+</p>
+  </header>
+  <p><a href="http://www.lua.org">Lua</a>本身已经是一个十分轻量级的脚本语言。在我的64位Windows上编译出来的<code>lua53.dll</code>仅248K。(参照物：<code>python34.dll</code>为3963K。)</p>
+<p><a href="http://www.lua.org/notes/ltn001.html">Lua Technical Note 1</a>介绍了通过删减功能来进一步减小Lua的二进制体积的方法。这篇文章针对的是Lua 3.2，16年前的版本，尽管如此，它仍然给了我很大的启发。</p>
+<p>首先看Lua 5.3中哪些模块占用的二进制体积最多：</p>
+<pre><code>size	%all	%core	file
+23571	7%	12%	lauxlib.o
+20909	6%	11%	lparser.o
+20256	6%	11%	lapi.o
+18403	5%	10%	lvm.o
+14413	4%	8%	llex.o
+13526	4%	7%	lcode.o
+12584	4%	7%	lgc.o
+10214	3%	5%	ldebug.o
+8967	3%	5%	lobject.o
+8776	2%	5%	ldo.o
+7002	2%	4%	ltable.o
+5087	1%	3%	lundump.o
+4887	1%	3%	lstate.o
+3970	1%	2%	ltm.o
+3832	1%	2%	ldump.o
+2818	1%	1%	lstring.o
+2525	1%	1%	lfunc.o
+2170	1%	1%	linit.o
+1810	1%	1%	lopcodes.o
+1498	0%	1%	lmem.o
+1406	0%	1%	lzio.o
+860	0%	0%	lctype.o
+189484	54%	100%	(core)
+</code></pre><pre><code>size	%all	%lib	file
+37418	11%	27%	lstrlib.o
+16909	5%	12%	liolib.o
+13517	4%	10%	lbaselib.o
+12406	4%	9%	ldblib.o
+12291	3%	9%	loadlib.o
+10916	3%	8%	lmathlib.o
+9813	3%	7%	ltablib.o
+7973	2%	6%	loslib.o
+5969	2%	4%	lutf8lib.o
+5241	1%	4%	lcorolib.o
+4922	1%	4%	lbitlib.o
+137375	39%	100%	(lib)
+</code></pre><pre><code>size	%all	file
+13135	4%	luac.o
+12431	4%	lua.o
+25566	7%	(exe)
+</code></pre><p>所有二进制文件的大小之和是344K，其中，核心部分为185K，标准库为134K。</p>
+<p>可见Lua的二进制文件中，标准库占了很大的比例。有些不太重要的标准库，可以直接去掉。</p>
+<ul>
+<li>如果不需要调试功能，可以把debug库(<code>ldblib.o</code>)去掉。</li>
+<li>如果不需要处理UTF-8字符串，也可以把utf8库(<code>lutf8lib.o</code>)去掉。</li>
+<li>既然Lua 5.3已经提供了位运算符，如果不需要兼容性的话，可以把bit32库(<code>lbitlib.o</code>)也去掉。</li>
+</ul>
+<p>这样，总共就减小了23K。要去掉某个特定的标准库非常简单，只要不要编译对应的<code>.c</code>文件，并且在<code>linit.c</code>中注释掉相应的条目就可以了。标准库不存在依赖关系，所以你可以随心所欲地去掉任意一个。</p>
+<p>下面看看Lua的核心部分有没有什么可以削减的东西。Technical Note 1中提到，编译器是最值得去掉的部分，因为它们占了很大的体积。这句话同样适用于Lua 5.3：语法分析器(<code>lparser.o</code>)、词法分析器(<code>llex.o</code>)和代码生成器(<code>lcode.c</code>)的体积总共有48K之多。</p>
+<p>去掉了编译器，Lua解释器怎么解释脚本呢？我们可以先使用独立的编译器程序<code>luac</code>(另外编译)，把Lua脚本编译成字节码，然后让解释器运行。一个副作用是脚本中无法动态编译，有些所谓的元编程(meta programming)技巧无法施展。此外，独立的解释器<code>lua</code>也将不能在交互模式下运行。</p>
+<p>去掉编译器比去掉标准库要麻烦一些，因为Lua的核心部分对编译器有一些依赖。一个是词法分析器的初始化<code>luaX_init</code>，另一个就是语法分析器<code>luaY_parser</code>。如果只是简单地不编译上述的若干文件，则会因为缺少符号而无法通过链接。我们所要做的，就是定义这两个函数，但是不包含任何实质性的功能。调用<code>luaY_parser</code>时，抛出一个错误即可。</p>
+<p>将下方的代码保存为<code>stub.c</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;llex.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lparser.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lauxlib.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">luaX_init</span>(lua_State <span style="color:#f92672">*</span>L) { <span style="color:#75715e">/* nothing */</span> }
+
+LClosure <span style="color:#f92672">*</span><span style="color:#a6e22e">luaY_parser</span>(lua_State <span style="color:#f92672">*</span>L, ZIO <span style="color:#f92672">*</span>z, Mbuffer <span style="color:#f92672">*</span>buff,
+		Dyndata <span style="color:#f92672">*</span>dyd, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">int</span> firstchar) {
+  luaL_error(L, <span style="color:#e6db74">&#34;parser not loaded&#34;</span>);
+  <span style="color:#66d9ef">return</span> NULL;
+}
+</code></pre></div><p>然后编译(MinGW 64位)：</p>
+<pre><code>$ gcc -shared -Os -o lua53.dll -DBUILD_AS_DLL \
+lapi.c lctype.c ldebug.c ldo.c ldump.c lfunc.c lgc.c \
+lmem.c lobject.c lopcodes.c lstate.c lstring.c ltable.c \
+ltm.c lundump.c lvm.c lzio.c stub.c \
+lauxlib.c lbaselib.c linit.c
+
+$ strip --strip-unneeded lua53.dll
+</code></pre><p>我已在<code>linit.c</code>中去掉了几乎所有的标准库。这样编译出来的<code>lua53.dll</code>只有131KB，比正常安装的版本小了将近一半。去掉了这么多东西，Lua的基本功能还是存在的，像下面这样的程序：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">search</span>(n)
+  <span style="color:#66d9ef">local</span> allbits <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> n) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+  <span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rec</span>(row, ld, rd)
+    <span style="color:#66d9ef">if</span> row <span style="color:#f92672">==</span> allbits <span style="color:#66d9ef">then</span>
+      count <span style="color:#f92672">=</span> count <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+      <span style="color:#66d9ef">return</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">local</span> avail <span style="color:#f92672">=</span> allbits <span style="color:#f92672">&amp;</span> <span style="color:#f92672">~</span>(row <span style="color:#f92672">|</span> ld <span style="color:#f92672">|</span> rd)
+    <span style="color:#66d9ef">while</span> avail <span style="color:#f92672">~=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">do</span>
+      <span style="color:#66d9ef">local</span> pos <span style="color:#f92672">=</span> avail <span style="color:#f92672">&amp;</span> <span style="color:#f92672">-</span>avail
+      avail <span style="color:#f92672">=</span> avail <span style="color:#f92672">~</span> pos
+      rec(row <span style="color:#f92672">|</span> pos, (ld <span style="color:#f92672">|</span> pos) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>, (rd <span style="color:#f92672">|</span> pos) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+  rec(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+  <span style="color:#66d9ef">return</span> count
+<span style="color:#66d9ef">end</span>
+
+print(search(tonumber(arg[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">or</span> <span style="color:#ae81ff">8</span>))
+</code></pre></div><p>仍然可以很顺利地求解八皇后问题（输出：92），因为（除了<code>print</code>函数以外）它没有用到任何标准库函数，并且也不需要进行动态编译。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fminimal-lua%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fminimal-lua%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fminimal-lua%2f&amp;text=%e5%87%8f%e5%b0%8fLua%e7%9a%84%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%bd%93%e7%a7%af" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

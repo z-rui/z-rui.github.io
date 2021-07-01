@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="复习：傅里叶级数和傅里叶变换" />
+<meta property="og:description" content="致EE120。
+傅里叶级数和傅里叶变换是工程学领域里的一个重要工具。其思想也非常深刻：从频率的角度分析问题；把复杂函数分解成具有不同频率的分量；将函数在时域和频域之间进行转换。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/12/fourier/" />
+<meta property="article:published_time" content="2015-12-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-12-09T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="复习：傅里叶级数和傅里叶变换"/>
+<meta name="twitter:description" content="致EE120。
+傅里叶级数和傅里叶变换是工程学领域里的一个重要工具。其思想也非常深刻：从频率的角度分析问题；把复杂函数分解成具有不同频率的分量；将函数在时域和频域之间进行转换。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "复习：傅里叶级数和傅里叶变换",
+  "url": "http://z-rui.github.io/post/2015/12/fourier/",
+  "wordCount": "532",
+  "datePublished": "2015-12-09T00:00:00+00:00",
+  "dateModified": "2015-12-09T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/12/fourier/">
+
+    <title>复习：傅里叶级数和傅里叶变换 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/12/fourier/">复习：傅里叶级数和傅里叶变换</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-12-09T00:00:00Z">Wed Dec 9, 2015</time> by rui</p>
+  </header>
+  <p>致EE120。</p>
+<p>傅里叶级数和傅里叶变换是工程学领域里的一个重要工具。其思想也非常深刻：从频率的角度分析问题；把复杂函数分解成具有不同频率的分量；将函数在时域和频域之间进行转换。</p>
+<h1 id="傅里叶级数">傅里叶级数</h1>
+<h2 id="连续时间傅里叶级数">连续时间傅里叶级数</h2>
+<p>傅里叶级数的核心思想是：**任何周期函数都可以展开为三角级数。**假设有一函数\(x(t)\)，其最小正周期是\(T\)，则它一定可以展开成\[x(t) = \sum_k A_k{\rm e}^{jk\omega_0t}, \tag{$*$}\]</p>
+<p>其中，\(\omega_0={2\pi\over T}\)称为基频，\(A_k\)称为傅里叶系数。根据复指数函数的周期性，可以知道上式右边的周期是\(T\)。为方便计算，使用复指数而不是余弦或正弦函数。复指数函数与三角函数的关系由欧拉公式给出：\[{\rm e}^{j\theta} = \cos\theta + j\sin\theta.\]</p>
+<p>一个简单的例子是取\(x(t)=\cos{\omega_0t}\)，由欧拉公式立即得到
+\[\cos{\omega_0t}={1\over2}{\rm e}^{-j\omega_0t} + {1\over2}{\rm e}^{j\omega_0t}.\]
+在这个展开中，\(A_k = \cases{{1\over 2} &amp; if $k = \pm 1$, \cr 0 &amp; else.}\)由此也可见，引入负的频率分量是有必要的。</p>
+<p>为了工程应用的方便，用\(t\)表示自变量，其通常意义为连续的时间，并且其取值是整个实数集。而\(x\)和\(y\)通常是关于\(t\)的函数，常称为<strong>信号</strong>。</p>
+<p>既然认定可以做\((*)\)那样的展开，那么就要问：如何确定式中的系数\(A_k\)？有人想出了一种做法：计算
+\[\eqalign{
+\int_T x(t){\rm e}^{-jk\omega_0t} ;{\rm d}t &amp;= \int_T \sum_\kappa A_\kappa{\rm e}^{j(\kappa-k)\omega_0t} ;{\rm d}t \cr
+&amp;= \sum_\kappa A_\kappa\int_T {\rm e}^{j(\kappa-k)\omega_0t} ;{\rm d}t \cr
+&amp;= TA_k
+}\]
+积分号的下标\(T\)表示积分在任意一个长度为\(T\)的区间内进行。最后一个等号成立源于复指数函数在一个周期上的积分\[\int_T {\rm e}^{j(\kappa-k)\omega_0t} ;{\rm d}t = \cases{T &amp; if $\kappa = k$, \cr 0 &amp; else.}\]
+因此
+\[A_k={1\over T}\int_T x(t){\rm e}^{-jk\omega_0t} ;{\rm d}t.\]
+上式称为分析方程(Analysis Equation)，而与之相对的\((*)\)式则称为综合方程(Synthesis Equation)。</p>
+<h2 id="离散时间傅里叶级数">离散时间傅里叶级数</h2>
+<p>有时候将时间视为离散的可以带来方便。数字设备如计算机通常只能处理离散时间的信号。通常用\(n\)表示离散时间，其取值范围是整数集。用\(x[n]\)这样的记号来表示一个离散时间信号。</p>
+<p>设有一离散时间信号\(x[n]\)，其最小正周期为\(N\)，那么沿用刚才的思想，它应当可以展开成\[x[n] = \sum_{k\in S_N} A_k {\rm e}^{jk\omega_0n}.\]</p>
+<p>其中，\(S_N\)是任意一个包含\(N\)个连续整数的集合，常取\(S_N=\{0,1,\dots,N-1\}\)。和连续时间的情况不同，这里\(k\)的取值是有限多个，主要是因为复指数函数的周期性。</p>
+<p>上式为综合方程。使用类似的技巧（这次是求和而不是积分），可以得到傅里叶系数：
+\[\eqalign{
+\sum_{k\in S_N} x[n] {\rm e}^{-jk\omega_0n} &amp;= \sum_{k\in S_N}\sum_{\kappa\in S_N} A_\kappa {\rm e}^{j(\kappa-k)\omega_0n} \cr
+&amp;= \sum_{\kappa\in S_N}A_\kappa \sum_{k\in S_N} {\rm e}^{j(\kappa-k)\omega_0n} \cr
+&amp;= NA_k
+}\]
+同样，求和符号里只有一项不为零，因此最后一个等号成立。因此得到分析方程
+\[A_k = {1\over N} \sum_{k \in S_N} x[n] {\rm e}^{-jk\omega_0 n}.\]</p>
+<h1 id="傅里叶变换">傅里叶变换</h1>
+<h2 id="连续时间傅里叶变换">连续时间傅里叶变换</h2>
+<p>傅里叶变换将周期函数展开成了三角级数。那么自然会想，如何处理非周期的函数。非周期的函数，可以视作周期是无穷大的函数。即研究傅里叶级数在\(T\to\infty\)的表现。可想而知，当周期趋于无穷时，基频将趋于0，无限细分的求和式将会转化为积分的形式。具体而言，
+\[\eqalign{
+x(t) &amp;= \sum_k A_k {\rm e}^{jk\omega_0t} \cr
+&amp;= \sum_k {1\over T}\left[\int_{-T/2}^{T/2} x(t) {\rm e}^{-jk\omega_0t} ;{\rm d}t\right] {\rm e}^{jk\omega_0t} \cr
+&amp;= {1\over 2\pi}\sum_k \left[\int_{-\pi/\omega_0}^{\pi/\omega_0} x(t) {\rm e}^{-jk\omega_0t} ;{\rm d}t\right] {\rm e}^{jk\omega_0t} \omega_0\cr
+}\]</p>
+<p>如果\(T\to\infty\)，即\(\omega_0\to 0^+\)，则
+\[x(t) = {1\over 2\pi}\int_{-\infty}^\infty \left[\int_{-\infty}^\infty x(t) {\rm e}^{-j\omega t} ;{\rm d}t\right] {\rm e}^{j\omega t};{\rm d}\omega.\]</p>
+<p>定义\(x(t)\)的傅里叶变换为
+\[X(j\omega) = {\cal F}\{x(t)\} = \int_{-\infty}^\infty x(t) {\rm e}^{-j\omega t} ;{\rm d}t.\]
+则
+\[x(t) = {\cal F}^{-1}\{X(j\omega)\} = {1\over 2\pi}\int_{-\infty}^\infty X(j\omega) {\rm e}^{j\omega t} ;{\rm d}\omega.\]</p>
+<p>上面两式分别称为分析方程和综合方程。\(X(j\omega)\)是\(\omega\)的函数，括号里写\(j\omega\)是为了将它和拉普拉斯变换联系起来。</p>
+<p>由综合方程可见，非周期函数可以表示成复指数函数带权的积分，不同频率的权重则由分析方程所确定的傅里叶变换\(X(j\omega)\)决定。</p>
+<p>综合方程也定义了傅里叶逆变换。</p>
+<h2 id="dirichlet条件和dirac函数">Dirichlet条件和Dirac函数</h2>
+<p>傅里叶曾经相信，任何函数的傅里叶级数都是存在的。因为相信这个断言，才能给出\((*)\)式，并用它导出傅里叶系数的分析方程。然而，数学总是包含各种各样的反例，\(x(t)\)的傅里叶级数若要存在，仍须满足一定的条件。这些条件由Dirichlet给出：</p>
+<ol>
+<li>有界；</li>
+<li>在任意有限区间内只有有限个间断点，间断点左右的极限不可以是无穷；</li>
+<li>在任意有限区间内只有有限个极值点。</li>
+<li>在一个周期内绝对可积: \(\int_T |x(t)| ;{\rm d}t &lt; \infty\)。</li>
+</ol>
+<p>对于非周期的函数，第4条可以理解为“在\((-\infty, \infty)\)上绝对可积”，而满足Dirichlet条件则表明该函数存在傅里叶变换。</p>
+<p>尽管如此，有的时候为了工程应用的方便，在严格意义上的傅里叶变换不存在的时候，使用含有Dirac函数的表达式来表示傅里叶变换，以使其满足综合方程。</p>
+<p>Dirac函数\(\delta(t)\)大致可以定义为阶跃函数\(u(t)=\cases{0 &amp; if $t &lt; 0$ \cr {1\over2} &amp; if $t = 0$ \cr 1 &amp; if $t &gt; 0$}\)的导数。因此在\(t\neq0\)时处处为0，而在\(t=0\)的时刻为\(\infty\)。因此，它常常用于描述一个时间无限短但作用量有限的冲击，例如质点的密度函数。它的重要性质如下
+\[\int_{-\infty}^{\infty} x(t)\delta(t) ;{\rm d}t = x(0)\]
+对于任意函数\(x\)总成立。</p>
+<p>举例而言，把\(X(j\omega) = 2\pi\delta(\omega-\omega_0)\)代入傅里叶变换的综合方程，可以得到
+\[x(t) = {1\over2\pi}\int_{-\infty}^{\infty} 2\pi\delta(\omega-\omega_0) {\rm e}^{j\omega t};{\rm d}\omega = {\rm e}^{j\omega_0 t}\]</p>
+<p>由此可以得到\[{\cal F}\{{\rm e}^{j\omega_0 t}\} = 2\pi\delta(\omega-\omega_0).\]
+由欧拉公式，得\[{\cal F}\{\cos \omega_0 t\} = \pi\left[\delta(\omega-\omega_0) + \delta(\omega+\omega_0)\right].\]
+取\(\omega_0 = 0\)，得\[{\cal F}\{1\} = 2\pi\delta(\omega).\]
+以上便导出了一些不满足Dirichlet条件(不是绝对可积的)的函数所对应的傅里叶变换。</p>
+<h2 id="查表法">查表法</h2>
+<p>导数是通过极限定义的，但是，对每个函数都套用极限定义是非常麻烦的，因此我们总结导数的运算法则，并归纳一些基本函数的导数，在这样的基础上来计算更加复杂的函数的导数。</p>
+<p>类似地，尽管一个函数的傅里叶变换总是可以由上节所述的分析方程求出，对不同的函数都计算一遍反常积分也是非常费事的。因此，更常用的办法是查阅事先计算出来的傅里叶变换表，并运用相关性质来得到所需要的傅里叶变换。</p>
+<p>傅里叶变换表以及相关性质可以在各类数学工具书中找到。</p>
+<h2 id="离散时间傅里叶变换">离散时间傅里叶变换</h2>
+<p>对于离散时间的信号，也可以仿照连续时间傅里叶变换的定义
+\[{\cal F}\{x(t)\} = \int_{-\infty}^\infty x(t) {\rm e}^{-j\omega t} ;{\rm d}t\]
+把时间换成离散的，积分号换成求和符号，定义离散时间傅里叶变换：
+\[X({\rm e}^{j\omega}) = {\cal F}\{x[n]\} = \sum_n x[n] {\rm e}^{-j\omega n}\]
+上式称为分析方程。离散信号经傅里叶变换后得到的\(X({\rm e}^{j\omega})\)是关于\(\omega\)的函数。在括号里写\({\rm e}^{j\omega}\)的原因，一方面是为了和连续时间傅里叶变换在记号上加以区分，一方面暗示离散时间傅里叶变换是以\(2\pi\)为周期的函数，另一方面它还便于把离散时间傅里叶变换和z变换相联系。</p>
+<p>我们可以直接写出综合方程并验证其正确性：
+\[\eqalign{
+x[n] &amp;= {1\over 2\pi}\int_{2\pi} X({\rm e}^{j\omega}) {\rm e}^{j\omega n} ;{\rm d}\omega \cr
+&amp;= {1\over 2\pi}\int_{2\pi} \left[\sum_m x[m] {\rm e}^{-j\omega m}\right] {\rm e}^{j\omega n} ;{\rm d}\omega \cr
+&amp;= {1\over 2\pi}\sum_m x[m] \int_{2\pi} {\rm e}^{j\omega (n-m)} ;{\rm d}\omega \cr
+}\]
+式中的定积分仅在\(m=n\)时不为零，所以可以验证以上等式成立。</p>
+<p>离散时间信号往往要比连续时间信号容易处理（例如，无需考虑间断点），判定傅里叶变换是否存在的Dirichlet条件的前3条均不适用，而只需最后一条，将绝对可积改成“绝对可求和”：\[\sum_n |x[n]| &lt; \infty. \]</p>
+<p>离散时间里也不会遇到Dirac函数这样具有古怪性质的函数。Dirac函数在离散时间中的版本是单位冲击函数
+\[\delta[n] = \cases{1 &amp; if $n = 0,$ \cr 0 &amp; else.}\]
+是一个具有良好定义的普通函数。</p>
+<h2 id="离散傅里叶变换和快速傅里叶变换">离散傅里叶变换和快速傅里叶变换</h2>
+<p>离散傅里叶变换基于上节所述的离散时间傅里叶变换。如上节所述，<strong>离散时间</strong>信号的傅里叶变换是一个以\(2\pi\)为周期的<strong>连续</strong>函数。虽然信号是离散时间的，但是其傅里叶变换仍然是连续的，这样也不便于利用计算机进行处理。</p>
+<p>离散傅里叶变换接受长度为\(N\)的离散时间信号\(\{x[n]\}_{n=0}^{N-1}\)，并计算信号\[\tilde x[n] = \cases{x[n] &amp; if $0 \leq n &lt; N$, \cr 0 &amp; else}\]的离散时间傅里叶变换\(\tilde X({\rm e}^{j\omega})\)在\([0, 2\pi)\)内的\(N\)个等间距采样，即
+\[X[k] = \left.\tilde X({\rm e}^{j\omega})\right|_{\omega = {2k\pi\over N}}\qquad k=0,1,\dots,N-1. \]</p>
+<p>根据离散时间傅里叶变换的定义，可以得到离散傅里叶变换的计算公式
+\[X[k] = \sum_{n=0}^{N-1} x[n]{\rm e}^{-j{2k\pi\over N}n}. \]</p>
+<p>另一方面，如果对\(x[n]\)做周期延拓，并和傅里叶级数的分析方程相对比，不难发现\[X[k] = NA_k.\]</p>
+<p>所以可以用离散时间傅里叶级数的综合方程来导出离散傅里叶逆变换的计算公式
+\[x[n] = {1\over N}\sum_{k=0}^{N-1} X[k]{\rm e}^{j{2k\pi\over N}n}.\]</p>
+<p>快速傅里叶变换(FFT)算法是利用分治思想来快速计算离散傅里叶变换的一种算法。它可以在\(O(N\log N)\)的时间内计算出\(X[0], X[1], \dots, X[N-1]\)的值。在工程实践中所做的大部分傅里叶变换都是快速傅里叶变换。</p>
+<h1 id="应用举例多项式乘法">应用举例：多项式乘法</h1>
+<p>傅里叶变换有一个重要性质是卷积定理。以离散情况为例，函数\(x\)和\(y\)的卷积定义为
+\[(x*y)[n] = \sum_k x[k]y[n-k].\]
+卷积定理指出，时域内的卷积经过傅里叶变换，转化为频域内的数量乘法，即
+\[{\cal F}\{(x*y)[n]\} = X({\rm e}^{j\omega})Y({\rm e}^{j\omega}).\]</p>
+<p>不难验证卷积和多项式的乘法是等同的：
+\[\eqalign{
+(1+x)(1+2x+x^2) &amp;= 1+3x+3x^2+x^3, \cr
+\{1, 1\} * \{1, 2, 1\} &amp;= \{1, 3, 3, 1\}. \cr
+}\]</p>
+<p>下面我们利用卷积定理来计算这两个多项式的乘积。由于我们事先知道了结果的长度为\(N=4\)，为了避免混叠(aliasing)现象的产生，离散傅里叶变换至少需要4个采样值。因此先将输入数据的长度扩展为4：
+\[\eqalign{
+x &amp;= \{1, 1, 0, 0\}, \cr
+y &amp;= \{1, 2, 1, 0\}. \cr
+}\]</p>
+<p>运用快速傅里叶算法，得到频域数值
+\[\eqalign{
+X &amp;= \{2, 1-j, 0, 1+j\}, \cr
+Y &amp;= \{4, -2j, 0, 2j\}. \cr
+}\]</p>
+<p>在频域内做数量乘法：
+\[ XY = \{8, -2-2j, 0, -2+2j\}. \]</p>
+<p>运用快速傅里叶逆变换，得到
+\[ x * y = \{1, 3, 3, 1\}. \]</p>
+<p>当两个多项式的次数都很高时，尽管多了时域和频域之间的两次转换，总的计算时间仍然远远小于朴素的（使用卷积在时域中的定义）算法。自然数也可以看做一个多项式，只不过其变量固定地取进位制中约定的数值，例如\(x=10\)（十进制）或\(x=2\)（二进制）。因此，这里所给出的多项式乘法算法还可以用于大整数的乘法计算中。在很多现有的大整数运算库（例如<a href="http://www.gmplib.org/">GNU MP</a>）中，当两个数特别巨大时，它们的乘法就是利用快速傅里叶变换来计算的。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f12%2ffourier%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f12%2ffourier%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f12%2ffourier%2f&amp;text=%e5%a4%8d%e4%b9%a0%ef%bc%9a%e5%82%85%e9%87%8c%e5%8f%b6%e7%ba%a7%e6%95%b0%e5%92%8c%e5%82%85%e9%87%8c%e5%8f%b6%e5%8f%98%e6%8d%a2" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

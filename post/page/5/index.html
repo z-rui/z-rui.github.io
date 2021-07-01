@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/post/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/post/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/post/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/09/gnupg/">GNU Privacy Guard</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-09-11T01:21:00+08:00">Sun Sep 11, 2016</time> by rui</p>
+  </header>
+  <p>GNU Privacy Guard简称GnuPG或GPG，是一款密码学工具。许多Linux系统上自带的<code>gpg</code>命令就是它。其最重要的功能是对数据进行加密、解密和签名。此外还带有密钥生成和管理功能。</p>
+<p>GPG区别于一般加密工具的地方在于其使用非对称加密机制。加密时，使用收件人的公开密钥，该密钥公开发行可供所有人使用。解密时，使用收件人的私有密钥，该密钥由收件人严密保管。这样，收件人无需和发件人商定密码，就可以安全地通信。</p>
+<p>签名是确保信息完整性的办法。使用发件人的私有密钥进行签名，其他人无法伪造，但所有人均可使用发件人的公开密钥进行验证。</p>
+<p>我用GPG生成了一个密钥对，公共密钥已经上传到密钥服务器上，大家可以通过</p>
+<pre><code>gpg --recv-keys 0DB87340
+</code></pre>
+<p>下载这个密钥。其指纹为</p>
+<pre><code>2252 7AF4 8AFB 5635 72EC  AC4D 895C 7F46 0DB8 7340
+</code></pre>
+<p>理论上，如果有人要冒充我的身份，只需创造一个虚假的密钥上传到服务器，然后入侵存放这个页面的服务器，纂改上面的密钥编号和指纹。</p>
+<p>当然要这么做也有一定难度，总之小心为好，导入密钥的时候务必需要通过可靠的方式（例如，当面）和密钥的持有人进行确认，然后对它签名，以示信任。</p>
+  <a href='http://z-rui.github.io/post/2016/09/gnupg/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/08/equal-temperament/">十二平均律</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-08-24T23:18:00+08:00">Wed Aug 24, 2016</time> by rui</p>
+  </header>
+  <p>相差八度的两个音，在频率上相差了一倍。例如，A<sub>4</sub>的频率为440Hz，而A<sub>5</sub>的频率为880Hz，A<sub>3</sub>的频率则为220Hz。人耳听起来“距离相等”的若干个音，频率并非成等差数列，而是成等比数列。</p>
+<p>“八度”的称谓源于八个频率递增的音，例如</p>
+<blockquote>
+<p>C<sub>4</sub> D<sub>4</sub> E<sub>4</sub> F<sub>4</sub> G<sub>4</sub> A<sub>4</sub> B<sub>4</sub> C<sub>5</sub></p>
+</blockquote>
+<p>它们构成C大调音阶，唱作do re mi fa so la si do(高)。有意思的是，音阶中的各个音也不是“等距离”分布的。音乐老师说过，mi和fa、si和do之间只相差半音，而其他相邻的音之间相差全音。</p>
+<p>相差全音的两个音之间，还存在一个音，和这两个音的距离都是“半音”。例如，C<sub>4</sub>和D<sub>4</sub>之间的音，可以记作C♯<sub>4</sub>或者D♭<sub>4</sub>。如果把这些音也插进音阶里，就变成了13个音：</p>
+<blockquote>
+<p>C<sub>4</sub> C♯<sub>4</sub> D<sub>4</sub> D♯<sub>4</sub> E<sub>4</sub> F<sub>4</sub> F♯<sub>4</sub> G<sub>4</sub> G♯<sub>4</sub> A<sub>4</sub> A♯<sub>4</sub> B<sub>4</sub> C<sub>5</sub></p>
+</blockquote>
+<p>这样一来，相邻的音的“距离”都相等。也就是说，这些音的频率成等比数列。相隔12个间隔的两个音的频率为2倍关系，即\(q^{12}=2\)，\(q\)为公比，或者说是相邻两个音的频率之比。由此得\(q = \sqrt[12]{2}\approx 1.059463\)。这个规律最早由明朝的朱载堉提出，现在称为<strong>十二平均律</strong>。</p>
+<p>知道了十二平均律，再根据一个基准音的频率（如A<sub>4</sub>为440Hz），就可以推算出所有音的频率。</p>
+  <a href='http://z-rui.github.io/post/2016/08/equal-temperament/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/08/virtual-base/">多重继承和虚基类</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-08-11T17:29:00Z">Thu Aug 11, 2016</time> by rui</p>
+  </header>
+  <p>多重继承是面向对象编程(Object Oriented Programming, OOP)中的一个有争议的话题。并非所有OOP语言都支持多重继承(Java和C#均不支持)。C++作为万能语言是支持多重继承的典型例子，即便如此，一些C++的开发框架，例如MFC，也从不使用多重继承特性。Go虽然很少用到复杂的继承，但是它本身是支持多重继承的。</p>
+<p>我想从对象的存储方式角度来分析多重继承和虚基类的问题。C++在这方面有些故弄玄虚，一个<code>virtual</code>关键字弄得让人有些摸不着头脑。Go的设计在提供多重继承功能的同时，也非常明确地指出了对象在内存中的存储形式，理解起来也容易许多。</p>
+  <a href='http://z-rui.github.io/post/2016/08/virtual-base/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/08/magic-square/">幻方生成器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-08-11T01:47:00Z">Thu Aug 11, 2016</time> by rui</p>
+  </header>
+  <p>幻方(magic square)是休闲数学(recreational mathematics)所感兴趣的话题。相传在古代曾有神龟浮出水面，背上有图案，称为《洛书》：</p>
+<blockquote>
+<p>载九履一，左三右七，二四为肩，六八为足，五居中腹。</p>
+</blockquote>
+<p>这是一个3阶幻方，如下所示。它的特点是每行、每列、每条对角线上的数字之和都相等。</p>
+<pre><code>4 9 2
+3 5 7
+8 1 6
+</code></pre>
+  <a href='http://z-rui.github.io/post/2016/08/magic-square/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/07/golang-yacc/">用Go编写BASIC解释器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-07-25T14:59:00+08:00">Mon Jul 25, 2016</time> by rui</p>
+  </header>
+  <p>我以前用C写过一个<a href="https://github.com/z-rui/interp">简单的解释器</a>，它接受类似BASIC的代码，并解释执行。一个解释器主要包含以下部分：</p>
+<ol>
+<li>词法分析器(lexer)，用来把代码分割成一连串记号(token)，如标识符、数字、运算符等，并且忽略空白和注释。</li>
+<li>语法分析器(parser)，用来分析代码的层次结构，并构造抽象语法树(AST)。</li>
+<li>后端(backend)，用来解释执行所生成的AST。</li>
+</ol>
+<p>如果是编译器，那么后端的作用是生成机器代码，以便直接被CPU执行。</p>
+<p>词法分析器可以手写也可以用lex自动生成。因为比较简单，所以往往采用手写的方式。语法分析器可以手写，通常采用递归下降(recursive-descent)算法；也可以用yacc自动生成，后者使用的是一种称为LALR(1)的技术。</p>
+<p>最近发现Go的官方工具链自带了一个yacc工具(<code>go tool yacc</code>)，所以就试着用它写了一个<a href="https://github.com/z-rui/interp2">类似的解释器</a>。功能被进一步削减，只能算是一个demo。</p>
+<p>能解释运行像这样的代码：</p>
+<pre><code>SUM = 0
+I = 1
+WHILE NOT I &gt; 100 DO
+	SUM = SUM + I
+	I = I + 1
+END WHILE
+PRINT SUM
+</code></pre>
+  <a href='http://z-rui.github.io/post/2016/07/golang-yacc/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/07/golang-shared-library/">Go与动态链接库</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-07-23T20:45:00+08:00">Sat Jul 23, 2016</time> by rui</p>
+  </header>
+  <p>Go从1.5版本开始支持动态链接库。目前官方工具链仅在linux-amd64平台支持动态链接；gccgo则支持更多的平台。</p>
+<p>在此之前，Go的所有程序都采用静态链接。一个很简单的&quot;hello, world&quot;程序，因为引入了<code>fmt</code>库(这个库进一步依赖其他代码)，所以最终得到的可执行文件也比较大。如果将Go的标准库编译为动态链接库，就可以减小Go生成的可执行文件的大小。</p>
+<p>我在Gentoo上安装了Go 1.6.3，要将标准库编译为动态链接库，需要以root权限执行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">go build -buildmode<span style="color:#f92672">=</span>shared -linkshared std
+</code></pre></div><p>这样就会产生<code>/usr/lib/go/pkg/linux_amd64/dynlink/libstd.so</code>文件。这个文件在我的机器上有32MB大，包含了Go标准库的所有内容。</p>
+  <a href='http://z-rui.github.io/post/2016/07/golang-shared-library/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/07/golang-generator/">Go语言中的生成器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-07-22T23:16:00+08:00">Fri Jul 22, 2016</time> by rui</p>
+  </header>
+  <p>生成器(generator)是Python的一个语法特性，例如生成平方数序列的生成器可以写成</p>
+<pre><code>def squares(n):
+	i = 1
+	while i &lt;= n:
+		yield i * i
+		i += 1
+</code></pre><p>若要求前10个平方数之和，只需</p>
+<pre><code>&gt;&gt;&gt; sum(squares(10))
+385
+</code></pre><p>在Go语言中，使用goroutine配合channel，可以实现相同的功能：</p>
+<pre><code>func squares(n int) &lt;-chan int {
+	ch := make(chan int)
+	go func() {
+		for i := 1; i &lt;= n; i++ {
+			ch &lt;- i * i
+		}
+		close(ch)
+	}()
+	return ch
+}
+</code></pre><p>然后可以用for语句遍历：</p>
+<pre><code>sum := 0
+for term := range squares(10) {
+	sum += term
+}
+</code></pre>
+  <a href='http://z-rui.github.io/post/2016/07/golang-generator/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/07/nanatsu-no-ko/">七个孩子</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-07-06T16:31:00+08:00">Wed Jul 6, 2016</time> by rui</p>
+  </header>
+  <p>乌鸦啊 为什么啼叫<br>
+因为乌鸦在那高山上<br>
+有着七位最可爱的<br>
+孩子等着她回家</p>
+<p>好可爱呀好可爱<br>
+乌鸦如此啼叫着<br>
+好可爱呀好可爱<br>
+如此啼叫着的呀</p>
+<p>到那山中的古巢中<br>
+走走看看吧<br>
+都是些有着圆圆眼睛的<br>
+好孩子们唷</p>
+  <a href='http://z-rui.github.io/post/2016/07/nanatsu-no-ko/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/">C语言的美与丑</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-06-12T14:32:00+08:00">Sun Jun 12, 2016</time> by rui</p>
+  </header>
+  <p>C语言的设计非常如同公理体系般简洁，而所能够演绎出来的内容又足够完备。这是对C的美的一种简单概括。</p>
+<p>我要说的“公理体系”中的最核心的组件，便是指针。有智者说到，计算机科学中的一切问题，都可以通过增加一层间接(indirection)来解决<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 。指针可以用来解决什么问题呢？</p>
+  <a href='http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/06/math/">数学填空题</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-06-09T22:00:00+08:00">Thu Jun 9, 2016</time> by rui</p>
+  </header>
+  <script>
+mathjax
+</script>
+<p>基本上只有到了一年一度的高考日子才有兴趣研究那么几道数学题。我已脱离高考三年，能力也是退化了许多。户枢不蠹，流水不腐。重温几道数学题，仿佛可以将已锈蚀的脑子润滑起来。</p>
+<p>问题：已知锐角\(\triangle ABC\)满足\(\sin A = 2\sin B \sin C\)。则\(\tan A \tan B \tan C\)的最小值为______。</p>
+<p>解答：因为
+\[ \tan A \tan B \tan C = \frac{\sin A \sin B \sin C}{\cos A \cos B \cos C}, \]
+代入
+\[\left\lbrace\begin{aligned}
+\sin A &amp;= 2\sin B\sin C, \\
+\cos A &amp;= -\cos(B + C) = \sin B \sin C - \cos B \cos C
+\end{aligned}\right.\]
+得</p>
+  <a href='http://z-rui.github.io/post/2016/06/math/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/post/page/4/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/post/page/6/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="睿" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="睿"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link active" href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2019/11/excerpt/">文摘</a></h2>
+    <p class="blog-post-meta"><time datetime="2019-11-11T22:29:08-08:00">Mon Nov 11, 2019</time> by rui</p>
+  </header>
+  ……被看作什么，很大程度上是基于社会认同和社会价值观的。
+  ……说不好听的，都是一些人为了增加自我认同感和群体认同感，为整个社会风气强行定下的规则和秩序，是充满着固执与偏见的。并不是所有人都要把某一个人认为重要的事情，当作对自己也同样重要的事情来看待的，我们所谓的自由权利，也如此……
+  ……习惯“适可而止”的人怎么着都会适可而止，不会有这些烦恼，而不想适可而止，无非就只是因为不愿意被条条框框所束缚。但反而是这样一群不死板的人，会展现出更多的创造力，越是看那些需要想象力、创造力的行业，越会发现这样“不适可而止”的人有更多更大的成就。
+ 原文作者：凌子卿
+  <a href='http://z-rui.github.io/post/2019/11/excerpt/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2018/12/manual-duplex/">手动双面打印</a></h2>
+    <p class="blog-post-meta"><time datetime="2018-12-19T18:02:53-05:00">Wed Dec 19, 2018</time> by rui</p>
+  </header>
+  <p>在不具备自动双面打印功能的硬件/软件上， 可以通过先打印偶数页、
+然后将纸张放回， 再打印奇数页的方法实现手动双面打印。
+在一些打印机上， 需要将放回的纸张调转方向；
+这可以通过打印偶数页时调转页面方向来避免。</p>
+<p>在使用 CUPS 的机器上， 可以使用以下脚本实现此功能：</p>
+<pre><code>#!/bin/bash
+
+# Usage: ./duplex.sh [options] &lt;file&gt;
+
+lp -o page-set=even -o orientation-requested=6 -o outputorder=reverse &quot;$@&quot;
+printf &quot;Put the paper in tray and hit Enter&quot;; read
+lp -o page-set=odd &quot;$@&quot;
+</code></pre>
+  <a href='http://z-rui.github.io/post/2018/12/manual-duplex/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2018/10/dc/">古代科技： desk calculator</a></h2>
+    <p class="blog-post-meta"><time datetime="2018-10-27T14:43:52-04:00">Sat Oct 27, 2018</time> by rui</p>
+  </header>
+  <p><code>dc</code> 是 UNIX 系统上的计算器 (desk calculator) 程序。
+它采用逆波兰表达式 (RPN) 语法， 和平常使用的算术表达式稍有不同。
+如： <code>1 2 + 3 *</code> 表示 (1+2)*3。
+RPN 的好处是不用输入括号， 且熟练掌握后效率很高；
+缺点是难以上手。</p>
+<p><code>dc</code> 的计算能力不仅限于此。
+实际上， 它是一个图灵完备的语言， 并且据说是第一个被移植到 UNIX 系统上的语言。
+由于可以定义并调用宏， 它具备了分支和循环的能力， 因此可以写出各种各样的程序。</p>
+  <a href='http://z-rui.github.io/post/2018/10/dc/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2018/09/wifi_suspend/">WiFi 和睡眠</a></h2>
+    <p class="blog-post-meta"><time datetime="2018-10-01T11:57:33-04:00">Mon Oct 1, 2018</time> by rui</p>
+  </header>
+  <p>本文要讨论的不是人的睡眠而是计算机的睡眠 (suspend) 操作。</p>
+<p>我的 Gentoo 系统上有一个困扰了我很长一段时间的问题：
+当计算机从睡眠状态中恢复时， 我的无线网络连接往往会失效。
+这时， 我需要手动重置无线网络服务：</p>
+<pre><code>/etc/init.d/net.wlp4s0 restart
+</code></pre><p>究其原因， 是 DHCP 客户端未能在唤醒时重新申请新的 lease，
+路由表也没有被更新。</p>
+<p>看 <code>/etc/wpa_supplicant/wpa_cli.sh</code>， 这个脚本在无线网络连接/断开时会被触发，
+但是并不会触发 DHCP 客户端重新获取 lease。
+所以一个简单的解决方案是在这里加上 DHCP 的操作。 查看 udhcpc 的帮助，
+SIGUSR2 和 SIGUSR1 分别可以用于释放和重新申请 lease：</p>
+  <a href='http://z-rui.github.io/post/2018/09/wifi_suspend/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2018/09/fbterm/">FbTerm: 终端下的中文显示和输入解决方案</a></h2>
+    <p class="blog-post-meta"><time datetime="2018-09-30T16:01:20-04:00">Sun Sep 30, 2018</time> by rui</p>
+  </header>
+  Linux 内核支持 Unicode。 但是它的显示驱动只支持 256 个不同的字符。 所以没有办法显示中文。 一般的解决办法是使用 fbterm （该项目已停止开发）。
+FbTerm 用最新版本的 FreeType 渲染时会有一些问题， 主要表现为西文字母显示出较多毛刺。 这个问题可以通过这个补丁解决。
+FbTerm 也提供了一个输入法框架。 我把我之前为 ibus 编写的输入法移植到了 FbTerm 中， 只不过功能更加薄弱了： 屏幕录像  
+  <a href='http://z-rui.github.io/post/2018/09/fbterm/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2018/07/probability/">概率问题二则</a></h2>
+    <p class="blog-post-meta"><time datetime="2018-07-20T00:00:00+08:00">Fri Jul 20, 2018</time> by rui</p>
+  </header>
+  <p>问题一： 设 \(X_i\) (\(i=1,2,\dots,N\)) 为相互独立的<strong>离散</strong>随机变量，
+取值为整数， 且服从 \([0,M)\) 上的均匀分布。
+求 \(\Pr(X_1&lt;X_2&lt;\dots&lt;X_N)\)。</p>
+<p><strong>解</strong></p>
+  <a href='http://z-rui.github.io/post/2018/07/probability/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/12/ibus-2/">自制 IBus 输入法 (2)</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-12-30T21:52:00-05:00">Sat Dec 30, 2017</time> by rui</p>
+  </header>
+  <p>今天我进一步完善了我自制的 IBus 输入法。主要有两方面的改进：</p>
+<ol>
+<li>码表不再是 hardcode 在代码中的了，而是运行时加载。这样，可以支持多个码表，只需修改 <a href="https://github.com/ibus/ibus/wiki/DevXML">XML 文件</a> 的 <code>&lt;engines&gt;</code> 项目，不需要重新编译程序。</li>
+<li>用 <code>IBusProperty</code> 来指示输入法的中/英文状态。</li>
+</ol>
+  <a href='http://z-rui.github.io/post/2017/12/ibus-2/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/12/gentoo-debug/">Gentoo 除错日志</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-12-25T17:18:00-05:00">Mon Dec 25, 2017</time> by rui</p>
+  </header>
+  <p><strong>2018-6-9 更新：</strong> 文中部分过时信息已用删除线划去。</p>
+<p>之前几天重新配置了我的 Gentoo 桌面环境。很遗憾的是官方源中的 Gnome 在不用 systemd 的情况下是无法顺利安装的，我暂时不打算更换整个 init 系统，所以我先装了 Xfce 凑合。（除了功能稍显单薄，Xfce 的各方面我都很喜欢，可能是因为它是我用过的第一个 Linux 桌面环境。）</p>
+<pre><code>rui@localhost ~ $ uname -a
+Linux localhost 4.14.8-gentoo-r1 #6 SMP Mon Dec 25 16:54:41 EST 2017 x86_64 Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz GenuineIntel GNU/Linux
+</code></pre>
+  <a href='http://z-rui.github.io/post/2017/12/gentoo-debug/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/12/ibus/">自制 IBus 输入法</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-12-24T21:57:00-05:00">Sun Dec 24, 2017</time> by rui</p>
+  </header>
+  <p>IBus (Intelligent Input Bus) 是 Unix 系统上可用的一种输入法框架。我尝试自制了一个简单的“查表”式的输入法，类似于用微软的IME编辑器生成的古老输入法。</p>
+<figure>
+    <img src="/media/ibus-1.png"
+         alt="IBus输入法界面"/> <figcaption>
+            <p>IBus输入法界面</p>
+        </figcaption>
+</figure>
+
+<p>重要的参考文档是<a href="http://ibus.github.io/docs/ibus-1.5/index.html">IBus参考手册</a>。但是这个文档的质量非常一般。<a href="https://github.com/ibus/ibus/wiki/Develop">官方Wiki上的条目</a>给了一个 Python 和 C 的开发模版，虽然没有解释 IBus 的相关概念，但是值得参考。</p>
+<p>另外，还可以用 Vala 编写 IBus 组件，这样可以省去不少 GObject 的繁文缛节。只需继承 <code>IBus.Engine</code> 即可。最重要的是重载它的 <code>process_key_event</code> 方法，拦截键盘输入，并更新候选项。候选项采用 <code>IBusLookupTable</code> 维护。</p>
+  <a href='http://z-rui.github.io/post/2017/12/ibus/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/11/drawtree/">二叉树的作图</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-11-18T22:52:00-05:00">Sat Nov 18, 2017</time> by rui</p>
+  </header>
+  <p>画图是观察数据结构的好办法。 二叉树是一种常见的数据结构， 我在调试的时候往往通过先序遍历把整个树的结构打印出来。 然后拿一张草稿纸， 根据打印出的信息， 用笔画出整个树的样子， 然后判断该进行什么操作 （或者我已经执行的操作是否正确）。</p>
+<p>为了偷懒， 我在想有没有办法能够让计算机自动生成二叉树的图像。
+我发现使用 MetaPost 可以方便地实现。</p>
+<figure>
+    <img src="/media/rbgraph-1.svg"
+         alt="用MetaPost画出的一棵二叉树" width="100%;"/> <figcaption>
+            <p>用MetaPost画出的一棵二叉树</p>
+        </figcaption>
+</figure>
+  <a href='http://z-rui.github.io/post/2017/11/drawtree/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/page/3/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

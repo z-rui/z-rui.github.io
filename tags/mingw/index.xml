@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MinGW on 睿</title>
+    <link>http://z-rui.github.io/tags/mingw/</link>
+    <description>Recent content in MinGW on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Mon, 09 Feb 2015 08:26:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/mingw/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>发现了MinGW GCC的一个bug</title>
+      <link>http://z-rui.github.io/post/2015/02/mingw-bug/</link>
+      <pubDate>Mon, 09 Feb 2015 08:26:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/mingw-bug/</guid>
+      <description>&lt;p&gt;我今天发现MinGW内置的打印函数&lt;code&gt;__mingw_printf&lt;/code&gt;在处理&lt;code&gt;%a&lt;/code&gt;格式的时候会产生不正确的输出。下面这段程序体现了这个问题。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdarg.h&amp;gt;
+
+int main()
+{
+	printf(&amp;quot;%a %a\n&amp;quot;, 1.0, 1.1);
+	__mingw_printf(&amp;quot;%a %a\n&amp;quot;, 1.0, 1.1);
+	return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;输出是&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;0x1.000000p+0 0x1.19999ap+0
+0x0p-63 0x8.cccccccccccdp-3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;因为浮点数&lt;code&gt;1.0&lt;/code&gt;显然不能表示为&lt;code&gt;0x0p-63&lt;/code&gt;，所以&lt;code&gt;__mingw_printf&lt;/code&gt;是错的。&lt;/p&gt;
+&lt;p&gt;这个错误我提交在 &lt;a href=&#34;http://sourceforge.net/p/mingw-w64/bugs/459/&#34;&gt;http://sourceforge.net/p/mingw-w64/bugs/459/&lt;/a&gt; ，过几天我看看有没有人回应。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>惊喜 on 睿</title>
+    <link>http://z-rui.github.io/tags/%E6%83%8A%E5%96%9C/</link>
+    <description>Recent content in 惊喜 on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Thu, 26 Feb 2015 06:00:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/%E6%83%8A%E5%96%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lua语言中的“惊喜”</title>
+      <link>http://z-rui.github.io/post/2015/02/lua-surprises/</link>
+      <pubDate>Thu, 26 Feb 2015 06:00:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/lua-surprises/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.lua.org/&#34;&gt;Lua&lt;/a&gt;在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &amp;ldquo;gotcha&amp;rdquo;)。根据我的经验，整理如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不等号是&lt;code&gt;~=&lt;/code&gt;，而不是&lt;code&gt;!=&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是&lt;code&gt;!=&lt;/code&gt;(C家族)，还有一部分用&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;(Pascal, Basic, SQL)。用&lt;code&gt;~=&lt;/code&gt;真的只有Lua一家。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="GNU Privacy Guard" />
+<meta property="og:description" content="GNU Privacy Guard简称GnuPG或GPG，是一款密码学工具。许多Linux系统上自带的gpg命令就是它。其最重要的功能是对数据进行加密、解密和签名。此外还带有密钥生成和管理功能。
+GPG区别于一般加密工具的地方在于其使用非对称加密机制。加密时，使用收件人的公开密钥，该密钥公开发行可供所有人使用。解密时，使用收件人的私有密钥，该密钥由收件人严密保管。这样，收件人无需和发件人商定密码，就可以安全地通信。
+签名是确保信息完整性的办法。使用发件人的私有密钥进行签名，其他人无法伪造，但所有人均可使用发件人的公开密钥进行验证。
+我用GPG生成了一个密钥对，公共密钥已经上传到密钥服务器上，大家可以通过
+gpg --recv-keys 0DB87340
+
+下载这个密钥。其指纹为
+2252 7AF4 8AFB 5635 72EC  AC4D 895C 7F46 0DB8 7340
+
+理论上，如果有人要冒充我的身份，只需创造一个虚假的密钥上传到服务器，然后入侵存放这个页面的服务器，纂改上面的密钥编号和指纹。
+当然要这么做也有一定难度，总之小心为好，导入密钥的时候务必需要通过可靠的方式（例如，当面）和密钥的持有人进行确认，然后对它签名，以示信任。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/09/gnupg/" />
+<meta property="article:published_time" content="2016-09-11T01:21:00+08:00" />
+<meta property="article:modified_time" content="2016-09-11T01:21:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GNU Privacy Guard"/>
+<meta name="twitter:description" content="GNU Privacy Guard简称GnuPG或GPG，是一款密码学工具。许多Linux系统上自带的gpg命令就是它。其最重要的功能是对数据进行加密、解密和签名。此外还带有密钥生成和管理功能。
+GPG区别于一般加密工具的地方在于其使用非对称加密机制。加密时，使用收件人的公开密钥，该密钥公开发行可供所有人使用。解密时，使用收件人的私有密钥，该密钥由收件人严密保管。这样，收件人无需和发件人商定密码，就可以安全地通信。
+签名是确保信息完整性的办法。使用发件人的私有密钥进行签名，其他人无法伪造，但所有人均可使用发件人的公开密钥进行验证。
+我用GPG生成了一个密钥对，公共密钥已经上传到密钥服务器上，大家可以通过
+gpg --recv-keys 0DB87340
+
+下载这个密钥。其指纹为
+2252 7AF4 8AFB 5635 72EC  AC4D 895C 7F46 0DB8 7340
+
+理论上，如果有人要冒充我的身份，只需创造一个虚假的密钥上传到服务器，然后入侵存放这个页面的服务器，纂改上面的密钥编号和指纹。
+当然要这么做也有一定难度，总之小心为好，导入密钥的时候务必需要通过可靠的方式（例如，当面）和密钥的持有人进行确认，然后对它签名，以示信任。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GNU Privacy Guard",
+  "url": "http://z-rui.github.io/post/2016/09/gnupg/",
+  "wordCount": "68",
+  "datePublished": "2016-09-11T01:21:00+08:00",
+  "dateModified": "2016-09-11T01:21:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/09/gnupg/">
+
+    <title>GNU Privacy Guard | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/09/gnupg/">GNU Privacy Guard</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-09-11T01:21:00+08:00">Sun Sep 11, 2016</time> by rui</p>
+  </header>
+  <p>GNU Privacy Guard简称GnuPG或GPG，是一款密码学工具。许多Linux系统上自带的<code>gpg</code>命令就是它。其最重要的功能是对数据进行加密、解密和签名。此外还带有密钥生成和管理功能。</p>
+<p>GPG区别于一般加密工具的地方在于其使用非对称加密机制。加密时，使用收件人的公开密钥，该密钥公开发行可供所有人使用。解密时，使用收件人的私有密钥，该密钥由收件人严密保管。这样，收件人无需和发件人商定密码，就可以安全地通信。</p>
+<p>签名是确保信息完整性的办法。使用发件人的私有密钥进行签名，其他人无法伪造，但所有人均可使用发件人的公开密钥进行验证。</p>
+<p>我用GPG生成了一个密钥对，公共密钥已经上传到密钥服务器上，大家可以通过</p>
+<pre><code>gpg --recv-keys 0DB87340
+</code></pre>
+<p>下载这个密钥。其指纹为</p>
+<pre><code>2252 7AF4 8AFB 5635 72EC  AC4D 895C 7F46 0DB8 7340
+</code></pre>
+<p>理论上，如果有人要冒充我的身份，只需创造一个虚假的密钥上传到服务器，然后入侵存放这个页面的服务器，纂改上面的密钥编号和指纹。</p>
+<p>当然要这么做也有一定难度，总之小心为好，导入密钥的时候务必需要通过可靠的方式（例如，当面）和密钥的持有人进行确认，然后对它签名，以示信任。</p>
+<p>下面是我签名过的一段消息：</p>
+<pre><code>-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owEBuAJH/ZANAwACAYlcf0YNuHNAAcuIYgBX1EWJ55y8552b556q5b6X5YOP6ZOc
+6ZODCuWwhOWHuumXqueUteiIrOeahOacuueBtQrogLPmnLXnq5blvpflg4/pl6rn
+lLUK5ZCs552A5LiA5YiH5Y+v55aR55qE5aOw6Z+zCuWVin7lk4jlk4h+6YKj5bCx
+5piv6buR54yr6K2m6ZW/CokCHAQAAQIABgUCV9RFiQAKCRCJXH9GDbhzQKSVD/9y
+q70pHZeP5lGLQ6eiTcUMpATu0RzFJC0UoIvDZ5IszI++pu1Vjcm68QPEGwntyBjU
+/ovT4sNWC2halawClt+dNb052B4Y8AKvW/37fXcDAlmQgDZ7wTUwdD4YZ0ls3E9g
+eHch9rfQEDqFNxNZDLOjweIIrh3FS+0ETxNU3+eCEFrNws7HEhzUyIodrQyBl0s0
+zIzGBhS5Ucube67uNlf1Kh+9+M23pRydwVTltcXcQQJa92DGUhn/7hTYyGDCrGoY
+nVtIExEMf44KYHmG0/rWZLh14YhVG2mTYset6M3WoIz5oxlSmZIgPuJjueY3JQj4
+rifo/+4afDjQ2FkOTIA0O2gG7Jv0MurEPeH/M5AhNSHPkwJTfY9LYSr4Ddgbqtu6
+01uFAaBKsMGe3DLgqGKqTfQtMIQC2x2/Qnpty7DBheVQ8wfcnvJfp5TN7g4Sf6ka
+fmnVSOU1j/Ob+d4eyZA+A7s9CjZJM9X1vZAHdRNfDHMQVEUn09/rWzXURWHAdmxY
+ri/054CyhONXPuACqWLdO/YriuixdGvCnmBYI5o4R4zICrw36I29sMFBb6CYS07f
+RWbyh/+kPnkEN93VScbYdSDImFgSHzE7rUTH+Dn85xdXUXtjH5O4fm1eeQOhfi3n
+PZjl5h0iiIP+eCaF8t1SYlsZ05ifLxfGQfSPxhAAIQ==
+=hmIq
+-----END PGP MESSAGE-----
+</code></pre><p>将其输入<code>gpg</code>命令中即可看到其内容，并验证其完整性。如果没有导入我的公钥，那么是没法看到消息内容的。</p>
+<p>在不需要非对称加密机制的地方，也可以采用简单的对称加密方法。发件人和收件人首先通过一种安全的方式商定好密码，然后使用<code>gpg</code>的<code>-c</code>选项启用对称加密。</p>
+<p>对称加密方法不能用于签名。</p>
+<p>下面是我用对称加密的方法加密过的消息。出于演示目的，这里直接指出密码是<code>112233</code>。</p>
+<pre><code>-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+jA0EBwMCk0B0ZJrqqplg0rYBtudLvOJZ3SKg/RpbBOgfO8ePrLp2WBElqYc4vgwr
+EKyzxVdPSC1uaM9uv9CeOlm3PCGD76GGDvEe5KJAGaSF1+N88VOFo0Nz8CghkyA7
+0apG4zuIp43BwDGFi7dMUQuO9nAXUP5AzLZKSzTmM5sVPotzn85mptiNs6u0ozLb
+5RthfGA4Ctpu6pj7ngSP3zTxBtBbLeNvh01fiR1OD+ms6hSSZvltTvpQFaWuvXF4
+fJ9f1Z6pFg==
+=9h3J
+-----END PGP MESSAGE-----
+</code></pre><p>同样，直接将上面的内容输入<code>gpg</code>即可解密。这时<code>gpg</code>会询问密码，输入正确的密码之后即可看到消息原文。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fgnupg%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fgnupg%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fgnupg%2f&amp;text=GNU%20Privacy%20Guard" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

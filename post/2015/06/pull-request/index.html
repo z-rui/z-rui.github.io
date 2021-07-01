@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="人生中第一份Pull Request" />
+<meta property="og:description" content="今天做了几件杂活：
+
+更新Highlight.js到8.6。手动更新似乎是很无聊的工作，如果像MathJax那样提供一个latest链接的话就不需要更新了。
+更新Hugo到0.14。这个版本的Hugo deprecate了.BaseUrl，并且和我正在使用的主题不能兼容。
+
+本站使用的主题Fork自chibicode/hugo-theme-shiori。因为更新了Hugo之后不能正常工作，所以我开始自己修改这个主题。其实之前我就改正过Archive页面中的一个逻辑错误，但是我是放在本地的override中的，而没有修改主题本身。这次需要大量的改动，所以干脆修改主题。
+转念一想，该主题既然托管在GitHub上，我可以把它做成Pull Request。我以前从来没有做过Pull Request，今天算是实践了一次。
+首先在GitHub中点击Fork按钮，几秒钟后，一个本地仓库(repository)就建好了。
+接下来要做的就是在本机克隆仓库，设置好远程仓库 upstream ，然后创建一个新的分支。
+$ git clone https://github.com/z-rui/hugo-theme-shiori.git
+$ git remote add upstream https://github.com/chibicode/hugo-theme-shiori.git
+$ git checkout -b patch
+upstream 仓库是被fork的仓库，如果原作者修改了代码，那么我只需要pull upstream就可以及时跟上进度。
+然后就是修改其中的内容。修改好了以后提交(commit)，然后推送(push)到自己的仓库中。
+$ git push
+推送完毕后，在我的GitHub页面上就可以看到生成Pull Request的提示。于是我提交了人生中的第一份Pull Request。
+我在操作过程中学到了一些知识：
+
+不要在master分支中修改代码。如果这样，则GitHub界面上就没有非常显眼的生成Pull Request的提示。尽管仍然可以生成Pull Request，在master分支中修改代码的主要问题是会带来冲突(conflict)。
+每次push的时候git都会请求我输入用户名和密码，在反复push的时候显得很恼人。可以打开git的缓存功能，在全局设置中设置credential.helper=cache，就可以只输入一次用户名和密码。
+
+更新: git缓存用户名和密码的功能在Windows上并不好用，因为它依赖UNIX文件系统权限。使用git-credential-winstore项目可以让Windows凭据管理器保管git用户名和密码。下载git-credential-winstore.exe并复制到合适的目录中，在git的全局设置中设置credential.helper=winstore即可。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/06/pull-request/" />
+<meta property="article:published_time" content="2015-06-02T04:09:00+08:00" />
+<meta property="article:modified_time" content="2015-06-02T04:09:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="人生中第一份Pull Request"/>
+<meta name="twitter:description" content="今天做了几件杂活：
+
+更新Highlight.js到8.6。手动更新似乎是很无聊的工作，如果像MathJax那样提供一个latest链接的话就不需要更新了。
+更新Hugo到0.14。这个版本的Hugo deprecate了.BaseUrl，并且和我正在使用的主题不能兼容。
+
+本站使用的主题Fork自chibicode/hugo-theme-shiori。因为更新了Hugo之后不能正常工作，所以我开始自己修改这个主题。其实之前我就改正过Archive页面中的一个逻辑错误，但是我是放在本地的override中的，而没有修改主题本身。这次需要大量的改动，所以干脆修改主题。
+转念一想，该主题既然托管在GitHub上，我可以把它做成Pull Request。我以前从来没有做过Pull Request，今天算是实践了一次。
+首先在GitHub中点击Fork按钮，几秒钟后，一个本地仓库(repository)就建好了。
+接下来要做的就是在本机克隆仓库，设置好远程仓库 upstream ，然后创建一个新的分支。
+$ git clone https://github.com/z-rui/hugo-theme-shiori.git
+$ git remote add upstream https://github.com/chibicode/hugo-theme-shiori.git
+$ git checkout -b patch
+upstream 仓库是被fork的仓库，如果原作者修改了代码，那么我只需要pull upstream就可以及时跟上进度。
+然后就是修改其中的内容。修改好了以后提交(commit)，然后推送(push)到自己的仓库中。
+$ git push
+推送完毕后，在我的GitHub页面上就可以看到生成Pull Request的提示。于是我提交了人生中的第一份Pull Request。
+我在操作过程中学到了一些知识：
+
+不要在master分支中修改代码。如果这样，则GitHub界面上就没有非常显眼的生成Pull Request的提示。尽管仍然可以生成Pull Request，在master分支中修改代码的主要问题是会带来冲突(conflict)。
+每次push的时候git都会请求我输入用户名和密码，在反复push的时候显得很恼人。可以打开git的缓存功能，在全局设置中设置credential.helper=cache，就可以只输入一次用户名和密码。
+
+更新: git缓存用户名和密码的功能在Windows上并不好用，因为它依赖UNIX文件系统权限。使用git-credential-winstore项目可以让Windows凭据管理器保管git用户名和密码。下载git-credential-winstore.exe并复制到合适的目录中，在git的全局设置中设置credential.helper=winstore即可。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "人生中第一份Pull Request",
+  "url": "http://z-rui.github.io/post/2015/06/pull-request/",
+  "wordCount": "44",
+  "datePublished": "2015-06-02T04:09:00+08:00",
+  "dateModified": "2015-06-02T04:09:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/06/pull-request/">
+
+    <title>人生中第一份Pull Request | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/06/pull-request/">人生中第一份Pull Request</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-06-02T04:09:00+08:00">Tue Jun 2, 2015</time> by rui</p>
+  </header>
+  <p>今天做了几件杂活：</p>
+<ol>
+<li>更新Highlight.js到8.6。手动更新似乎是很无聊的工作，如果像MathJax那样提供一个latest链接的话就不需要更新了。</li>
+<li>更新Hugo到0.14。这个版本的Hugo deprecate了<code>.BaseUrl</code>，并且和我正在使用的主题不能兼容。</li>
+</ol>
+<p>本站使用的主题Fork自<a href="https://github.com/chibicode/hugo-theme-shiori/pulse">chibicode/hugo-theme-shiori</a>。因为更新了Hugo之后不能正常工作，所以我开始自己修改这个主题。其实之前我就改正过Archive页面中的一个逻辑错误，但是我是放在本地的override中的，而没有修改主题本身。这次需要大量的改动，所以干脆修改主题。</p>
+<p>转念一想，该主题既然托管在GitHub上，我可以把它做成Pull Request。我以前从来没有做过Pull Request，今天算是实践了一次。</p>
+<p>首先在GitHub中点击Fork按钮，几秒钟后，一个本地仓库(repository)就建好了。</p>
+<p>接下来要做的就是在本机克隆仓库，设置好远程仓库 <em>upstream</em> ，然后创建一个新的分支。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git clone https://github.com/z-rui/hugo-theme-shiori.git
+$ git remote add upstream https://github.com/chibicode/hugo-theme-shiori.git
+$ git checkout -b patch
+</code></pre></div><p><em>upstream</em> 仓库是被fork的仓库，如果原作者修改了代码，那么我只需要pull upstream就可以及时跟上进度。</p>
+<p>然后就是修改其中的内容。修改好了以后提交(commit)，然后推送(push)到自己的仓库中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git push
+</code></pre></div><p>推送完毕后，在我的GitHub页面上就可以看到生成Pull Request的提示。于是我提交了<a href="https://github.com/chibicode/hugo-theme-shiori/pull/5">人生中的第一份Pull Request</a>。</p>
+<p>我在操作过程中学到了一些知识：</p>
+<ol>
+<li>不要在master分支中修改代码。如果这样，则GitHub界面上就没有非常显眼的生成Pull Request的提示。尽管仍然可以生成Pull Request，在master分支中修改代码的主要问题是会带来冲突(conflict)。</li>
+<li>每次push的时候git都会请求我输入用户名和密码，在反复push的时候显得很恼人。可以打开git的缓存功能，在全局设置中设置<code>credential.helper=cache</code>，就可以只输入一次用户名和密码。</li>
+</ol>
+<p><strong>更新:</strong> git缓存用户名和密码的功能在Windows上并不好用，因为它依赖UNIX文件系统权限。使用<a href="http://gitcredentialstore.codeplex.com/">git-credential-winstore</a>项目可以让Windows凭据管理器保管git用户名和密码。下载<code>git-credential-winstore.exe</code>并复制到合适的目录中，在git的全局设置中设置<code>credential.helper=winstore</code>即可。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fpull-request%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fpull-request%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fpull-request%2f&amp;text=%e4%ba%ba%e7%94%9f%e4%b8%ad%e7%ac%ac%e4%b8%80%e4%bb%bdPull%20Request" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

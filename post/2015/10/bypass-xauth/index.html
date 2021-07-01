@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="免xauth进行X11转发" />
+<meta property="og:description" content="之前谈到如何通过SSH进行X11转发。其中有一个前提，即主机B上要装有xauth。事实上，X11的转发和普通的TCP端口转发并无差别。如果主机B中未安装xauth，则需要用户手动设置远程TCP端口转发，并设置主机B的DISPLAY变量：
+hostA$ ssh -R6010:localhost:6000 user@hostB
+hostB$ export DISPLAY=&#39;:10&#39;
+在图形界面客户端例如PuTTY或者Bitvise Tunnelier中，也都有远程TCP端口转发的设置。
+在主机A中，仍然启动X服务器的TCP监听。不同的是，由于没有.Xauthority认证文件，需要用xhost允许本地主机(即SSH客户端)连接X服务器。在Cygwin中：
+hostA$ startxwin -- :0 -multiwindow -listen tcp &amp;
+hostA$ xhost &#43;localhost
+具体采用哪一种办法见仁见智。建议在主机B中安装xauth，这样可以免去手工设置远程端口转发和DISPLAY变量。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/10/bypass-xauth/" />
+<meta property="article:published_time" content="2015-10-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-10-20T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="免xauth进行X11转发"/>
+<meta name="twitter:description" content="之前谈到如何通过SSH进行X11转发。其中有一个前提，即主机B上要装有xauth。事实上，X11的转发和普通的TCP端口转发并无差别。如果主机B中未安装xauth，则需要用户手动设置远程TCP端口转发，并设置主机B的DISPLAY变量：
+hostA$ ssh -R6010:localhost:6000 user@hostB
+hostB$ export DISPLAY=&#39;:10&#39;
+在图形界面客户端例如PuTTY或者Bitvise Tunnelier中，也都有远程TCP端口转发的设置。
+在主机A中，仍然启动X服务器的TCP监听。不同的是，由于没有.Xauthority认证文件，需要用xhost允许本地主机(即SSH客户端)连接X服务器。在Cygwin中：
+hostA$ startxwin -- :0 -multiwindow -listen tcp &amp;
+hostA$ xhost &#43;localhost
+具体采用哪一种办法见仁见智。建议在主机B中安装xauth，这样可以免去手工设置远程端口转发和DISPLAY变量。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "免xauth进行X11转发",
+  "url": "http://z-rui.github.io/post/2015/10/bypass-xauth/",
+  "wordCount": "23",
+  "datePublished": "2015-10-20T00:00:00+00:00",
+  "dateModified": "2015-10-20T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/10/bypass-xauth/">
+
+    <title>免xauth进行X11转发 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/bypass-xauth/">免xauth进行X11转发</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-20T00:00:00Z">Tue Oct 20, 2015</time> by rui</p>
+  </header>
+  <p>之前谈到如何通过SSH进行X11转发。其中有一个前提，即主机B上要装有<code>xauth</code>。事实上，X11的转发和普通的TCP端口转发并无差别。如果主机B中未安装<code>xauth</code>，则需要用户手动设置远程TCP端口转发，并设置主机B的<code>DISPLAY</code>变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hostA$ ssh -R6010:localhost:6000 user@hostB
+hostB$ export DISPLAY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;:10&#39;</span>
+</code></pre></div><p>在图形界面客户端例如PuTTY或者<a href="https://www.bitvise.com/tunnelier">Bitvise Tunnelier</a>中，也都有远程TCP端口转发的设置。</p>
+<p>在主机A中，仍然启动X服务器的TCP监听。不同的是，由于没有<code>.Xauthority</code>认证文件，需要用<code>xhost</code>允许本地主机(即SSH客户端)连接X服务器。在Cygwin中：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">hostA$ startxwin -- :0 -multiwindow -listen tcp &amp;
+hostA$ xhost +localhost
+</code></pre></div><p>具体采用哪一种办法见仁见智。建议在主机B中安装<code>xauth</code>，这样可以免去手工设置远程端口转发和<code>DISPLAY</code>变量。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2fbypass-xauth%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2fbypass-xauth%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2fbypass-xauth%2f&amp;text=%e5%85%8dxauth%e8%bf%9b%e8%a1%8cX11%e8%bd%ac%e5%8f%91" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

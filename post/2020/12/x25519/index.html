@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="自制加密通信协议（二）：密钥交换算法" />
+<meta property="og:description" content="使用对称密钥通信时，双方需要事先约定密钥。如何安全地操作是一个关键问题。Diffie-Hellman-Merkle算法使得在不安全的信道中交换密钥成为可能。
+在Diffie-Hellman-Merkle算法中，事先约定整数G和M。通信双方Alice和Bob分别拥有自己的私钥a和b。Alice把自己的公钥A=Ga发送给Bob。同理，Bob把B=Gb发送给Alice。Alice计算Ba，Bob计算Ab。这样，他们就得到了共享密钥K=Gab。
+注意，这里的乘法定义在GF(M)上，即A=Ga mod M，等等。对于取模的指数运算，其逆运算是一个目前难以解决的问题。对于外界的观察者而言，只知道G、M、A、B，并不能容易地求出a、b或K。这样就确保了密钥交换过程的安全性。
+在实践中，常用密钥派生函数KDF对密钥K进行处理，用派生密钥KDF(K)作为对称加密的实际密钥。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2020/12/x25519/" />
+<meta property="article:published_time" content="2020-12-04T21:43:25-05:00" />
+<meta property="article:modified_time" content="2020-12-04T21:43:25-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="自制加密通信协议（二）：密钥交换算法"/>
+<meta name="twitter:description" content="使用对称密钥通信时，双方需要事先约定密钥。如何安全地操作是一个关键问题。Diffie-Hellman-Merkle算法使得在不安全的信道中交换密钥成为可能。
+在Diffie-Hellman-Merkle算法中，事先约定整数G和M。通信双方Alice和Bob分别拥有自己的私钥a和b。Alice把自己的公钥A=Ga发送给Bob。同理，Bob把B=Gb发送给Alice。Alice计算Ba，Bob计算Ab。这样，他们就得到了共享密钥K=Gab。
+注意，这里的乘法定义在GF(M)上，即A=Ga mod M，等等。对于取模的指数运算，其逆运算是一个目前难以解决的问题。对于外界的观察者而言，只知道G、M、A、B，并不能容易地求出a、b或K。这样就确保了密钥交换过程的安全性。
+在实践中，常用密钥派生函数KDF对密钥K进行处理，用派生密钥KDF(K)作为对称加密的实际密钥。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "自制加密通信协议（二）：密钥交换算法",
+  "url": "http://z-rui.github.io/post/2020/12/x25519/",
+  "wordCount": "13",
+  "datePublished": "2020-12-04T21:43:25-05:00",
+  "dateModified": "2020-12-04T21:43:25-05:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2020/12/x25519/">
+
+    <title>自制加密通信协议（二）：密钥交换算法 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-12-04T21:43:25-05:00">Fri Dec 4, 2020</time> by rui</p>
+  </header>
+  <p>使用对称密钥通信时，双方需要事先约定密钥。如何安全地操作是一个关键问题。<a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">Diffie-Hellman-Merkle算法</a>使得在不安全的信道中交换密钥成为可能。</p>
+<p>在Diffie-Hellman-Merkle算法中，事先约定整数G和M。通信双方Alice和Bob分别拥有自己的私钥a和b。Alice把自己的公钥A=G<sup>a</sup>发送给Bob。同理，Bob把B=G<sup>b</sup>发送给Alice。Alice计算B<sup>a</sup>，Bob计算A<sup>b</sup>。这样，他们就得到了共享密钥K=G<sup>ab</sup>。</p>
+<p>注意，这里的乘法定义在GF(M)上，即A=G<sup>a</sup> mod M，等等。对于取模的指数运算，其<a href="https://en.wikipedia.org/wiki/Discrete_logarithm">逆运算</a>是一个目前难以解决的问题。对于外界的观察者而言，只知道G、M、A、B，并不能容易地求出a、b或K。这样就确保了密钥交换过程的安全性。</p>
+<p>在实践中，常用密钥派生函数KDF对密钥K进行处理，用派生密钥KDF(K)作为对称加密的实际密钥。</p>
+<h2 id="x25519-密钥交换算法">X25519 密钥交换算法</h2>
+<p><a href="https://tools.ietf.org/html/rfc7748">X25519</a>是一种类似Diffie-Hellman-Merkle，但基于<a href="https://en.wikipedia.org/wiki/Elliptic_curve">椭圆曲线</a>理论的密钥交换算法。</p>
+<p>X25519采用定义在GF(2<sup>255</sup>-19)上的椭圆曲线：\[y^2=x^3+486662x^2+x\]
+对该曲线上的点可以定义<a href="https://en.wikipedia.org/wiki/Montgomery_curve#Addition">加法运算</a>：过P、Q作直线，它将交曲线于第三点R=P+Q。如果P=Q，则作切线。由此可以得到数乘运算： \(nP=\underbrace{P+P+\ldots+P}_{n}\)。从nP和P倒推出n的值也是一个难以解决的问题，因此可以得到下面的密钥交换算法：</p>
+<p>Alice和Bob各自拥有32字节的私钥a和b，使用X25519定义的基点G，分别生成公钥A=aG和B=bG并发送给对方。Alice计算a(bG)，Bob计算b(aG)。这样，他们就得到了共享密钥K=abG。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f12%2fx25519%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f12%2fx25519%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f12%2fx25519%2f&amp;text=%e8%87%aa%e5%88%b6%e5%8a%a0%e5%af%86%e9%80%9a%e4%bf%a1%e5%8d%8f%e8%ae%ae%ef%bc%88%e4%ba%8c%ef%bc%89%ef%bc%9a%e5%af%86%e9%92%a5%e4%ba%a4%e6%8d%a2%e7%ae%97%e6%b3%95" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

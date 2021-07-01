@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bug on 睿</title>
+    <link>http://z-rui.github.io/tags/bug/</link>
+    <description>Recent content in bug on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Thu, 26 Feb 2015 06:00:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/bug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lua语言中的“惊喜”</title>
+      <link>http://z-rui.github.io/post/2015/02/lua-surprises/</link>
+      <pubDate>Thu, 26 Feb 2015 06:00:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/lua-surprises/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.lua.org/&#34;&gt;Lua&lt;/a&gt;在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &amp;ldquo;gotcha&amp;rdquo;)。根据我的经验，整理如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不等号是&lt;code&gt;~=&lt;/code&gt;，而不是&lt;code&gt;!=&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是&lt;code&gt;!=&lt;/code&gt;(C家族)，还有一部分用&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;(Pascal, Basic, SQL)。用&lt;code&gt;~=&lt;/code&gt;真的只有Lua一家。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>发现了MinGW GCC的一个bug</title>
+      <link>http://z-rui.github.io/post/2015/02/mingw-bug/</link>
+      <pubDate>Mon, 09 Feb 2015 08:26:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/02/mingw-bug/</guid>
+      <description>&lt;p&gt;我今天发现MinGW内置的打印函数&lt;code&gt;__mingw_printf&lt;/code&gt;在处理&lt;code&gt;%a&lt;/code&gt;格式的时候会产生不正确的输出。下面这段程序体现了这个问题。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;stdarg.h&amp;gt;
+
+int main()
+{
+	printf(&amp;quot;%a %a\n&amp;quot;, 1.0, 1.1);
+	__mingw_printf(&amp;quot;%a %a\n&amp;quot;, 1.0, 1.1);
+	return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;输出是&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;0x1.000000p+0 0x1.19999ap+0
+0x0p-63 0x8.cccccccccccdp-3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;因为浮点数&lt;code&gt;1.0&lt;/code&gt;显然不能表示为&lt;code&gt;0x0p-63&lt;/code&gt;，所以&lt;code&gt;__mingw_printf&lt;/code&gt;是错的。&lt;/p&gt;
+&lt;p&gt;这个错误我提交在 &lt;a href=&#34;http://sourceforge.net/p/mingw-w64/bugs/459/&#34;&gt;http://sourceforge.net/p/mingw-w64/bugs/459/&lt;/a&gt; ，过几天我看看有没有人回应。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

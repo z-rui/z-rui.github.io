@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="复数和矢量运算" />
+<meta property="og:description" content="在工程领域中，复数\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\)被用来指代一个有效值为\(A\)，初相位为\(\varphi\)的正弦量\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t&#43;\varphi)\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\(\newcommand\phase[1]{,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\)表示，并且使用角度制。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/12/vector-ops/" />
+<meta property="article:published_time" content="2016-12-13T21:55:00+08:00" />
+<meta property="article:modified_time" content="2016-12-13T21:55:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="复数和矢量运算"/>
+<meta name="twitter:description" content="在工程领域中，复数\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\)被用来指代一个有效值为\(A\)，初相位为\(\varphi\)的正弦量\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t&#43;\varphi)\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\(\newcommand\phase[1]{,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\)表示，并且使用角度制。
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "复数和矢量运算",
+  "url": "http://z-rui.github.io/post/2016/12/vector-ops/",
+  "wordCount": "241",
+  "datePublished": "2016-12-13T21:55:00+08:00",
+  "dateModified": "2016-12-13T21:55:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/12/vector-ops/">
+
+    <title>复数和矢量运算 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/12/vector-ops/">复数和矢量运算</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-12-13T21:55:00+08:00">Tue Dec 13, 2016</time> by rui</p>
+  </header>
+  <p>在工程领域中，复数\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\)被用来指代一个有效值为\(A\)，初相位为\(\varphi\)的正弦量\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\(\newcommand\phase[1]{,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\)表示，并且使用角度制。</p>
+<img style="margin: auto;" src="/media/vector-1.svg">
+<p>平面上的矢量和复数之间有一一对应的关系。如图，\(A\phase\varphi\)对应矢量\(\overrightarrow{OP}\)，它也可以用直角坐标形式表示为\(x+y,\mathrm{i}\)。通常，把\(A\)取成非负的，称为模：\(r = \sqrt{x^2+y^2}\)；把\(\varphi\)取在区间\((-\pi,\pi]\)内，称为幅角：\(\varphi = \mathrm{atan2}(y, x)\)。</p>
+<p>可以用欧拉公式证明两种形式是等价的，用矢量可以形象地表示出这一关系，便于记忆。</p>
+<p>用复数和矢量分析交流电是很方便的。例如，在三相电源中，设A相电压\[\dot{U}_A = 220\phase{0^\circ};\mathrm{V},\]则另外两相电压分别可以表示为
+\begin{align}
+\dot{U}_B &amp;= 220\phase{-120^\circ};\mathrm{V}, \\
+\dot{U}_C &amp;= 220\phase{120^\circ};\mathrm{V}.
+\end{align}</p>
+<p>这种记法的物理意义很明显。并且用这种表示进行算术运算也具有明确的意义。例如，线电压
+\[\dot{U}_{AB} = \dot{U}_A - \dot{U}_B = 220\sqrt3\phase{30^\circ};\mathrm{V}.\]
+可以直接从计算结果中读出它的幅值和相位。</p>
+<p>上面的计算因为涉及特殊角，所以可以笔算得出结果。甚至可以画出对应矢量的图形（恰好构成等腰三角形），用图解法来做。</p>
+<img style="margin: auto;" src="/media/vector-2.svg">
+<p>下面讨论一般的计算办法。</p>
+<p>首先把\(\dot{U}_B = 220\phase{-120^\circ}\)转换成直角坐标形式。先用诱导公式把三角函数的参数化归到第一象限：\(\sin(-120^\circ)=-\sin 60^\circ\)，\(\cos(-120^\circ)=-\cos 60^\circ\)。查数学用表：
+\begin{array}{rrr}
+&amp;\lg 220 =&amp; 2.3424 \\
++&amp; \lg\sin 60^\circ =&amp; \overline{1}.9375 \\\hline
+&amp;&amp; 2.2799\rlap{\quad=\lg190.5}
+\end{array}
+\begin{array}{rrr}
+&amp;\lg 220 =&amp; 2.3424 \\
++&amp; \lg\cos 60^\circ =&amp; \overline{1}.6990 \\\hline
+&amp;&amp; 2.0414\rlap{\quad=\lg110.0}
+\end{array}</p>
+<p>添上符号，得\(\dot{U}_{B} = -110.0 - j190.5\)。然后就可以进行减法计算
+\[\dot{U}_{AB} = 220 - (-110 - j190.5) = 330.0 + j190.5. \]</p>
+<p>为了求出幅值和相位，需要再转换为极坐标形式。一般地，可以归结为一个解直角三角形的问题。</p>
+<img style="margin: auto;" src="/media/vector-3.svg">
+<p>设三边按从小到大的顺序分别为\(a,,b,,c\)，边\(a\)所对的角为\(\alpha\)。则\(\alpha=\arctan\frac{a}{b}\)。注意我们总用小数除以大数。
+\begin{array}{rrr}
+&amp;\lg 190.5 =&amp; 2.2799 \\
+-&amp;\lg 330.0 =&amp; 2.5185 \\\hline
+&amp;&amp; \overline{1}.7614 \rlap{\quad=\lg\tan30^\circ}
+\end{array}</p>
+<p>接下来计算斜边长\(c = \frac{a}{\sin\alpha}\)：
+\begin{array}{rrr}
+&amp;\lg 190.5 =&amp; 2.2799 \\
+-&amp;\lg\sin 30^\circ =&amp; \overline{1}.6990 \\\hline
+&amp;&amp;2.5809 \rlap{\quad=\lg381.0}
+\end{array}</p>
+<p>根据复数所在的象限和计算得出的\(\alpha\)，可以确定\(\varphi\)。各种情况总结在下表中。实际计算的时候，画出坐标系和复数所在的直角三角形，比较容易看出\(\alpha\)和\(\varphi\)的关系。</p>
+<p>\begin{array}{cccc}
+\hline
+\text{象限} &amp; x &amp; y &amp; \varphi_{|x| \ge |y|} &amp; \varphi_{|x| &lt; |y|} \\\hline
+\text{I}    &amp; + &amp; + &amp; \alpha &amp; 90^\circ - \alpha \\
+\text{II}   &amp; - &amp; + &amp; 180^\circ - \alpha &amp; 90^\circ + \alpha \\
+\text{III}  &amp; - &amp; - &amp; -(180^\circ - \alpha) &amp; -(90^\circ + \alpha)\\
+\text{IV}   &amp; + &amp; - &amp; -\alpha &amp; -(90^\circ - \alpha) \\\hline
+\end{array}</p>
+<p>由上表知，计算结果位于第I象限，并且\(|x| \ge |y|\)，所以\(\varphi=\alpha=30^\circ\)。因此极坐标形式为\(\dot{U}_{AB} = 381.0\phase{30^\circ};\mathrm{V}.\)</p>
+<h2 id="矢量计算尺">矢量计算尺</h2>
+<p>用矢量型的计算尺可以代替查表的工作。将角度化归到第一象限，以及根据象限确定\(\varphi\)取值的步骤和前面一样，此处省略。</p>
+<p>当\(r=220\), \(\varphi=60^\circ\)时，计算过程如下：</p>
+<ol>
+<li>移动滑尺使C刻度右端线对齐D刻度2.2；</li>
+<li>将游标移至S刻度60，在D刻度读出1.905，得\(y=190.5\)；</li>
+<li>将游标移至S刻度红字60，在D刻度读出1.100，得\(x=110.0\)。</li>
+</ol>
+<p>当\(a=330.0\), \(b=190.5\)时，计算过程如下：</p>
+<ol>
+<li>移动滑尺使C刻度右端线对齐D刻度3.3；</li>
+<li>将游标移至D刻度1.905，在T刻度读出30，得\(\alpha=30^\circ\)；</li>
+<li>移动滑尺使S刻度的30与游标对齐；</li>
+<li>将游标移至C尺右端线，在D尺读出3.807，得\(c=380.7\)。可见，有少许误差。</li>
+</ol>
+<h2 id="科学计算器">科学计算器</h2>
+<p>利用科学计算器上的<code>sin</code>、<code>cos</code>和<code>tan<sup>-1</sup></code>功能代替查表，也可以求出待求的量，而且不论是速度还是精度都更优。<code>sin</code>和<code>cos</code>可以接受任意角，因此不需要把角度化归到第一象限。但是，<code>tan<sup>-1</sup></code>给出的角度在\(\left(-\frac{\pi}{2},\frac{\pi}{2}\right)\)内，因此仍然需要根据象限来确定幅角的取值。</p>
+<p>现在市面上的科学计算器大多都含有直角坐标和极坐标转换的功能，分别是<code>Rec(</code>和<code>Pol(</code>。</p>
+<p><code>Rec(r,θ)</code>相当于计算\(r\cos\theta\)和\(r\sin\theta\)。结果将分别被保存到计算器的变量E和F(有些计算器可能是其他变量)中。</p>
+<ul>
+<li><code>Rec(50,53.1301)</code> → <code>30</code></li>
+<li><code>E</code> → <code>30</code></li>
+<li><code>F</code> → <code>40</code></li>
+</ul>
+<p><code>Pol(x,y)</code>相当于计算\(\sqrt{x^2+y^2}\)和\(\mathrm{atan2}(y,x)\)。这时计算器会根据象限自动确定幅角的值，使用起来更加简便了。</p>
+<ul>
+<li><code>Pol(30,40)</code> → <code>50</code></li>
+<li><code>E</code> → <code>50</code></li>
+<li><code>F</code> → <code>53.1301</code></li>
+</ul>
+<p>还有一些科学计算器可以直接做复数计算，它的操作也最简单。</p>
+<p>例如，在TI-89中，将角度模式设置为DEG，复数模式设置为POLAR，那么它可以自动地将计算结果显示成类似\(A\phase\varphi\)的格式。</p>
+<ul>
+<li><code>220/(30+40<b><i>i</i></b>)</code> → <code>(4.4 ∠-53.1301)</code></li>
+</ul>
+<p>有时候需要得到直角形式，可以用<code>‣Rect</code>语法来实现。</p>
+<ul>
+<li><code>(4.4 ∠-53.1301)⏵Rect</code> → <code>2.64-3.52<b><i>i</i></b></code></li>
+</ul>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f12%2fvector-ops%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f12%2fvector-ops%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f12%2fvector-ops%2f&amp;text=%e5%a4%8d%e6%95%b0%e5%92%8c%e7%9f%a2%e9%87%8f%e8%bf%90%e7%ae%97" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

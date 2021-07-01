@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="睿" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="睿"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link active" href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/10/mpostcn/">在MetaPost中使用中文标签</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-10-02T20:44:00-04:00">Mon Oct 2, 2017</time> by rui</p>
+  </header>
+  <p><a href="http://www.tug.org/metapost.html">MetaPost</a>是非常经典的矢量图绘制工具。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+之前我用 PSTricks 配合 XeTeX 绘制含中文标签的图形，因为 MetaPost 中不方便使用中文标签。确实如此。</p>
+<p><strong>TL; DR</strong>  目前比较简单的办法是用 LuaTeX，因为它内置了 MetaPost 库 MPLib，可以直接输出 PDF，字体部分由 LuaTeX 负责处理。</p>
+<figure>
+    <img src="/media/mplib-1.svg"
+         alt="使用 LuaTeX &#43; MPLib 绘制的矢量图"/> <figcaption>
+            <p>使用 LuaTeX + MPLib 绘制的矢量图</p>
+        </figcaption>
+</figure>
+  <a href='http://z-rui.github.io/post/2017/10/mpostcn/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/09/textab/">TeX 的表格陷阱</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-09-21T16:09:00-05:00">Thu Sep 21, 2017</time> by rui</p>
+  </header>
+  <!--
+  \\((\rm L\kern-.36em\raise 2pt\hbox{$\scriptstyle\rm A$}\kern-.15em)\TeX\\)
+-->
+<p>(La)TeX 常被视为高质量出版工具。 确实如此， 但并非用它们生成的文档必然具备较高的排版质量： 计算机工具始终遵守人的指令， 因此排版质量的最终决定者仍然是作者本身。</p>
+<p>LaTeX 给人一种快速上手的感觉， 某些作者可能愿意简单地将自己的文档按照结构化的方式以 LaTeX 代码呈现， 剩下的排版细节留给宏包以及排版引擎。 （某种程度上讲这也是 LaTeX 的设计目标之一。）</p>
+<p>Plain TeX 相对而言要求作者对排版细节知悉更多。 例如， 它要求用户手动添加 <code>{\it 斜体修正\/}</code> 。 这看起来毫无必要， 并且丝毫不 “智能”； LaTeX 的 <code>\textit{斜体}</code> 功能就自动在末尾添加了斜体修正。</p>
+<p>下面考虑一个 TeX 中比较麻烦的问题： 表格排版。 理论上， 可以把表格内的数据分离出来， 只需套用所需的格式， 就可以排版表格。 但是实践中往往需要手动地调整表格的样式。 因此， 从表格的排版中常常可以看出作者对细节的关注程度。 为了充分展示问题， 我选择讨论一个带有竖线的表格。 带有竖线的表格在 TeX 里较难处理 （但它在 Microsoft Word 里出乎意料地容易）， 虽然这种样式越来越不流行， 且不被推荐。 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+  <a href='http://z-rui.github.io/post/2017/09/textab/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/cjk-extend/">扩展汉字的编码</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-29T00:15:27+08:00">Wed Mar 29, 2017</time> by rui</p>
+  </header>
+  <p>2013 年的《通用规范汉字表》是目前简体中文字形的最新标准。其中有若干字为新的类推简化字，如字典末尾均有的「<ruby>𬭊<rt>dù</rt></ruby>」「<ruby>𬭳<rt>xǐ</rt></ruby>」「<ruby>𬭛<rt>bō</rt></ruby>」「<ruby>𬭶<rt>hēi</rt></ruby>」「<ruby>鿏<rt>mài</rt></ruby>」（105&ndash;109号元素名）。</p>
+<p>除「鿏」外，其余均位于 Unicode 8.0 新增的 Ext-E 扩展分区内。在较新的操作系统上，安装有相应的字体，这些汉字均可正常显示。可能并非所有输入法均能输入这些字。（可以根据上面给出的拼音测试一下自己的输入法是否符合国家标准。）</p>
+<p>Ext-E 的范围是2B820&ndash;2CEAF。使用UTF-8或GB18030编码均需4个字节：</p>
+<table>
+<thead>
+<tr>
+<th>字</th>
+<th>GB18030</th>
+<th>UTF-8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>𬭊</td>
+<td><code>9933a838</code></td>
+<td><code>f0 ac ad 8a</code></td>
+</tr>
+</tbody>
+</table>
+  <a href='http://z-rui.github.io/post/2017/03/cjk-extend/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/go-scanf/">Go的fmt效率问题</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-17T16:50:07+08:00">Fri Mar 17, 2017</time> by rui</p>
+  </header>
+  <p>Go 的 <code>fmt</code> 包提供了类似 C 标准库中的 scanf 和 printf 的系列输入输出函数。</p>
+<pre><code>// 输入 N*N 矩阵
+var G [N][N]int
+for i := 0; i &lt; N; i++ {
+	for j := 0; j &lt; N; j++ {
+		fmt.Scan(&amp;G[i][j])
+	}
+}
+</code></pre><p>但是 C 的标准输入输出默认是带缓冲的， 而 Go 的不带。
+当有大量 I/O 时， 效率较低。 解决的办法是用 <code>bufio</code> 中带缓冲的类型。</p>
+<pre><code>in := bufio.NewReader(os.Stdin)
+for i := 0; i &lt; N; i++ {
+	for j := 0; j &lt; N; j++ {
+		fmt.Fscan(in, &amp;G[i][j])
+	}
+}
+</code></pre><p>同理， 可用 <code>bufio.Writer</code> 对输出进行缓冲，
+但是记得在程序退出前调用 <code>Flush()</code> 清空缓冲区。</p>
+  <a href='http://z-rui.github.io/post/2017/03/go-scanf/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/pdf-imposition/">PDF 拼版技巧</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-07T20:59:06+08:00">Tue Mar 7, 2017</time> by rui</p>
+  </header>
+  <p>我手头有一些 jpg 格式的图像文件。 我想把他们打印成 A5 尺寸的小册子。
+如果打印机附带了将图像打印成小册子的功能， 那么直接使用即可。
+否则， 比较方便的办法是将 jpg 汇集在一个 PDF 文件中， 拼版后交给打印机进行打印。</p>
+<p>拼版之前需要确保每个页面的大小为 148mm x 210mm。 对于 300dpi 的图像而言， 即为
+1748 x 2480。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 可以使用 ImageMagick 对图像进行缩放：</p>
+<pre><code>$ magick img.jpg -set density 300   \
+                 -resize 1748x2480  \
+                 -unsharp 0x5+0.3+0 \
+         img-300dpi.jpg
+</code></pre><p>其中， <code>-unsharp</code> 选项用于对缩放后的图像进行钝化遮罩 (Unsharp Mask) 处理，
+简单地说就是锐化图像， 抵消缩放所产生的模糊感。</p>
+<p>使用 Acrobat 软件可以将若干张图像合成为单个 PDF。</p>
+<p>观察一下小册子的印刷方式。 每张纸上印刷的页面并不是按照顺序排列的。
+例如， 对于一份 8 页的小册子， 第一张纸正面印的是第 8 页和第 1 页，
+反面印的是第 2 页和第 7 页； 第二张纸正面印的是第 6 页和第 3 页，
+反面印的是第 4 页和第 5 页。 这样，将这两张纸叠在一起，
+第 1 页的反面是第 2 页， 第 2 页和第 3 页恰好相对， 等等。
+将所有纸张叠好， 并在中间装订， 然后对折，就构成了一本小册子。</p>
+<p>对于上述的小册子， Acrobat 可以直接打印出来。 打开合成的 PDF 文件并按 “打印”，
+在打印对话框中选择 “小册子”， 即可。</p>
+<p>如果要用 A4 纸制作 A6 大小的小册子， 那么一张纸上需要拼 8 个版面。
+仍以 8 页的小册子为例， 这时只需一张纸即可： 正面布置的版面为
+\({5;4 \atop 8;1}\)， 反面布置的版面为 \({3;6 \atop 2;7}\)。
+将这张纸正面朝外对折， 则反面的第 2、 3 页相对， 第 6、 7 页相对。
+用一把裁纸刀沿着折痕将纸裁开， 保持对折时页面的相对位置，
+然后令第 1、 8 页朝外， 将两个叠好的半张纸再次对折， 在折痕处装订，
+就构成了小册子。</p>
+  <a href='http://z-rui.github.io/post/2017/03/pdf-imposition/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/inkscape-coloring/">用 Inkscape 给 svg 文件上色</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-07T11:48:34+08:00">Tue Mar 7, 2017</time> by rui</p>
+  </header>
+  <figure>
+    <img src="/media/ctanlion-1.svg"
+         alt="Duane Bibby 为 TeXbook 绘制的插图 (来自 http://ctan.org/lion)"/> <figcaption>
+            <p>Duane Bibby 为 TeXbook 绘制的插图 (来自 <a href="http://ctan.org/lion">http://ctan.org/lion</a>)</p>
+        </figcaption>
+</figure>
+
+<figure>
+    <img src="/media/ctanlion-2.svg"
+         alt="上色后的效果"/> <figcaption>
+            <p>上色后的效果</p>
+        </figcaption>
+</figure>
+  <a href='http://z-rui.github.io/post/2017/03/inkscape-coloring/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/02/typezh/">typezh: XeTeX 中文排版辅助宏</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-02-22T13:19:00+08:00">Wed Feb 22, 2017</time> by rui</p>
+  </header>
+  XeTeX 是 TeX 排版系统的扩展，增加了对 Unicode 和 OpenType(R) 的支持。因此可被用于中文排版。
+我写了 typezh，用于在 Plain TeX 的基础上编写中文文档。可以参考其中的 readme.tex 了解其用法。或者，更好地，使用
+xetex readme.tex 将说明文件编译成 PDF，然后查看。
+  <a href='http://z-rui.github.io/post/2017/02/typezh/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/01/gentoo-vultr/">在Vultr上安装Gentoo</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-01-20T16:08:00+08:00">Fri Jan 20, 2017</time> by rui</p>
+  </header>
+  <p><a href="http://www.vultr.com/?ref=7089997-3B">Vultr</a>是和DigitalOcean类似的VPS服务提供商。它比后者多一个功能：挂载任意ISO镜像。这样就可以安装任意操作系统了。</p>
+<p>我用这个功能安装Gentoo。主要参考<a href="https://www.vultr.com/docs/installing-gentoo-linux-on-a-vultr-server">这篇文章</a>，以及Gentoo的官方手册。</p>
+<p>我没有用Gentoo安装盘，而是用了Vultr的ISO library中已有的ArchLinux安装盘。这样省去了上传ISO镜像的步骤。而且事实上ArchLinux的安装盘好用得多。</p>
+<p>分区、格式化、下载和解包stage3……等等步骤，都没有太多需要注意的地方。chroot之前要记得复制<code>/etc/resolv.conf</code>，否则之后无法连网。然后就是emerge一些东西，也没什么难度。</p>
+<p>值得注意的是内核编译选项。文章中明显提到了要启用<code>VIRTIO_PCI</code>和<code>VIRTIO_MMIO</code>，实际上还要启用<code>VIRTIO_BLK</code>和<code>VIRTIO_NET</code>，才能访问硬盘和网络。很多其它硬件驱动都可以禁用。</p>
+<p>最后按照文章里写的配置好系统就可以了。安装GRUB启动器，如果<code>/dev</code>等虚拟目录没有正确挂载到chroot的根目录下也会安装失败。重启之前记得运行<code>passwd</code>设置root密码。</p>
+  <a href='http://z-rui.github.io/post/2017/01/gentoo-vultr/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/01/makeindex-pp/">makeindex预处理</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-01-19T16:11:00+08:00">Thu Jan 19, 2017</time> by rui</p>
+  </header>
+  <p>makeindex是用来编制索引的工具。在\(\LaTeX\)文档中，用<code>\index</code>在文中标记索引，排版时将生成相应的<code>.idx</code>文件，每一个<code>\index</code>命令对应一行。</p>
+<p>makeindex对<code>.idx</code>文件进行排序和格式化，然后生成<code>.ind</code>文件，该文件就是索引部分的\(\LaTeX\)代码。之后只需再运行一次\(\LaTeX\)程序即可将索引包含在文档内。</p>
+<p>这个过程本身已经有些复杂了，现在遇到一件更麻烦的事：怎样编制中文索引。汉字没有明确的排序依据，通用的做法是按拼音或者笔画排序。<a href="https://github.com/leo-liu/zhmakeindex">zhmakeindex</a>提供了这些功能。</p>
+  <a href='http://z-rui.github.io/post/2017/01/makeindex-pp/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/12/vector-ops/">复数和矢量运算</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-12-13T21:55:00+08:00">Tue Dec 13, 2016</time> by rui</p>
+  </header>
+  <p>在工程领域中，复数\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\)被用来指代一个有效值为\(A\)，初相位为\(\varphi\)的正弦量\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\(\newcommand\phase[1]{,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\)表示，并且使用角度制。</p>
+<img style="margin: auto;" src="/media/vector-1.svg">
+  <a href='http://z-rui.github.io/post/2016/12/vector-ops/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/page/2/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/page/4/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

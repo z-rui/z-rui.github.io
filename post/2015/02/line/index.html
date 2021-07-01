@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="在位图上画直线" />
+<meta property="og:description" content="在显示器上画出的各种图形中，直线是最简单的一种。这里说的直线，有确定的起点和终点；数学家也许更愿意称其为线段。
+画直线是如此的简单，以至于人们也许已经忽略了它也是逐个像素点绘制出来的，而把它当作一种原子的操作。我也是如此认为，直到昨天一位同学谈他的计算机图形学课程时，说到了这个问题。
+于是我尝试用自己的知识来解决这个问题。显示器上的直线和数学上的线段最明显的差别是，前者是由有限个点构成的，而后者不是。所以，显示器上的直线只是一种近似，而我要使得这种近似的效果尽量好。
+为了简化问题，假设显示器显示的是一幅单色的位图。我想到的做法是这样的：
+
+画起点。
+画完一个点后，在其周围的点中，找到距离给定直线最近的点，然后画这个点。
+重复第2步，直到画了终点为止。
+
+这个做法看上去应该没有问题，只有一些细节部分需要考虑。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/02/line/" />
+<meta property="article:published_time" content="2015-02-18T02:01:00+08:00" />
+<meta property="article:modified_time" content="2015-02-18T02:01:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在位图上画直线"/>
+<meta name="twitter:description" content="在显示器上画出的各种图形中，直线是最简单的一种。这里说的直线，有确定的起点和终点；数学家也许更愿意称其为线段。
+画直线是如此的简单，以至于人们也许已经忽略了它也是逐个像素点绘制出来的，而把它当作一种原子的操作。我也是如此认为，直到昨天一位同学谈他的计算机图形学课程时，说到了这个问题。
+于是我尝试用自己的知识来解决这个问题。显示器上的直线和数学上的线段最明显的差别是，前者是由有限个点构成的，而后者不是。所以，显示器上的直线只是一种近似，而我要使得这种近似的效果尽量好。
+为了简化问题，假设显示器显示的是一幅单色的位图。我想到的做法是这样的：
+
+画起点。
+画完一个点后，在其周围的点中，找到距离给定直线最近的点，然后画这个点。
+重复第2步，直到画了终点为止。
+
+这个做法看上去应该没有问题，只有一些细节部分需要考虑。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "在位图上画直线",
+  "url": "http://z-rui.github.io/post/2015/02/line/",
+  "wordCount": "281",
+  "datePublished": "2015-02-18T02:01:00+08:00",
+  "dateModified": "2015-02-18T02:01:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/02/line/">
+
+    <title>在位图上画直线 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/line/">在位图上画直线</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-18T02:01:00+08:00">Wed Feb 18, 2015</time> by rui</p>
+  </header>
+  <p>在显示器上画出的各种图形中，直线是最简单的一种。这里说的<strong>直线</strong>，有确定的起点和终点；数学家也许更愿意称其为<strong>线段</strong>。</p>
+<p>画直线是如此的简单，以至于人们也许已经忽略了它也是逐个像素点绘制出来的，而把它当作一种原子的操作。我也是如此认为，直到昨天一位同学谈他的计算机图形学课程时，说到了这个问题。</p>
+<p>于是我尝试用自己的知识来解决这个问题。显示器上的直线和数学上的线段最明显的差别是，前者是由有限个点构成的，而后者不是。所以，显示器上的直线只是一种近似，而我要使得这种近似的效果尽量好。</p>
+<p>为了简化问题，假设显示器显示的是一幅单色的位图。我想到的做法是这样的：</p>
+<ol>
+<li>画起点。</li>
+<li>画完一个点后，在其周围的点中，找到距离给定直线最近的点，然后画这个点。</li>
+<li>重复第2步，直到画了终点为止。</li>
+</ol>
+<p>这个做法看上去应该没有问题，只有一些细节部分需要考虑。</p>
+<h2 id="点到直线距离">点到直线距离</h2>
+<p>首先要考虑的是，怎样确定一个点到给定直线的距离最近？平面解析几何给出了点\((x_0, y_0)\)到直线\(Ax+By+C=0\)的距离公式：
+\[d={|Ax_0+By_0+C|\over\sqrt{A^2+B^2}}\]</p>
+<p>给出的是两个端点，而距离公式中使用的是直线方程，其中的3个待定系数需要求解。根据直线的两点式方程，过\((x_1, y_1),(x_2,y_2)\)的直线方程为
+\[(y_1-y_2)x-(x_1-x_2)y+x_1y_2-x_2y_1=0\]</p>
+<p>如果给出第3个点\((x_3,y_3)\)，则该点到直线的距离
+\[d = {\left| (y_1-y_2)x_3-(x_1-x_2)y_3+x_1y_2-x_2y_1 \right| \over \sqrt{(y_1-y_2)^2 + (x_1-x_2)^2}}\]
+看上去有些复杂。实际上，对于给定的直线而言，式中的分母是常数，因此无需计算，只需比较分子的大小即可。而分子
+\[\eqalign{
+&amp;\left| (y_1-y_2)x_3-(x_1-x_2)y_3+x_1y_2-x_2y_1 \right| \cr
+=&amp;\left|
+\left|\matrix{y_1 &amp; 1 \cr y_2 &amp; 1}\right|x_3
+-\left|\matrix{x_1 &amp; 1 \cr x_2 &amp; 1}\right|y_3
++\left|\matrix{x_1 &amp; y_1 \cr x_2 &amp; y_2}\right|
+\right| \cr
+=&amp;\left|\det\pmatrix{x_1 &amp; y_1 &amp; 1 \cr x_2 &amp; y_2 &amp; 1 \cr x_3 &amp; y_3 &amp; 1}\right|
+}\]</p>
+<p>是一个非常好记的形式。</p>
+<h2 id="画线的方向">画线的方向</h2>
+<p>上文使用两个端点确定了直线的方程，但是仍然有一个细节值得注意：画完起点以后，面向终点和背离终点的两个方向都存在一个到直线距离最短的点，因此必须做出取舍。有两种办法处理这个问题。</p>
+<h3 id="对称化简">对称化简</h3>
+<p>把所有对称的情况化归到一种最基本的情况，在这种情况里（比方说），斜率永远在\([0,1]\)区间里，而起点是左下角的那个点。这样的话，枚举所谓“周围的点”，只要枚举两个点：右边的点和右上角的点。</p>
+<h3 id="单调性限制">单调性限制</h3>
+<p>这种做法在编程中更加方便。其原理是，限制所画的各点的坐标是单调变化的，其单调的方向由给定的两点的相对位置而定。</p>
+<h2 id="演示程序">演示程序</h2>
+<blockquote>
+<p>Talk is cheap, show me your code.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>Bitmap; <span style="color:#75715e">/* 位图类型(代码中未给出实现) */</span>
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_pixel</span>(Bitmap b, <span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y, <span style="color:#66d9ef">int</span> color);
+<span style="color:#75715e">/* 把位图b的(x, y)坐标设置为color颜色 */</span>
+<span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">is_pixel</span>(Bitmap b, <span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y);
+<span style="color:#75715e">/* 检查坐标(x, y)是否在位图b的范围内 */</span>
+
+<span style="color:#66d9ef">static</span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">crossp3</span>(<span style="color:#66d9ef">int</span> x1, <span style="color:#66d9ef">int</span> y1, <span style="color:#66d9ef">int</span> x2, <span style="color:#66d9ef">int</span> y2, <span style="color:#66d9ef">int</span> x3, <span style="color:#66d9ef">int</span> y3)
+{
+	<span style="color:#66d9ef">return</span> x1<span style="color:#f92672">*</span>(y2<span style="color:#f92672">-</span>y3) <span style="color:#f92672">+</span> x2<span style="color:#f92672">*</span>(y3<span style="color:#f92672">-</span>y1) <span style="color:#f92672">+</span> x3<span style="color:#f92672">*</span>(y1<span style="color:#f92672">-</span>y2);
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">line</span>(Bitmap b, <span style="color:#66d9ef">int</span> x1, <span style="color:#66d9ef">int</span> y1, <span style="color:#66d9ef">int</span> x2, <span style="color:#66d9ef">int</span> y2)
+{
+	<span style="color:#66d9ef">int</span> x, y, xx, yy;
+	<span style="color:#66d9ef">int</span> dxmin, dymin;
+
+	dxmin <span style="color:#f92672">=</span> (x1 <span style="color:#f92672">&lt;</span> x2) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+	dymin <span style="color:#f92672">=</span> (y1 <span style="color:#f92672">&lt;</span> y2) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+	x <span style="color:#f92672">=</span> x1;
+	y <span style="color:#f92672">=</span> y1;
+	<span style="color:#66d9ef">for</span> (;;) {
+		<span style="color:#66d9ef">int</span> xx, yy, dx, dy, x3, y3;
+		<span style="color:#66d9ef">int</span> crossp, min_crossp <span style="color:#f92672">=</span> INT_MAX;
+
+		set_pixel(b, x, y, <span style="color:#ae81ff">1</span>);
+		<span style="color:#66d9ef">if</span> (x <span style="color:#f92672">==</span> x2 <span style="color:#f92672">&amp;&amp;</span> y <span style="color:#f92672">==</span> y2)
+			<span style="color:#66d9ef">break</span>;
+		<span style="color:#66d9ef">for</span> (dx <span style="color:#f92672">=</span> dxmin; dx <span style="color:#f92672">&lt;=</span> dxmin<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; dx<span style="color:#f92672">++</span>) {
+			<span style="color:#66d9ef">for</span> (dy <span style="color:#f92672">=</span> dymin; dy <span style="color:#f92672">&lt;=</span> dymin<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; dy<span style="color:#f92672">++</span>) {
+				<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>dx <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>dy)
+					<span style="color:#66d9ef">continue</span>;
+				<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>is_pixel(b, x3 <span style="color:#f92672">=</span> x<span style="color:#f92672">+</span>dx, y3 <span style="color:#f92672">=</span> y<span style="color:#f92672">+</span>dy))
+					<span style="color:#66d9ef">continue</span>;
+				crossp <span style="color:#f92672">=</span> abs(crossp3(x1, y1, x2, y2, x3, y3));
+				<span style="color:#66d9ef">if</span> (crossp <span style="color:#f92672">&lt;</span> min_crossp) {
+					min_crossp <span style="color:#f92672">=</span> crossp;
+					xx <span style="color:#f92672">=</span> x3;
+					yy <span style="color:#f92672">=</span> y3;
+				}
+			}
+		}
+		x <span style="color:#f92672">=</span> xx;
+		y <span style="color:#f92672">=</span> yy;
+	}
+}
+</code></pre></div>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fline%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fline%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f02%2fline%2f&amp;text=%e5%9c%a8%e4%bd%8d%e5%9b%be%e4%b8%8a%e7%94%bb%e7%9b%b4%e7%ba%bf" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="suckless.org" />
+<meta property="og:description" content="suckless.org有两个小程序：dwm和surf。我很喜欢。
+现在的软件有一个不好的趋势，那就是越做越大。这可能和计算机资源越来越充裕有关系。随随便便就有一个上百GB的硬盘，那么占用5GB甚至更多的空间安装一个Gnome桌面环境也未尝不可。
+软件之间互相依赖。我只需要A软件的功能，但是A需要B的功能X，所以我还得安装B。然而B却自带了其他与之不相关的功能Y, Z, &hellip;功能Y, Z又依赖其他的软件C, D, &hellip;这样下去就没完没了了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/05/suckless/" />
+<meta property="article:published_time" content="2016-05-10T14:21:00+08:00" />
+<meta property="article:modified_time" content="2016-05-10T14:21:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="suckless.org"/>
+<meta name="twitter:description" content="suckless.org有两个小程序：dwm和surf。我很喜欢。
+现在的软件有一个不好的趋势，那就是越做越大。这可能和计算机资源越来越充裕有关系。随随便便就有一个上百GB的硬盘，那么占用5GB甚至更多的空间安装一个Gnome桌面环境也未尝不可。
+软件之间互相依赖。我只需要A软件的功能，但是A需要B的功能X，所以我还得安装B。然而B却自带了其他与之不相关的功能Y, Z, &hellip;功能Y, Z又依赖其他的软件C, D, &hellip;这样下去就没完没了了。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "suckless.org",
+  "url": "http://z-rui.github.io/post/2016/05/suckless/",
+  "wordCount": "25",
+  "datePublished": "2016-05-10T14:21:00+08:00",
+  "dateModified": "2016-05-10T14:21:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/05/suckless/">
+
+    <title>suckless.org | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/05/suckless/">suckless.org</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-05-10T14:21:00+08:00">Tue May 10, 2016</time> by rui</p>
+  </header>
+  <p><a href="http://suckless.org">suckless.org</a>有两个小程序：dwm和surf。我很喜欢。</p>
+<p>现在的软件有一个不好的趋势，那就是越做越大。这可能和计算机资源越来越充裕有关系。随随便便就有一个上百GB的硬盘，那么占用5GB甚至更多的空间安装一个Gnome桌面环境也未尝不可。</p>
+<p>软件之间互相依赖。我只需要A软件的功能，但是A需要B的功能X，所以我还得安装B。然而B却自带了其他与之不相关的功能Y, Z, &hellip;功能Y, Z又依赖其他的软件C, D, &hellip;这样下去就没完没了了。</p>
+<p>下面是我的系统上webkit-gtk2软件包的依赖关系图。建议不要放大了看，头晕。幸运的是现代的软件包管理器都能够自动处理相依性问题，否则的话这就是一个噩梦。</p>
+<figure>
+    <img src="/media/dependency-1.svg"/> 
+</figure>
+
+<p>surf依赖于webkit-gtk2，除此以外没有太多乱七八糟的依赖。它就是一个简单的浏览器，一个窗口显示一个页面，仅此而已。<em>连地址栏也没有。</em></p>
+<figure>
+    <img src="/media/suckless-1.png"/> 
+</figure>
+
+<p>图中就是两个浏览器窗口。没有地址栏，通过快捷键<code>Ctrl-G</code>调出地址栏输入框，输入要访问的URL即可。这个输入框是suckless.org的另一个作品：dmenu。在页面内搜索文字也是用<code>demnu</code>完成的，快捷键是<code>Ctrl-/</code>。</p>
+<p>中文用户会发现当前版本(4.6)的dmenu并不能支持中文输入法，这给搜索网页中的中文词语带来了很大的麻烦。为此，我制作了一个<a href="http://lists.suckless.org/dev/1605/28914.html">补丁</a>。使用这个补丁，就可以在locale设置为UTF-8的情况下在dmenu中输入汉字，就像图中那样。</p>
+<p>此外还有光标显示不正确的问题，我觉得这个问题不那么严重，毕竟很少需要编辑。没有什么特别好的解决办法，可选的解决方案有：</p>
+<ol>
+<li>在dmenu的<code>config.h</code>中把默认字体设置为中文字体，例如<code>Droid Sans Fallback</code>。副作用是，英文字体也一块儿被改了。</li>
+<li>我写了一个凑合能用的<a href="http://lists.suckless.org/dev/1605/28922.html">补丁</a>。</li>
+<li>假装没看见光标。</li>
+</ol>
+<p>dwm是一个窗口管理器。上图中似乎没有任何窗口管理器。呃，其实是因为dwm的状态栏被dmenu的输入框挡住了。dwm非常简洁，只有一个状态栏，没有乱七八糟的窗口装饰，移动窗口和调整窗口大小可以用<code>Alt</code>键配合鼠标左右键来完成。当然，大部分时候不需要移动窗口或者调整窗口大小，因为dwm可以工作在__平铺模式__：</p>
+<figure>
+    <img src="/media/suckless-2.png"/> 
+</figure>
+
+<p>在平铺模式中，窗口管理器自动调整窗口的位置和大小。有一个主要的工作窗口，显示在左侧，其他的窗口则堆叠在右侧。而之前一张图中，各个窗口可以随意摆放，这是__浮动模式__。</p>
+<p>在这张图里可以看见dwm的状态栏。dwm默认提供9个工作区，可以通过<code>Alt+[0-9]</code>切换。这些热键也可以自定义。不过，它们是直接定义在源文件里的。修改<code>config.h</code>，编译一份属于自己的dwm就可以了。</p>
+<p>如果你的屏幕DPI较高，你可能会发现dwm的状态栏以及dmenu中显示的中文字体明显偏小(图中不存在这个问题)。这也是一个bug，我不知道正确的改正方法是什么，可选的的解决方案有：</p>
+<ol>
+<li>在dwm和dmenu的<code>config.h</code>中，在<code>fonts[]</code>数组后面添加一项中文字体，字号可以和前面的英文字体(默认为monospace)一致。可以很好地解决问题，特别是，你还可以自由地选择中文字体。</li>
+<li>修改<code>drw.c</code>，把含有<code>FcDefaultSubstitite(fcpattern);</code>的行删除。这个函数调用会把字体的DPI设置为默认的75，不论你实际的DPI设置为多少。我不知道正确的改正方法是什么，我也不知道删除这一行会有什么副作用。</li>
+<li>买一个放大镜。</li>
+</ol>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f05%2fsuckless%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f05%2fsuckless%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f05%2fsuckless%2f&amp;text=suckless.org" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="玩具垃圾收集器" />
+<meta property="og:description" content="今天我写了一个玩具垃圾收集器，采用_标记-清除(Mark-Sweep)_ 算法。
+Wikipedia上的一张图片解释了该过程。
+     
+
+
+我写的垃圾收集器之所以称作玩具，是因为它采用了朴素实现。每次垃圾收集会打断其他例程的运行，进行一次完整的标记-清除周期。其缺点是容易造成周期性的延迟，影响程序运行的平顺度。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/10/toygc/" />
+<meta property="article:published_time" content="2015-10-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2015-10-04T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="玩具垃圾收集器"/>
+<meta name="twitter:description" content="今天我写了一个玩具垃圾收集器，采用_标记-清除(Mark-Sweep)_ 算法。
+Wikipedia上的一张图片解释了该过程。
+     
+
+
+我写的垃圾收集器之所以称作玩具，是因为它采用了朴素实现。每次垃圾收集会打断其他例程的运行，进行一次完整的标记-清除周期。其缺点是容易造成周期性的延迟，影响程序运行的平顺度。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "玩具垃圾收集器",
+  "url": "http://z-rui.github.io/post/2015/10/toygc/",
+  "wordCount": "12",
+  "datePublished": "2015-10-04T00:00:00+00:00",
+  "dateModified": "2015-10-04T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/10/toygc/">
+
+    <title>玩具垃圾收集器 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/10/toygc/">玩具垃圾收集器</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-10-04T00:00:00Z">Sun Oct 4, 2015</time> by rui</p>
+  </header>
+  <p>今天我写了一个<a href="https://github.com/z-rui/toygc">玩具垃圾收集器</a>，采用_标记-清除(<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection">Mark-Sweep</a>)_ 算法。</p>
+<p><a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection">Wikipedia</a>上的一张图片解释了该过程。<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif"/> 
+</figure>
+</p>
+<p>我写的垃圾收集器之所以称作玩具，是因为它采用了朴素实现。每次垃圾收集会打断其他例程的运行，进行一次完整的标记-清除周期。其缺点是容易造成周期性的延迟，影响程序运行的平顺度。</p>
+<p>整个实现非常干净，基本上就是标记-清除算法的直接转译。垃圾收集器需要三个外部函数来操作对象：</p>
+<ol>
+<li><code>finalize</code>是外界对象的终结器(finalizer)，通常它会调用<code>free</code>之类的函数来释放对象的内存（垃圾回收器自己不管理内存的分配和释放）。</li>
+<li><code>walk_obj</code>遍历一个对象的所有直接引用。</li>
+<li><code>walk_root_set</code>遍历根集对象。</li>
+</ol>
+<p>对外暴露两个接口函数：</p>
+<ol>
+<li><code>tgc_collect</code>执行一次标记-清除。</li>
+<li><code>tgc_add</code>将新对象加入垃圾收集器的管辖范围。</li>
+</ol>
+<p>之后我可能会考虑改进垃圾收集器的算法，例如采用增量收集的方法，减少一次收集过程的延迟。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2ftoygc%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2ftoygc%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f10%2ftoygc%2f&amp;text=%e7%8e%a9%e5%85%b7%e5%9e%83%e5%9c%be%e6%94%b6%e9%9b%86%e5%99%a8" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数值分析 on 睿</title>
+    <link>http://z-rui.github.io/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</link>
+    <description>Recent content in 数值分析 on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Fri, 10 Apr 2015 16:52:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用gnuplot将数据可视化</title>
+      <link>http://z-rui.github.io/post/2015/04/gnuplot/</link>
+      <pubDate>Fri, 10 Apr 2015 16:52:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/04/gnuplot/</guid>
+      <description>&lt;p&gt;今天我做了两件事，其一是了解了样条插值的概念，其二是观察了使用有限差分方法求解的调和场。做这两件事都用到了gnuplot。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.gnuplot.info/&#34;&gt;Gnuplot&lt;/a&gt;是一个可用于作图的免费软件。使用它可以将数值计算的结果以图像的方式呈现，以获得直观的感受。&lt;/p&gt;
+&lt;h1 id=&#34;观察插值函数&#34;&gt;观察插值函数&lt;/h1&gt;
+&lt;p&gt;试想原本有一个连续函数，由于测量的原因现在只知道其中的个别点的位置。&lt;/p&gt;
+&lt;figure&gt;
+    &lt;img src=&#34;http://z-rui.github.io/media/gnuplot-sample.png&#34; width=&#34;100%&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;但是我想知道中间某个点处的函数值，我会这么做：用一条光滑的曲线把这些点连接起来，然后根据图像来找到对应的函数值。这就是科学实验中常用的图解法的原理。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

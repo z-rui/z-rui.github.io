@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="PDF 拼版技巧" />
+<meta property="og:description" content="我手头有一些 jpg 格式的图像文件。 我想把他们打印成 A5 尺寸的小册子。
+如果打印机附带了将图像打印成小册子的功能， 那么直接使用即可。
+否则， 比较方便的办法是将 jpg 汇集在一个 PDF 文件中， 拼版后交给打印机进行打印。
+拼版之前需要确保每个页面的大小为 148mm x 210mm。 对于 300dpi 的图像而言， 即为
+1748 x 2480。1 可以使用 ImageMagick 对图像进行缩放：
+$ magick img.jpg -set density 300   \
+                 -resize 1748x2480  \
+                 -unsharp 0x5&#43;0.3&#43;0 \
+         img-300dpi.jpg
+其中， -unsharp 选项用于对缩放后的图像进行钝化遮罩 (Unsharp Mask) 处理，
+简单地说就是锐化图像， 抵消缩放所产生的模糊感。
+使用 Acrobat 软件可以将若干张图像合成为单个 PDF。
+观察一下小册子的印刷方式。 每张纸上印刷的页面并不是按照顺序排列的。
+例如， 对于一份 8 页的小册子， 第一张纸正面印的是第 8 页和第 1 页，
+反面印的是第 2 页和第 7 页； 第二张纸正面印的是第 6 页和第 3 页，
+反面印的是第 4 页和第 5 页。 这样，将这两张纸叠在一起，
+第 1 页的反面是第 2 页， 第 2 页和第 3 页恰好相对， 等等。
+将所有纸张叠好， 并在中间装订， 然后对折，就构成了一本小册子。
+对于上述的小册子， Acrobat 可以直接打印出来。 打开合成的 PDF 文件并按 “打印”，
+在打印对话框中选择 “小册子”， 即可。
+如果要用 A4 纸制作 A6 大小的小册子， 那么一张纸上需要拼 8 个版面。
+仍以 8 页的小册子为例， 这时只需一张纸即可： 正面布置的版面为
+\({5;4 \atop 8;1}\)， 反面布置的版面为 \({3;6 \atop 2;7}\)。
+将这张纸正面朝外对折， 则反面的第 2、 3 页相对， 第 6、 7 页相对。
+用一把裁纸刀沿着折痕将纸裁开， 保持对折时页面的相对位置，
+然后令第 1、 8 页朝外， 将两个叠好的半张纸再次对折， 在折痕处装订，
+就构成了小册子。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/03/pdf-imposition/" />
+<meta property="article:published_time" content="2017-03-07T20:59:06+08:00" />
+<meta property="article:modified_time" content="2017-03-07T20:59:06+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PDF 拼版技巧"/>
+<meta name="twitter:description" content="我手头有一些 jpg 格式的图像文件。 我想把他们打印成 A5 尺寸的小册子。
+如果打印机附带了将图像打印成小册子的功能， 那么直接使用即可。
+否则， 比较方便的办法是将 jpg 汇集在一个 PDF 文件中， 拼版后交给打印机进行打印。
+拼版之前需要确保每个页面的大小为 148mm x 210mm。 对于 300dpi 的图像而言， 即为
+1748 x 2480。1 可以使用 ImageMagick 对图像进行缩放：
+$ magick img.jpg -set density 300   \
+                 -resize 1748x2480  \
+                 -unsharp 0x5&#43;0.3&#43;0 \
+         img-300dpi.jpg
+其中， -unsharp 选项用于对缩放后的图像进行钝化遮罩 (Unsharp Mask) 处理，
+简单地说就是锐化图像， 抵消缩放所产生的模糊感。
+使用 Acrobat 软件可以将若干张图像合成为单个 PDF。
+观察一下小册子的印刷方式。 每张纸上印刷的页面并不是按照顺序排列的。
+例如， 对于一份 8 页的小册子， 第一张纸正面印的是第 8 页和第 1 页，
+反面印的是第 2 页和第 7 页； 第二张纸正面印的是第 6 页和第 3 页，
+反面印的是第 4 页和第 5 页。 这样，将这两张纸叠在一起，
+第 1 页的反面是第 2 页， 第 2 页和第 3 页恰好相对， 等等。
+将所有纸张叠好， 并在中间装订， 然后对折，就构成了一本小册子。
+对于上述的小册子， Acrobat 可以直接打印出来。 打开合成的 PDF 文件并按 “打印”，
+在打印对话框中选择 “小册子”， 即可。
+如果要用 A4 纸制作 A6 大小的小册子， 那么一张纸上需要拼 8 个版面。
+仍以 8 页的小册子为例， 这时只需一张纸即可： 正面布置的版面为
+\({5;4 \atop 8;1}\)， 反面布置的版面为 \({3;6 \atop 2;7}\)。
+将这张纸正面朝外对折， 则反面的第 2、 3 页相对， 第 6、 7 页相对。
+用一把裁纸刀沿着折痕将纸裁开， 保持对折时页面的相对位置，
+然后令第 1、 8 页朝外， 将两个叠好的半张纸再次对折， 在折痕处装订，
+就构成了小册子。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PDF 拼版技巧",
+  "url": "http://z-rui.github.io/post/2017/03/pdf-imposition/",
+  "wordCount": "302",
+  "datePublished": "2017-03-07T20:59:06+08:00",
+  "dateModified": "2017-03-07T20:59:06+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/03/pdf-imposition/">
+
+    <title>PDF 拼版技巧 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/pdf-imposition/">PDF 拼版技巧</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-07T20:59:06+08:00">Tue Mar 7, 2017</time> by rui</p>
+  </header>
+  <p>我手头有一些 jpg 格式的图像文件。 我想把他们打印成 A5 尺寸的小册子。
+如果打印机附带了将图像打印成小册子的功能， 那么直接使用即可。
+否则， 比较方便的办法是将 jpg 汇集在一个 PDF 文件中， 拼版后交给打印机进行打印。</p>
+<p>拼版之前需要确保每个页面的大小为 148mm x 210mm。 对于 300dpi 的图像而言， 即为
+1748 x 2480。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 可以使用 ImageMagick 对图像进行缩放：</p>
+<pre><code>$ magick img.jpg -set density 300   \
+                 -resize 1748x2480  \
+                 -unsharp 0x5+0.3+0 \
+         img-300dpi.jpg
+</code></pre><p>其中， <code>-unsharp</code> 选项用于对缩放后的图像进行钝化遮罩 (Unsharp Mask) 处理，
+简单地说就是锐化图像， 抵消缩放所产生的模糊感。</p>
+<p>使用 Acrobat 软件可以将若干张图像合成为单个 PDF。</p>
+<p>观察一下小册子的印刷方式。 每张纸上印刷的页面并不是按照顺序排列的。
+例如， 对于一份 8 页的小册子， 第一张纸正面印的是第 8 页和第 1 页，
+反面印的是第 2 页和第 7 页； 第二张纸正面印的是第 6 页和第 3 页，
+反面印的是第 4 页和第 5 页。 这样，将这两张纸叠在一起，
+第 1 页的反面是第 2 页， 第 2 页和第 3 页恰好相对， 等等。
+将所有纸张叠好， 并在中间装订， 然后对折，就构成了一本小册子。</p>
+<p>对于上述的小册子， Acrobat 可以直接打印出来。 打开合成的 PDF 文件并按 “打印”，
+在打印对话框中选择 “小册子”， 即可。</p>
+<p>如果要用 A4 纸制作 A6 大小的小册子， 那么一张纸上需要拼 8 个版面。
+仍以 8 页的小册子为例， 这时只需一张纸即可： 正面布置的版面为
+\({5;4 \atop 8;1}\)， 反面布置的版面为 \({3;6 \atop 2;7}\)。
+将这张纸正面朝外对折， 则反面的第 2、 3 页相对， 第 6、 7 页相对。
+用一把裁纸刀沿着折痕将纸裁开， 保持对折时页面的相对位置，
+然后令第 1、 8 页朝外， 将两个叠好的半张纸再次对折， 在折痕处装订，
+就构成了小册子。</p>
+<p>我用 <a href="http://pdfbooklet.sourceforge.net/">PDFBooklet</a> 软件来制作上述小册子。
+这个软件使用起来可能不及商业拼版软件方便， 但是足够满足我的需求。</p>
+<p>以印刷我最近使用 \(\TeX\) 排版的[对数表]
+(<a href="https://github.com/z-rui/eightlog/releases/download/v1.0/log8.pdf">https://github.com/z-rui/eightlog/releases/download/v1.0/log8.pdf</a>)为例，
+这个 PDF 文档的页面尺寸为 A6， 因此无需调整。
+用 PDFBooklet 打开该文件， 选择默认的拼版方式 Single Booklet， 然后按 Go，
+就生成了一张纸上拼 4 个版面的小册子文件 <code>bklt.pdf</code>， 这个文件的页面尺寸为 A5。
+如果有 A5 的打印机和纸， 那么直接打印即可。 如果要在 A4 纸上打印，
+可以做如下考虑：</p>
+<ul>
+<li>如果需要打印多份，那么在 A4 纸的每页上打印 2 个重复的 A5 版面，
+打印完毕后将所有页面沿着中间裁开， 即得到 2 份 A5 打印的结果。
+在 PDFBooklet 中打开 <code>bklt.pdf</code>， 然后选择 x copies， 并指定
+rows = 2, columns = 1, step = 1。</li>
+<li>如果只需要打印一份， 那么需要使用上述的拼版原理。 我的做法是：
+<ol>
+<li>在 PDFBooklet 中打开 <code>bklt.pdf</code>， 选择 Multiple Booklets， 并指定
+rows = 2, columns = 1, Leafs in a bootlet = 1。</li>
+<li>在 Page Transformations 选项卡中， 选择 Even pages， 并设置
+Rotation = 180， 将 <code>bklt.pdf</code> 中的偶数页面旋转 180°。</li>
+<li>按 Go， 生成 <code>bklt-bklt.pdf</code> 文件。</li>
+<li>将 <code>bklt-bklt.pdf</code> 文件的偶数页面全部旋转 180°。 这个步骤可以用
+Acrobat 完成， 也可以用 PDFBooklet 完成。
+甚至， 如果使用手动双面打印， 只要你搞得清楚打印的方向，
+也可以省去这一步。 用 PDFBooklet 的方法为： 在 Layout 中选择 One Page，
+然后在 Page Transformations 选项卡中做和第 2 步相同的操作。</li>
+</ol>
+</li>
+</ul>
+<p>用第 2 种方案拼版完成后， 将打印出来的每张纸如前所述进行折叠和裁剪，
+裁剪后先不必再次折叠， 而是对下一张纸继续进行折叠和裁剪。
+全部裁剪完成后， 就产生了一叠 A5 大小的纸张。 将它们对折并装订就构成了小册子。</p>
+<figure>
+    <img src="/media/booklet-1.jpg"
+         alt="装订好的小册子"/> <figcaption>
+            <p>装订好的小册子</p>
+        </figcaption>
+</figure>
+
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>计算公式： 像素 = 毫米 ÷ 25.4 × DPI <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2fpdf-imposition%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2fpdf-imposition%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2fpdf-imposition%2f&amp;text=PDF%20%e6%8b%bc%e7%89%88%e6%8a%80%e5%b7%a7" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

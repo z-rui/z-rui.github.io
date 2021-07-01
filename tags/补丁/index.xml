@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>补丁 on 睿</title>
+    <link>http://z-rui.github.io/tags/%E8%A1%A5%E4%B8%81/</link>
+    <description>Recent content in 补丁 on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Fri, 15 May 2015 15:02:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/%E8%A1%A5%E4%B8%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>IUP的两个补丁</title>
+      <link>http://z-rui.github.io/post/2015/05/iup-patch/</link>
+      <pubDate>Fri, 15 May 2015 15:02:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/05/iup-patch/</guid>
+      <description>&lt;p&gt;我正计划编写一个&lt;a href=&#34;https://www.github.com/z-rui/yasf&#34;&gt;SQLite的图形前端&lt;/a&gt;。为此我选择&lt;a href=&#34;http://webserver2.tecgraf.puc-rio.br/iup/&#34;&gt;IUP&lt;/a&gt;作为图形界面库。&lt;/p&gt;
+&lt;p&gt;IUP具有如下特点符合我的口味，因此被我选作图形界面库：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;C语言接口。GUI常用面向对象的方法处理，所以使用C++的图形界面库更常见。IUP使用C语言实现了一套类型系统，并提供了非常简洁的C语言接口。&lt;/li&gt;
+&lt;li&gt;跨平台。使用IUP编写的图形界面程序可以运行在Windows和UNIX操作系统上。&lt;/li&gt;
+&lt;li&gt;相对GTK+、Qt等大型的图形界面库(Qt应该算作综合工具箱)，体积小巧便于发布，配置起来也比较容易。&lt;/li&gt;
+&lt;li&gt;控件虽然没有其他工具箱来得丰富，但基本够用。文档比较详细。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;IUP目前最新的版本是3.14。它仍然存在一些问题，所以我在这里给出两个补丁。&lt;/p&gt;
+&lt;p&gt;第一个问题是IupSplit中嵌入的IupMatrix有时候会崩溃。我向IUP的作者反映了这个问题。作者回复说他已经在SVN中修复。所以，IUP的下一个版本中将不会再有这个问题。&lt;/p&gt;
+&lt;p&gt;补丁：（来自&lt;a href=&#34;http://sourceforge.net/p/iup/iup/2897/tree//trunk/iup/srccontrols/matrix/iupmat_edit.c?diff=53d9aa9d0910d44ffbc10019:2896&#34;&gt;SVN&lt;/a&gt;）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-patch&#34; data-lang=&#34;patch&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- a/srccontrols/matrix/iupmat_edit.c
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ b/srccontrols/matrix/iupmat_edit.c
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -678,6 +678,7 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;   IupSetAttribute(ih-&amp;gt;data-&amp;gt;texth, &amp;#34;VALUE&amp;#34;,  &amp;#34;&amp;#34;);
+   IupSetAttribute(ih-&amp;gt;data-&amp;gt;texth, &amp;#34;VISIBLE&amp;#34;, &amp;#34;NO&amp;#34;);
+   IupSetAttribute(ih-&amp;gt;data-&amp;gt;texth, &amp;#34;ACTIVE&amp;#34;,  &amp;#34;NO&amp;#34;);
+&lt;span style=&#34;color:#a6e22e&#34;&gt;+  IupSetAttribute(ih-&amp;gt;data-&amp;gt;texth, &amp;#34;FLOATING&amp;#34;, &amp;#34;IGNORE&amp;#34;);
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt; 
+ 
+   /******** DROPDOWN *************/
+&lt;span style=&#34;color:#75715e&#34;&gt;@@ -696,4 +697,5 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;   IupSetAttribute(ih-&amp;gt;data-&amp;gt;droph, &amp;#34;MULTIPLE&amp;#34;, &amp;#34;NO&amp;#34;);
+   IupSetAttribute(ih-&amp;gt;data-&amp;gt;droph, &amp;#34;VISIBLE&amp;#34;, &amp;#34;NO&amp;#34;);
+   IupSetAttribute(ih-&amp;gt;data-&amp;gt;droph, &amp;#34;ACTIVE&amp;#34;,  &amp;#34;NO&amp;#34;);
+&lt;span style=&#34;color:#f92672&#34;&gt;-}
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+  IupSetAttribute(ih-&amp;gt;data-&amp;gt;droph, &amp;#34;FLOATING&amp;#34;, &amp;#34;IGNORE&amp;#34;);
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+}
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;(注：截至写本文时，本站用于语法高亮的脚本&lt;a href=&#34;https://highlightjs.org/&#34;&gt;Highlight.js&lt;/a&gt;的版本为8.5，它似乎不能正确显示上述代码：最后一部分被作为注释处理了。)&lt;/p&gt;
+&lt;p&gt;第二个问题是IupTree控件的&lt;code&gt;NAME&lt;/code&gt;属性不起作用。即，无法使用&lt;code&gt;IupGetDialogChild&lt;/code&gt;找到相应的控件。这是出于兼容性考虑，IupTree控件的&lt;code&gt;NAME&lt;/code&gt;属性默认为是&lt;code&gt;TITLE&lt;/code&gt;属性的同义词。&lt;/p&gt;
+&lt;p&gt;IUP的下一个版本也许还会保留这个行为，但我并不需要它。所以我也许应该修改IUP的代码，取消掉这样的兼容行为。要修改这个行为，需要修改平台相关的驱动代码。因为我目前在Windows下开发，所以我只修改了Windows相关的文件。其他平台做类似修改即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-patch&#34; data-lang=&#34;patch&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;--- a/src/win/iupwin_tree.c
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;+++ b/src/win/iupwin_tree.c
+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;@@ -3060,7 +3060,6 @@
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;   iupClassRegisterAttributeId(ic, &amp;#34;DEPTH&amp;#34;,  winTreeGetDepthAttrib,  NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &amp;#34;KIND&amp;#34;,   winTreeGetKindAttrib,   NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &amp;#34;PARENT&amp;#34;, winTreeGetParentAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+&lt;span style=&#34;color:#f92672&#34;&gt;-  iupClassRegisterAttributeId(ic, &amp;#34;NAME&amp;#34;,   winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&lt;/span&gt;   iupClassRegisterAttributeId(ic, &amp;#34;TITLE&amp;#34;,  winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &amp;#34;CHILDCOUNT&amp;#34;, winTreeGetChildCountAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &amp;#34;COLOR&amp;#34;, winTreeGetColorAttrib, winTreeSetColorAttrib, IUPAF_NO_INHERIT);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我不是很确定修改IUP的源码以使它符合我的需求是不是明智的选择。&lt;/p&gt;
+&lt;p&gt;一旦修改了IUP的源码，那么基本上来说，我应该将IUP静态链接到我的程序中。因为编译出一个修改过的动态链接库似乎并没有什么意义（不能被其他程序共用）。&lt;/p&gt;
+&lt;p&gt;还有一种做法是绕过IUP现在提供的&lt;code&gt;IupGetDialogChild&lt;/code&gt;机制，另外建立一套获取窗体中的控件的机制。IUP传统的机制是为每一个控件指定一个全局的标识符。像&lt;code&gt;IupSetAtt&lt;/code&gt;这样的便捷函数就是在鼓励使用这样的机制（也是为了兼容旧的LED窗体描述机制）。这种做法固然简单有效，但我觉得很丑陋。只可惜像IupTree这样的控件出于兼容性考虑还不能支持&lt;code&gt;NAME&lt;/code&gt;属性。&lt;/p&gt;
+&lt;p&gt;我认为每个窗体有一个单独的名字空间才是正确的做法。不知道是不是出于同样的观点，IUP现在提供了一套新的机制，就是使用控件的&lt;code&gt;NAME&lt;/code&gt;属性。这样，控件的标识符的作用域就仅限于其所在的窗体。使用&lt;code&gt;IupGetDialogChild(dlg, &amp;quot;NAME&amp;quot;)&lt;/code&gt;这样的函数调用来获得&lt;code&gt;dlg&lt;/code&gt;窗体中标识符为&lt;code&gt;NAME&lt;/code&gt;的控件。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

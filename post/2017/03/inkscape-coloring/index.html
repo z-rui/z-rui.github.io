@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="用 Inkscape 给 svg 文件上色" />
+<meta property="og:description" content="
+     
+            Duane Bibby 为 TeXbook 绘制的插图 (来自 http://ctan.org/lion)
+        
+
+
+
+     
+            上色后的效果
+        
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/03/inkscape-coloring/" />
+<meta property="article:published_time" content="2017-03-07T11:48:34+08:00" />
+<meta property="article:modified_time" content="2017-03-07T11:48:34+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 Inkscape 给 svg 文件上色"/>
+<meta name="twitter:description" content="
+     
+            Duane Bibby 为 TeXbook 绘制的插图 (来自 http://ctan.org/lion)
+        
+
+
+
+     
+            上色后的效果
+        
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "用 Inkscape 给 svg 文件上色",
+  "url": "http://z-rui.github.io/post/2017/03/inkscape-coloring/",
+  "wordCount": "27",
+  "datePublished": "2017-03-07T11:48:34+08:00",
+  "dateModified": "2017-03-07T11:48:34+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/03/inkscape-coloring/">
+
+    <title>用 Inkscape 给 svg 文件上色 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/03/inkscape-coloring/">用 Inkscape 给 svg 文件上色</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-03-07T11:48:34+08:00">Tue Mar 7, 2017</time> by rui</p>
+  </header>
+  <figure>
+    <img src="/media/ctanlion-1.svg"
+         alt="Duane Bibby 为 TeXbook 绘制的插图 (来自 http://ctan.org/lion)"/> <figcaption>
+            <p>Duane Bibby 为 TeXbook 绘制的插图 (来自 <a href="http://ctan.org/lion">http://ctan.org/lion</a>)</p>
+        </figcaption>
+</figure>
+
+<figure>
+    <img src="/media/ctanlion-2.svg"
+         alt="上色后的效果"/> <figcaption>
+            <p>上色后的效果</p>
+        </figcaption>
+</figure>
+
+<p>使用 Inkscape 给 svg 文件上色的办法是： 首先删除原图中的白色成分， 变成透明。
+然后创建新的图层， 位于原图层的下方。
+在新的图层中， 用钢笔 （贝塞尔曲线） 工具描绘原图的轮廓。
+描完以后选择所需的颜色进行填充， 并把线条颜色设置为透明。</p>
+<p>对于开放边界的物体 （如图中的衣服、 书架上的书等），
+可以使用渐变色使得填充色在开口处逐渐消失。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2finkscape-coloring%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2finkscape-coloring%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f03%2finkscape-coloring%2f&amp;text=%e7%94%a8%20Inkscape%20%e7%bb%99%20svg%20%e6%96%87%e4%bb%b6%e4%b8%8a%e8%89%b2" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

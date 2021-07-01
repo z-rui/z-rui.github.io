@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Hugo的自动化部署" />
+<meta property="og:description" content="今天根据Hugo网站上的说明，把Hugo的构建和部署工作交给Wercker自动完成。
+要把一个Hugo站点发布在GitHub Pages服务上，需要在GitHub创建两个repo：
+
+源repo，用于存放站点源文件。
+目标repo，用于存放Hugo生成的静态站点。这个repo会被GitHub Pages作为www站点展示。
+
+以前我是按照另一篇说明上的流程操作的，但是命令行的操作并不方便。具体的办法是：在本机运行hugo，生成静态站点。然后把源文件的改动推送到源repo里，再把生成的public目录用Git的submodule或者subtree功能推送到目标repo里边。
+使用Wercker自动部署，则工作要轻松许多：当源文件的改动推送到源repo里边以后，Wercker会自动在它的服务器启动构建任务。当master分支成功构建后，就自动地把Hugo生成的静态站点推送到目标repo中。
+所以目标repo的事情我就不用管了。如果想要改变部署目标（例如发布到其他的托管主机），只需要修改几条Wercker的设置，非常灵活。
+使用自动化部署还给我的编辑流程提供了方便：我现在可以直接在GitHub的web界面上编辑内容。保存以后的更改也会自动地推送到GitHub Page上。另一方面，我可以充分地利用Git的分支功能：如果文章写到一半，可以保存到源repo的draft分支（或者staging分支，看看哪个名字好听而已）里面，而不是保存在本机。这允许我在多个位置进行持续地编辑，才算是有效地体现了GitHub的作用。
+Wercker看起来不是很成熟。我读了它的文档，但是看起来十分地简略。最近它推出了一种新的构建模式，使用了Docker的技术。只不过我搞了半天也没有搞定在这种模式下怎么进行自动构建和部署。所以目前仍然运行在旧的模式中。
+也有人用的是Travis CI，一个看起来更加成熟的持续集成工具，在GitHub的项目中非常流行。不过Wercker也有它的好处：用户可以创建自己的构建环境（称为box）和脚本（称为step），然后发布出去和其他人共享。我用来构建和部署Hugo的脚本，就是直接拿了别人的来用的，可以说是非常方便，不需要动什么脑筋。鉴于Wercker的解决方案已经足够方便，我现在就先不折腾了。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/06/automated-deploy/" />
+<meta property="article:published_time" content="2015-06-07T01:29:57+08:00" />
+<meta property="article:modified_time" content="2015-06-07T01:29:57+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo的自动化部署"/>
+<meta name="twitter:description" content="今天根据Hugo网站上的说明，把Hugo的构建和部署工作交给Wercker自动完成。
+要把一个Hugo站点发布在GitHub Pages服务上，需要在GitHub创建两个repo：
+
+源repo，用于存放站点源文件。
+目标repo，用于存放Hugo生成的静态站点。这个repo会被GitHub Pages作为www站点展示。
+
+以前我是按照另一篇说明上的流程操作的，但是命令行的操作并不方便。具体的办法是：在本机运行hugo，生成静态站点。然后把源文件的改动推送到源repo里，再把生成的public目录用Git的submodule或者subtree功能推送到目标repo里边。
+使用Wercker自动部署，则工作要轻松许多：当源文件的改动推送到源repo里边以后，Wercker会自动在它的服务器启动构建任务。当master分支成功构建后，就自动地把Hugo生成的静态站点推送到目标repo中。
+所以目标repo的事情我就不用管了。如果想要改变部署目标（例如发布到其他的托管主机），只需要修改几条Wercker的设置，非常灵活。
+使用自动化部署还给我的编辑流程提供了方便：我现在可以直接在GitHub的web界面上编辑内容。保存以后的更改也会自动地推送到GitHub Page上。另一方面，我可以充分地利用Git的分支功能：如果文章写到一半，可以保存到源repo的draft分支（或者staging分支，看看哪个名字好听而已）里面，而不是保存在本机。这允许我在多个位置进行持续地编辑，才算是有效地体现了GitHub的作用。
+Wercker看起来不是很成熟。我读了它的文档，但是看起来十分地简略。最近它推出了一种新的构建模式，使用了Docker的技术。只不过我搞了半天也没有搞定在这种模式下怎么进行自动构建和部署。所以目前仍然运行在旧的模式中。
+也有人用的是Travis CI，一个看起来更加成熟的持续集成工具，在GitHub的项目中非常流行。不过Wercker也有它的好处：用户可以创建自己的构建环境（称为box）和脚本（称为step），然后发布出去和其他人共享。我用来构建和部署Hugo的脚本，就是直接拿了别人的来用的，可以说是非常方便，不需要动什么脑筋。鉴于Wercker的解决方案已经足够方便，我现在就先不折腾了。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hugo的自动化部署",
+  "url": "http://z-rui.github.io/post/2015/06/automated-deploy/",
+  "wordCount": "14",
+  "datePublished": "2015-06-07T01:29:57+08:00",
+  "dateModified": "2015-06-07T01:29:57+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/06/automated-deploy/">
+
+    <title>Hugo的自动化部署 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/06/automated-deploy/">Hugo的自动化部署</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-06-07T01:29:57+08:00">Sun Jun 7, 2015</time> by rui</p>
+  </header>
+  <p>今天根据<a href="http://gohugo.io/tutorials/automated-deployments/">Hugo网站上的说明</a>，把Hugo的构建和部署工作交给<a href="http://www.wercker.com/">Wercker</a>自动完成。</p>
+<p>要把一个Hugo站点发布在<a href="https://pages.github.com/">GitHub Pages</a>服务上，需要在GitHub创建两个repo：</p>
+<ol>
+<li><a href="https://www.github.com/z-rui/hugo-site/"><strong>源</strong>repo</a>，用于存放站点源文件。</li>
+<li><a href="https://www.github.com/z-rui/z-rui.github.io/"><strong>目标</strong>repo</a>，用于存放Hugo生成的静态站点。这个repo会被GitHub Pages作为www站点展示。</li>
+</ol>
+<p>以前我是按照<a href="http://gohugo.io/tutorials/github-pages-blog/">另一篇说明</a>上的流程操作的，但是命令行的操作并不方便。具体的办法是：在本机运行hugo，生成静态站点。然后把源文件的改动推送到源repo里，再把生成的<code>public</code>目录用Git的submodule或者subtree功能推送到目标repo里边。</p>
+<p>使用Wercker自动部署，则工作要轻松许多：当源文件的改动推送到源repo里边以后，Wercker会自动在它的服务器启动构建任务。当<code>master</code>分支成功构建后，就自动地把Hugo生成的静态站点推送到目标repo中。</p>
+<p>所以目标repo的事情我就不用管了。如果想要改变部署目标（例如发布到其他的托管主机），只需要修改几条Wercker的设置，非常灵活。</p>
+<p>使用自动化部署还给我的编辑流程提供了方便：我现在可以直接在GitHub的web界面上编辑内容。保存以后的更改也会自动地推送到GitHub Page上。另一方面，我可以充分地利用Git的分支功能：如果文章写到一半，可以保存到源repo的<code>draft</code>分支（或者<code>staging</code>分支，看看哪个名字好听而已）里面，而不是保存在本机。这允许我在多个位置进行持续地编辑，才算是有效地体现了GitHub的作用。</p>
+<p>Wercker看起来不是很成熟。我读了它的文档，但是看起来十分地简略。最近它推出了一种新的构建模式，使用了<a href="https://www.docker.com/">Docker</a>的技术。只不过我搞了半天也没有搞定在这种模式下怎么进行自动构建和部署。所以目前仍然运行在旧的模式中。</p>
+<p>也有人用的是<a href="https://travis-ci.org/">Travis CI</a>，一个看起来更加成熟的持续集成工具，在GitHub的项目中非常流行。不过Wercker也有它的好处：用户可以创建自己的构建环境（称为box）和脚本（称为step），然后发布出去和其他人共享。我用来构建和部署Hugo的脚本，就是直接拿了别人的来用的，可以说是非常方便，不需要动什么脑筋。鉴于Wercker的解决方案已经足够方便，我现在就先不折腾了。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fautomated-deploy%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fautomated-deploy%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f06%2fautomated-deploy%2f&amp;text=Hugo%e7%9a%84%e8%87%aa%e5%8a%a8%e5%8c%96%e9%83%a8%e7%bd%b2" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

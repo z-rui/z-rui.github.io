@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="快速二-十进制转换" />
+<meta property="og:description" content="TL;DR
+将计算机内部存储的二进制数值转换为十进制以供输出是一件常见的工作。在一些场合，需要大量进行这种转换，这时希望速度能尽可能地快。
+二&ndash;十进制转换大量用到整数除法和取余运算。朴素的教科书算法是这样的：
+do {
+	putchar(n % 10);
+	n /= 10;
+} while (n);
+当然，输出是逆序的。这并不是什么本质的问题，实际代码再加上逆序的处理就可以了。
+这种做法每个循环计算一次取余和一次除法。我现在有一个硬件（Nios II/e），没有硬件乘法器和除法器。乘除运算使用软件模拟，速度非常慢。软件模拟的除法，并不能同时得到商和余数。也就是说，为了得到商和余数，除法会被计算两遍。（这是编译器的优化问题，理论上可以通过改进编译器的优化能力解决）。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/09/bin2dec/" />
+<meta property="article:published_time" content="2016-09-24T14:05:00+08:00" />
+<meta property="article:modified_time" content="2016-09-24T14:05:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="快速二-十进制转换"/>
+<meta name="twitter:description" content="TL;DR
+将计算机内部存储的二进制数值转换为十进制以供输出是一件常见的工作。在一些场合，需要大量进行这种转换，这时希望速度能尽可能地快。
+二&ndash;十进制转换大量用到整数除法和取余运算。朴素的教科书算法是这样的：
+do {
+	putchar(n % 10);
+	n /= 10;
+} while (n);
+当然，输出是逆序的。这并不是什么本质的问题，实际代码再加上逆序的处理就可以了。
+这种做法每个循环计算一次取余和一次除法。我现在有一个硬件（Nios II/e），没有硬件乘法器和除法器。乘除运算使用软件模拟，速度非常慢。软件模拟的除法，并不能同时得到商和余数。也就是说，为了得到商和余数，除法会被计算两遍。（这是编译器的优化问题，理论上可以通过改进编译器的优化能力解决）。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "快速二-十进制转换",
+  "url": "http://z-rui.github.io/post/2016/09/bin2dec/",
+  "wordCount": "237",
+  "datePublished": "2016-09-24T14:05:00+08:00",
+  "dateModified": "2016-09-24T14:05:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/09/bin2dec/">
+
+    <title>快速二-十进制转换 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/09/bin2dec/">快速二-十进制转换</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-09-24T14:05:00+08:00">Sat Sep 24, 2016</time> by rui</p>
+  </header>
+  <p><a href="/post/2016/09/bin2dec/#tl-dr">TL;DR</a></p>
+<p>将计算机内部存储的二进制数值转换为十进制以供输出是一件常见的工作。在一些场合，需要大量进行这种转换，这时希望速度能尽可能地快。</p>
+<p>二&ndash;十进制转换大量用到整数除法和取余运算。朴素的教科书算法是这样的：</p>
+<pre><code>do {
+	putchar(n % 10);
+	n /= 10;
+} while (n);
+</code></pre><p>当然，输出是逆序的。这并不是什么本质的问题，实际代码再加上逆序的处理就可以了。</p>
+<p>这种做法每个循环计算一次取余和一次除法。我现在有一个硬件（Nios II/e），没有硬件乘法器和除法器。乘除运算使用软件模拟，速度非常慢。软件模拟的除法，并不能同时得到商和余数。也就是说，为了得到商和余数，除法会被计算两遍。（这是编译器的优化问题，理论上可以通过改进编译器的优化能力解决）。</p>
+<p>实际上，一旦得到了商，不必再做一次除法，就可以得到余数：</p>
+<pre><code>do {
+	unsigned q, r;
+
+	q = n / 10;
+	r = n - q * 10;
+	putchar(r);
+	n = q;
+} while (n);
+</code></pre><p>对于一般的处理器，一次乘法加上一次减法所用的时间也比一次取余运算来得短。在没有硬件乘法器的情况下，那么最好连乘法也不要用，可以使用移位运算代替。根据这个思想，我就可以写出第一个实用版本：</p>
+<pre><code>char *simple(int n)
+{
+	static char buffer[11];
+	char *p = buffer + 10;
+
+	do {
+		unsigned q, r;
+		q = n / 10;
+		r = n - (q &lt;&lt; 1) - (q &lt;&lt; 3);
+		*--p = '0' + r;
+		n = q;
+	} while (n);
+	return p;
+}
+</code></pre><p>对照组则选择C标准库的<code>itoa</code>函数。当然，<code>itoa</code>还处理了负数的情况，而我假设输入是正数。</p>
+<pre><code>char *lib(int n)
+{
+	static char buf[12];
+	return itoa(n, buf, 10);
+}
+</code></pre><p>做一下benchmark，每个函数循环20000次，结果是<code>simple</code>执行了2323个ticks（我的系统上一个tick是1毫秒，50000个时钟周期），而<code>lib</code>执行了5137个ticks。看得出来，标准库的实现是最朴素的算法，而编译器也未能恰当地优化。调查一下反汇编代码，确实如此，分别调用了编译器生成的<code>__umodsi3</code>和<code>__udivsi3</code>（软件模拟的取余和除法）。</p>
+<h2 id="hackers-delight">Hacker&rsquo;s Delight</h2>
+<p>既然标题叫做“快速二&ndash;十进制转换”，那么一定要拿出一些dirty hacks才好。有一本书叫做Hacker&rsquo;s Delight，里面就全是这些东西，当然也提到了<a href="http://www.hackersdelight.org/divcMore.pdf">整数除法</a>的快速计算。其中包括除以10的算法：</p>
+<pre><code>unsigned divu10(unsigned n) {
+	unsigned q, r;
+	q = (n &gt;&gt; 1) + (n &gt;&gt; 2);
+	q = q + (q &gt;&gt; 4);
+	q = q + (q &gt;&gt; 8);
+	q = q + (q &gt;&gt; 16);
+	q = q &gt;&gt; 3;
+	r = n - q*10;
+	return q + ((r + 6) &gt;&gt; 4);
+//	return q + (r &gt; 9);
+}
+</code></pre><p>算法原理在书中有说明。这个函数给出商，可以用商计算出余数，或者对这个函数稍加修改，同时得到商和余数。</p>
+<p>我把上面这段代码稍加修改（例如把<code>*10</code>改成位运算），替换掉<code>simple</code>中的相应部分，定义了一个新的函数<code>hacker</code>。这个函数只包含机器指令，没有软件模拟的运算（乘、除）。benchmark的结果为392个ticks。比<code>simple</code>快了6倍。</p>
+<p>软件优化似乎已经到达了尽头。因为Nios II是软核处理器，当然也可以通过修改硬件来解决问题，例如增加硬件除法器等。不过，对于“除以常数10”这个任务来说，Hacker&rsquo;s Delight版本的算法通常比硬件除法还要快。</p>
+<p>一个了不起的办法是定制专用的“除以10”电路，配合Nios II的自定义指令功能。这只有像Nios II这样的运行在FPGA上的软核系统才能做到。</p>
+<p>创建一个除法器，可以使用Altera提供的LPM_DIVIDE模板生成一个31位/4位无符号除法器（我假定输入<code>int</code>为正数，所以被除数31位就够了，而且这样可以保证商+余数总共不超过32位），然后把除数直接连线为常数10。或者把上面Hacker&rsquo;s Delight的C代码翻译成Verilog（基本上不用改），就构造了一个专用的除以10的除法器。</p>
+<p>然后创建一个新的模块，用来表示Nios II的一条自定义指令</p>
+<pre><code>module divu10_ci
+(
+	input [31:0] ncs_cis0_dataa,
+	output [31:0] ncs_cis0_result
+);
+</code></pre><p>把<code>ncs_cis0_dataa[30:0]</code>连接到除法器的被除数，<code>ncs_cis0_result[31:4]</code>连接到商，<code>ncs_cis0_result[3:0]</code>连接到余数。这样自定义语句的硬件模块就做好了。</p>
+<p>接下来要在Qsys中创建自定义语句。在Component Editor中有一个模板Nios Custom Instruction Slave - Combinational，点击之后设置相关属性。最主要的是在Files选项卡中把刚才编写的<code>divu10_ci</code>硬件模块添加进去。</p>
+<figure>
+    <img src="/media/divu10-1.png"/> 
+</figure>
+
+<p>接下来只需要把创建好的Qsys组件加入系统，然后重新生成HDL，重新综合电路。在软件端，需要重新生成BSP。新生成的<code>system.h</code>就会含有为自定义指令定义好的宏</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define ALT_CI_DIVU10(A) __builtin_custom_ini(ALT_CI_DIVU10_N,(A))
+</span><span style="color:#75715e">#define ALT_CI_DIVU10_N 0x0
+</span></code></pre></div><p>这样，求除以10的商和余数可以这样写：</p>
+<pre><code>q = ALT_CI_DIVU10(n);
+r = q &amp; 0xf;
+q &gt;&gt;= 3;
+</code></pre><p>总共只有3条机器指令</p>
+<pre><code>2009c032 	custom	0,r4,r4,zero
+20c003cc 	andi	r3,r4,15
+2008d13a 	srli	r4,r4,4
+</code></pre><p>想必运行时间也大大减少了。benchmark的结果为127个ticks，比<code>hacker</code>又快了3倍。</p>
+<h2 id="tldr">TL;DR</h2>
+<p>这是各种做法的benchmark结果：</p>
+<figure>
+    <img src="/media/divu10-2.png"/> 
+</figure>
+
+<p>总结：<a href="#hacker-s-delight">Hacker&rsquo;s Delight</a>是最通用的，而且相当快。专用电路是最快的，但是必须有可定制的硬件才能实现。同时计算商和余数时，调查一下处理器是否需要计算两次除法，如果是，可以把计算余数改用乘法来做。（如果处理器本来就可以同时计算商和余数，那就没必要这么改了，反而会影响编译器的优化）。标准库是最慢的（另：<code>div</code>能同时计算商和余数，但其实它还是做了和一次<code>/</code>加一次<code>%</code>）。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fbin2dec%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fbin2dec%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fbin2dec%2f&amp;text=%e5%bf%ab%e9%80%9f%e4%ba%8c-%e5%8d%81%e8%bf%9b%e5%88%b6%e8%bd%ac%e6%8d%a2" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

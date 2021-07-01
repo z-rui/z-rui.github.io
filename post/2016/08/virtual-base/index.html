@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="多重继承和虚基类" />
+<meta property="og:description" content="多重继承是面向对象编程(Object Oriented Programming, OOP)中的一个有争议的话题。并非所有OOP语言都支持多重继承(Java和C#均不支持)。C&#43;&#43;作为万能语言是支持多重继承的典型例子，即便如此，一些C&#43;&#43;的开发框架，例如MFC，也从不使用多重继承特性。Go虽然很少用到复杂的继承，但是它本身是支持多重继承的。
+我想从对象的存储方式角度来分析多重继承和虚基类的问题。C&#43;&#43;在这方面有些故弄玄虚，一个virtual关键字弄得让人有些摸不着头脑。Go的设计在提供多重继承功能的同时，也非常明确地指出了对象在内存中的存储形式，理解起来也容易许多。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/08/virtual-base/" />
+<meta property="article:published_time" content="2016-08-11T17:29:00+00:00" />
+<meta property="article:modified_time" content="2016-08-11T17:29:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="多重继承和虚基类"/>
+<meta name="twitter:description" content="多重继承是面向对象编程(Object Oriented Programming, OOP)中的一个有争议的话题。并非所有OOP语言都支持多重继承(Java和C#均不支持)。C&#43;&#43;作为万能语言是支持多重继承的典型例子，即便如此，一些C&#43;&#43;的开发框架，例如MFC，也从不使用多重继承特性。Go虽然很少用到复杂的继承，但是它本身是支持多重继承的。
+我想从对象的存储方式角度来分析多重继承和虚基类的问题。C&#43;&#43;在这方面有些故弄玄虚，一个virtual关键字弄得让人有些摸不着头脑。Go的设计在提供多重继承功能的同时，也非常明确地指出了对象在内存中的存储形式，理解起来也容易许多。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "多重继承和虚基类",
+  "url": "http://z-rui.github.io/post/2016/08/virtual-base/",
+  "wordCount": "339",
+  "datePublished": "2016-08-11T17:29:00+00:00",
+  "dateModified": "2016-08-11T17:29:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/08/virtual-base/">
+
+    <title>多重继承和虚基类 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/08/virtual-base/">多重继承和虚基类</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-08-11T17:29:00Z">Thu Aug 11, 2016</time> by rui</p>
+  </header>
+  <p>多重继承是面向对象编程(Object Oriented Programming, OOP)中的一个有争议的话题。并非所有OOP语言都支持多重继承(Java和C#均不支持)。C++作为万能语言是支持多重继承的典型例子，即便如此，一些C++的开发框架，例如MFC，也从不使用多重继承特性。Go虽然很少用到复杂的继承，但是它本身是支持多重继承的。</p>
+<p>我想从对象的存储方式角度来分析多重继承和虚基类的问题。C++在这方面有些故弄玄虚，一个<code>virtual</code>关键字弄得让人有些摸不着头脑。Go的设计在提供多重继承功能的同时，也非常明确地指出了对象在内存中的存储形式，理解起来也容易许多。</p>
+<p>所谓继承，在内存中不过是一个父类的对象被嵌入了子类对象中。然后在语法层面，子类可以直接调用父类的方法。假设类<code>D</code>继承类<code>C</code>，那么<code>D</code>的对象在内存中形式如下：</p>
+<pre><code>+-----+
+|+---+|
+|| C ||
+|+---+|
+|  D  |
++-----+
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">D</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">C</span>
+}
+</code></pre></div><p>如果类<code>D</code>同时又继承类<code>B</code>，则构成多重继承。<code>D</code>的对象在内存中可能是这样的：</p>
+<pre><code>+---------+
+|+---+---+|
+|| B | C ||
+|+---+---+|
+|    D    |
++---------+
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">D</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">B</span>
+	<span style="color:#a6e22e">C</span>
+}
+</code></pre></div><p>这时<code>D</code>的对象既包含<code>B</code>的成员，又包含<code>C</code>的成员。</p>
+<p>下面问题来了：如果<code>B</code>和<code>C</code>都继承<code>A</code>，情况变得复杂起来：</p>
+<pre><code>+-------------+
+|+-----+-----+|
+||+---+|+---+||
+||| A ||| A |||
+||+---+|+---+||
+||  B  |  C  ||
+|+-----+-----+|
+|      D      |
++-------------+
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">A</span>
+}
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">C</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">A</span>
+}
+</code></pre></div><p>从继承关系的角度，应该是如下的菱形结构：</p>
+<pre><code>  A
+ / \
+B   C
+ \ /
+  D
+</code></pre>
+<p>但是从存储的角度，一个<code>D</code>类对象中含有两个<code>A</code>类的实例。这会引发一些问题。为了让<code>B</code>和<code>C</code>共享同一个基类对象，需要引入虚基类的机制。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">B</span> {
+	<span style="color:#f92672">*</span><span style="color:#a6e22e">A</span>
+}
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">C</span> {
+	<span style="color:#f92672">*</span><span style="color:#a6e22e">A</span>
+}
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">D</span> {
+	<span style="color:#f92672">*</span><span style="color:#a6e22e">A</span>
+	<span style="color:#a6e22e">B</span>
+	<span style="color:#a6e22e">C</span>
+}
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewD</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">D</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">o</span> <span style="color:#66d9ef">struct</span> { <span style="color:#a6e22e">A</span>; <span style="color:#a6e22e">D</span> }
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">B</span>.<span style="color:#a6e22e">A</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">A</span>
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">C</span>.<span style="color:#a6e22e">A</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">A</span>
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">D</span>.<span style="color:#a6e22e">A</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">A</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">D</span>
+}
+</code></pre></div><p>使用<code>NewD</code>构造出的对象在内存中是这样的：</p>
+<pre><code>+---------+
+|    A    &lt;-
++--^---^--+ \
++--|---|--+ |
+|+-|-+-|-+| |
+|| | | | || |
+||---|---|| |
+|| B | C || |
+|+---+---+| |
+|    -------/
+|---------|
+|    D    |
++---------+
+</code></pre>
+<p>从Go语言的描述中可以很清楚地看到，在<code>B</code>, <code>C</code>, <code>D</code>中，不保存<code>A</code>的实例，而是保存一个指向<code>A</code>对象的指针。这样它们就可以共享同一个对象。在<code>NewD</code>中可以看到显式地为指针赋值的代码。在C++中这是由编译器自动生成的。还可以看到，<code>A</code>的实例是在构造<code>D</code>的对象的时候构造的。这就是为什么C++要求虚基类的构造函数需要由最后的子类调用。</p>
+<p>C++的虚基类机制要求<code>B</code>, <code>C</code>, <code>D</code>必须共用同一个基类对象。据我猜测，按照C++无限压榨机器性能的风格，在这种情况下，<code>D</code>中无需保存<code>A</code>的指针，借用<code>B</code>或者<code>C</code>中的指针就可以了，这样可以节省一个机器字的空间。(思考：为什么不直接使用<code>A</code>对象在<code>D</code>中的偏移量？)</p>
+<p>作为一个可以实际运行的例子，考虑给上述各类增加成员：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">msg</span> <span style="color:#66d9ef">string</span>
+}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">SetMsg</span>() {
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">msg</span> = <span style="color:#e6db74">&#34;hello, world&#34;</span>
+}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">C</span>) <span style="color:#a6e22e">PrintMsg</span>() {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">msg</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">o</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewD</span>()
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">SetMsg</span>()
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">PrintMsg</span>()
+}
+</code></pre></div><p>因为<code>B</code>和<code>C</code>共用同一个基类对象，所以它们的方法中所读写的<code>msg</code>成员是同一个变量。这个程序可以正确地打印出相应的消息。如果不使用虚基类，则会有问题。</p>
+<p>使用C++编写的等价程序如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	std<span style="color:#f92672">::</span>string msg;
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">public</span> A {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> SetMsg() { msg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello, world&#34;</span>; }
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">public</span> A {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+	<span style="color:#66d9ef">void</span> PrintMsg() { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> msg <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; }
+};
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">D</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">public</span> A, <span style="color:#66d9ef">public</span> B, <span style="color:#66d9ef">public</span> C {
+};
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+	D o;
+	o.SetMsg();
+	o.PrintMsg();
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>C++把和指针相关的细节都隐藏起来了，抽象程度更高。但是从灵活性上讲，却不如Go。假如有一个类<code>X</code>继承了<code>A</code>但并非以虚基类的方式，那么就很难构造出同时继承<code>X</code>和<code>B</code>的子类。在Go中却很容易：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">X</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">A</span>
+}
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Y</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">X</span>
+	<span style="color:#a6e22e">B</span>
+	<span style="color:#f92672">*</span><span style="color:#a6e22e">A</span>
+}
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewY</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">Y</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">o</span> <span style="color:#a6e22e">Y</span>
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">A</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">X</span>.<span style="color:#a6e22e">A</span>
+	<span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">B</span>.<span style="color:#a6e22e">A</span> = <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">A</span>
+}
+</code></pre></div><p>使用<code>NewY</code>构造出的对象在内存中是这样的：</p>
+<pre><code>  +-----------+
+  |+-----+---+|
+  ||+---+|   ||
+ ---&gt; A &lt;--- ||
+/ ||+---+|---||
+| ||  X  | B ||
+\ |+-----+---+|
+ --------     |
+  |-----------|
+  |     Y     |
+  +-----------+
+</code></pre>
+<p>文中的程序纯粹为演示目的而编写，没有实际价值。多重继承和虚基类是实际程序中比较少见的技术。Go语言在设计时也有意弱化继承层次的重要性，所以也很难见到上述写法在现实中的应用。</p>
+<p>思考题：在那个C++程序中，假设一个机器字为8字节，一个指针需要1个机器字，一个<code>std::string</code>对象需要4个机器字，那么：</p>
+<ol>
+<li><code>sizeof (A)</code> = ?</li>
+<li><code>sizeof (B)</code> = ?</li>
+<li><code>sizeof (D)</code> = ?</li>
+</ol>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fvirtual-base%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fvirtual-base%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fvirtual-base%2f&amp;text=%e5%a4%9a%e9%87%8d%e7%bb%a7%e6%89%bf%e5%92%8c%e8%99%9a%e5%9f%ba%e7%b1%bb" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

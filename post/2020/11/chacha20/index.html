@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="自制加密通信协议（一）：对称加密算法" />
+<meta property="og:description" content="自古以来，有大量信息需要隐秘地传输，例如军事机密。密码学也随之发展起来。一种常用的加密算法是对称加密算法，它由加密函数E和解密函数D构成：
+    C=E(T,K)
+    T=D(C,K)
+其中T为明文，C为密文。信息的传输双方事先约定一个共用的密钥K。密文可以在不安全的信道中传递，即使被敌人截获，在未知密码的情况下也很难恢复出原文。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2020/11/chacha20/" />
+<meta property="article:published_time" content="2020-11-27T20:51:50-05:00" />
+<meta property="article:modified_time" content="2020-11-27T20:51:50-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="自制加密通信协议（一）：对称加密算法"/>
+<meta name="twitter:description" content="自古以来，有大量信息需要隐秘地传输，例如军事机密。密码学也随之发展起来。一种常用的加密算法是对称加密算法，它由加密函数E和解密函数D构成：
+    C=E(T,K)
+    T=D(C,K)
+其中T为明文，C为密文。信息的传输双方事先约定一个共用的密钥K。密文可以在不安全的信道中传递，即使被敌人截获，在未知密码的情况下也很难恢复出原文。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "自制加密通信协议（一）：对称加密算法",
+  "url": "http://z-rui.github.io/post/2020/11/chacha20/",
+  "wordCount": "177",
+  "datePublished": "2020-11-27T20:51:50-05:00",
+  "dateModified": "2020-11-27T20:51:50-05:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2020/11/chacha20/">
+
+    <title>自制加密通信协议（一）：对称加密算法 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-11-27T20:51:50-05:00">Fri Nov 27, 2020</time> by rui</p>
+  </header>
+  <p>自古以来，有大量信息需要隐秘地传输，例如军事机密。密码学也随之发展起来。一种常用的加密算法是<strong>对称加密算法</strong>，它由加密函数E和解密函数D构成：</p>
+<pre><code>    C=E(T,K)
+    T=D(C,K)
+</code></pre><p>其中T为<strong>明文</strong>，C为<strong>密文</strong>。信息的传输双方事先约定一个共用的密钥K。密文可以在不安全的信道中传递，即使被敌人截获，在未知密码的情况下也很难恢复出原文。</p>
+<h2 id="chacha20-算法">ChaCha20 算法</h2>
+<p>我尝试使用名为 <a href="http://cr.yp.to/chacha/chacha-20080128.pdf">ChaCha20</a> 的算法来处理互联网上传输的信息。该算法的详细描述可以参阅 <a href="https://tools.ietf.org/html/rfc8439">RFC 8439</a>。 ChaCha20 使用的核心部分是由 16 个 32 位整数构成的状态：</p>
+<pre><code> 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+12 13 14 15
+</code></pre><p>之后用一种“四分之一轮” (quarter round) 算法 QR 来操作这个状态：</p>
+<pre><code>QR(a, b, c, d) ::
+    a += b; d ^= a; d &lt;&lt;= 16;
+    c += d; b ^= c; b &lt;&lt;= 12;
+    a += b; d ^= a; d &lt;&lt;= 8;
+    c += d; b ^= c; b &lt;&lt;= 7;
+</code></pre><p>一“轮”由 4 个“四分之一轮”构成， 奇数轮为：</p>
+<pre><code>QR(0, 4,  8, 12);
+QR(1, 5,  9, 13);
+QR(2, 6, 10, 14);
+QR(3, 7, 11, 15);
+</code></pre><p>即对每列执行 QR 操作。 偶数轮为：</p>
+<pre><code>QR(0, 5, 10, 15);
+QR(1, 6, 11, 12);
+QR(2, 7,  8, 13);
+QR(3, 4,  9, 14);
+</code></pre><p>即沿着主对角线的方向执行 QR 操作。</p>
+<p>初始时，0-3 是常数 <code>expand 32-byte k</code> （共 16 字节），4-11 是密钥 K（共 32 字节），12 是计数器 B， 13-15 是一次性随机数 N (nonce)：</p>
+<pre><code>cccccccc cccccccc cccccccc cccccccc
+kkkkkkkk kkkkkkkk kkkkkkkk kkkkkkkk
+kkkkkkkk kkkkkkkk kkkkkkkk kkkkkkkk
+bbbbbbbb nnnnnnnn nnnnnnnn nnnnnnnn
+</code></pre><p>运行一次 ChaCha20 算法执行 20 “轮”， 即 80 次 QR 操作，然后再和初始状态逐位相加（目的是使计算过程不可逆）。这样得到的的状态和明文（密文）逐位异或，就得到了密文（明文）。注意，解密过程和加密过程完全等价。</p>
+<p>这样的计算一次只能处理 64 字节的明文。每处理 64 字节的明文，计数器 B 自加一。这样，每次用于异或的状态都不相同。</p>
+<p>给每个明文加密应采用不同的一次性随机数，理由类似。一次性随机数应当在双方通信时协商，可以采用明文方式发送。</p>
+<p>密钥则应以其他的安全方式分享。例如，当面分享。也可以采用密钥交换算法（如 Diffie-Hellman）。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f11%2fchacha20%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f11%2fchacha20%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2020%2f11%2fchacha20%2f&amp;text=%e8%87%aa%e5%88%b6%e5%8a%a0%e5%af%86%e9%80%9a%e4%bf%a1%e5%8d%8f%e8%ae%ae%ef%bc%88%e4%b8%80%ef%bc%89%ef%bc%9a%e5%af%b9%e7%a7%b0%e5%8a%a0%e5%af%86%e7%ae%97%e6%b3%95" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

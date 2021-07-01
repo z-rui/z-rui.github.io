@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="TeX 的表格陷阱" />
+<meta property="og:description" content="
+(La)TeX 常被视为高质量出版工具。 确实如此， 但并非用它们生成的文档必然具备较高的排版质量： 计算机工具始终遵守人的指令， 因此排版质量的最终决定者仍然是作者本身。
+LaTeX 给人一种快速上手的感觉， 某些作者可能愿意简单地将自己的文档按照结构化的方式以 LaTeX 代码呈现， 剩下的排版细节留给宏包以及排版引擎。 （某种程度上讲这也是 LaTeX 的设计目标之一。）
+Plain TeX 相对而言要求作者对排版细节知悉更多。 例如， 它要求用户手动添加 {\it 斜体修正\/} 。 这看起来毫无必要， 并且丝毫不 “智能”； LaTeX 的 \textit{斜体} 功能就自动在末尾添加了斜体修正。
+下面考虑一个 TeX 中比较麻烦的问题： 表格排版。 理论上， 可以把表格内的数据分离出来， 只需套用所需的格式， 就可以排版表格。 但是实践中往往需要手动地调整表格的样式。 因此， 从表格的排版中常常可以看出作者对细节的关注程度。 为了充分展示问题， 我选择讨论一个带有竖线的表格。 带有竖线的表格在 TeX 里较难处理 （但它在 Microsoft Word 里出乎意料地容易）， 虽然这种样式越来越不流行， 且不被推荐。 1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2017/09/textab/" />
+<meta property="article:published_time" content="2017-09-21T16:09:00-05:00" />
+<meta property="article:modified_time" content="2017-09-21T16:09:00-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TeX 的表格陷阱"/>
+<meta name="twitter:description" content="
+(La)TeX 常被视为高质量出版工具。 确实如此， 但并非用它们生成的文档必然具备较高的排版质量： 计算机工具始终遵守人的指令， 因此排版质量的最终决定者仍然是作者本身。
+LaTeX 给人一种快速上手的感觉， 某些作者可能愿意简单地将自己的文档按照结构化的方式以 LaTeX 代码呈现， 剩下的排版细节留给宏包以及排版引擎。 （某种程度上讲这也是 LaTeX 的设计目标之一。）
+Plain TeX 相对而言要求作者对排版细节知悉更多。 例如， 它要求用户手动添加 {\it 斜体修正\/} 。 这看起来毫无必要， 并且丝毫不 “智能”； LaTeX 的 \textit{斜体} 功能就自动在末尾添加了斜体修正。
+下面考虑一个 TeX 中比较麻烦的问题： 表格排版。 理论上， 可以把表格内的数据分离出来， 只需套用所需的格式， 就可以排版表格。 但是实践中往往需要手动地调整表格的样式。 因此， 从表格的排版中常常可以看出作者对细节的关注程度。 为了充分展示问题， 我选择讨论一个带有竖线的表格。 带有竖线的表格在 TeX 里较难处理 （但它在 Microsoft Word 里出乎意料地容易）， 虽然这种样式越来越不流行， 且不被推荐。 1"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "TeX 的表格陷阱",
+  "url": "http://z-rui.github.io/post/2017/09/textab/",
+  "wordCount": "261",
+  "datePublished": "2017-09-21T16:09:00-05:00",
+  "dateModified": "2017-09-21T16:09:00-05:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2017/09/textab/">
+
+    <title>TeX 的表格陷阱 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2017/09/textab/">TeX 的表格陷阱</a></h2>
+    <p class="blog-post-meta"><time datetime="2017-09-21T16:09:00-05:00">Thu Sep 21, 2017</time> by rui</p>
+  </header>
+  <!--
+  \\((\rm L\kern-.36em\raise 2pt\hbox{$\scriptstyle\rm A$}\kern-.15em)\TeX\\)
+-->
+<p>(La)TeX 常被视为高质量出版工具。 确实如此， 但并非用它们生成的文档必然具备较高的排版质量： 计算机工具始终遵守人的指令， 因此排版质量的最终决定者仍然是作者本身。</p>
+<p>LaTeX 给人一种快速上手的感觉， 某些作者可能愿意简单地将自己的文档按照结构化的方式以 LaTeX 代码呈现， 剩下的排版细节留给宏包以及排版引擎。 （某种程度上讲这也是 LaTeX 的设计目标之一。）</p>
+<p>Plain TeX 相对而言要求作者对排版细节知悉更多。 例如， 它要求用户手动添加 <code>{\it 斜体修正\/}</code> 。 这看起来毫无必要， 并且丝毫不 “智能”； LaTeX 的 <code>\textit{斜体}</code> 功能就自动在末尾添加了斜体修正。</p>
+<p>下面考虑一个 TeX 中比较麻烦的问题： 表格排版。 理论上， 可以把表格内的数据分离出来， 只需套用所需的格式， 就可以排版表格。 但是实践中往往需要手动地调整表格的样式。 因此， 从表格的排版中常常可以看出作者对细节的关注程度。 为了充分展示问题， 我选择讨论一个带有竖线的表格。 带有竖线的表格在 TeX 里较难处理 （但它在 Microsoft Word 里出乎意料地容易）， 虽然这种样式越来越不流行， 且不被推荐。 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>日常的 LaTeX 用户会这样排版她的表格：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#66d9ef">\begin</span>{tabular}{|c|c|c|}
+<span style="color:#66d9ef">\hline</span>
+State&amp;Remainder&amp;Answer<span style="color:#66d9ef">\\</span>
+<span style="color:#66d9ef">\hline</span> <span style="color:#66d9ef">\hline</span>
+Start&amp;000000&amp;000000<span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+5&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+4&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+3&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+2&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+1&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+0&amp; &amp; <span style="color:#66d9ef">\\</span> <span style="color:#66d9ef">\hline</span>
+<span style="color:#66d9ef">\end</span>{tabular}
+</code></pre></div><p>她得到的表格如下： <figure>
+    <img src="/media/mktab-1.png"/> 
+</figure>
+</p>
+<p>相当不错。 但放大了看， 可以看出有一些问题： 构成边框的竖线是断续的， 每经过一个横线的地方都有一个小的凹陷， 产生了很奇怪的视觉效果。</p>
+<p>怎样修复？ 从原理入手， 似乎只需要把每行的 <code>\hline</code> 弄得更长一些， 覆盖那些凹陷就可以了。 但是似乎又无从下手。</p>
+<p>对于 LaTeX 用户， 解决各种问题方案往往是 “找一下有没有现成的宏包”。 真的有。 <code>hhline</code> 宏包提供了 <code>\hhline</code>， 比普通的 <code>\hline</code> 更强， 其中一个功能就是对付这种边界有竖线的表格。 在这里， 只需把 <code>\hline</code> 都改成 <code>\hhline{|---|}</code> 即可。</p>
+<p>第二个问题： 如果我是作者， 我不希望表格的第一行和剩余部分在视觉上是分离的。 换言之， 我希望在第一行下方的双横线的两端， 也有竖线将边框连接起来。 这个问题乍一看又无从下手。 好在 <code>hhline</code> 宏包又解决了问题： 把双横线的 <code>\hline \hline</code> 改成 <code>\hhline{|===|}</code> 即可。</p>
+<p>这是利用 <code>hhline</code> 宏包得到的排版效果： <figure>
+    <img src="/media/mktab-2.png"/> 
+</figure>
+</p>
+<p>非常神奇， 我根本不知道 <code>\hhline</code> 做了什么有趣的魔法。 不过问题解决了， 简单、 快速。</p>
+<p>真正挑剔的读者， 比如 DEK， （我想） 恐怕对上面的结果还是不满意的。 观察一下表格中的 000000， 它到上方横线的距离远小于到下方横线的距离。 这种间距的设置给人一种单元格内的文字向上偏移的感觉。 如果单元格内恰好都是小写字母， 可能效果还不错， 但是在这里就有问题了。</p>
+<p>实际上， 我见过一些出版物， 它们有明显的特征表明是用 LaTeX 排版的 （Computer Modern 字体、 风格类似的目录、 标题、 题注， 以及交叉引用等功能）， 并且其中的表格就有这种字符向上偏移的问题。 现在看来， 恐怕作者也是按照类似的方式输入了她的表格， 并用 LaTeX 的默认设置把它排版出来。</p>
+<p>“肯定也有一个宏包能解决这个问题，” 我打算这么说。 但是我懒得去查找解决方案了。 总之， LaTeX 的默认设置不能实现最佳的排版效果。</p>
+<p>习惯了现代的 “智能” 软件的用户或许会有此疑问：</p>
+<ul>
+<li>LaTeX 不是高质量排版工具吗？ 为什么默认情况下会选择一种丑陋的样式？</li>
+</ul>
+<p>这个问题很难回答。 我想 LaTeX 本身也希望在任何情况下， 默认设置都能生成美观的结果。 但是它不可能考虑到所有情况， 更不可能理解你的意图。 另一方面， 改变默认行为是非常危险的： 这会导致之前写好的文档重新排版时产生不同的结果。 （试想你用另一个软件打开 Word 文档的情况。） 好在， 当 LaTeX 产生令人不满的结果时， 往往还能找到解决方案。 很多 “智能” 的软件自负地认为它的设计是最好的， 不给用户更多调节的余地。</p>
+<p>这里的讨论对 LaTeX 可能也有些不公平。 LaTeX 希望实现内容和格式的分离。 如果用户喜欢这种带框线的表格， 最好的办法是她创建一个新的 environment， 定义相应的样式， 在正文部分只保留内容。 不过这并不容易， 一旦离开了 “现成的宏包” 解决方案， LaTeX 就变得相当复杂。 有一个 <code>booktab</code> 可用于创建三线表， 很明显这个宏包的作者并不喜欢且不建议使用任何其他格式的表格。</p>
+<p>Plain TeX 用户用 <code>\halign</code> 这个原始指令 （即最基本的 TeX 命令） 排版表格。 细心的作者会仔细调节相关的参数， 直到得到满意的效果。
+<figure>
+    <img src="/media/mktab-3.png"/> 
+</figure>
+</p>
+<p>有一些用户可能觉得三种排版结果根本看不出来有什么区别。 确实， 不是形状残缺、 字符错乱这种关键问题， 不影响阅读 （没有减少 “信息量”）。 是否值得较真取决于个人喜好。 TeX 的作者很明显对这些细节很感兴趣。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>带有斜线的表格更难处理。 或者说， TeX 本身就不具备处理带斜线表格的能力。 令人意外的是 Microsoft Word 对此的支持也很不错。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f09%2ftextab%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f09%2ftextab%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2017%2f09%2ftextab%2f&amp;text=TeX%20%e7%9a%84%e8%a1%a8%e6%a0%bc%e9%99%b7%e9%98%b1" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

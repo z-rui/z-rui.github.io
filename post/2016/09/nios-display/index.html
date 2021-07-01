@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="软件控制数码管动态扫描显示" />
+<meta property="og:description" content="TL;DR
+数码管一般用来显示的数字，通常由7个笔画构成(有的还有1个小数点)，所以也称为7段数码管。之前构建的Nios II系统就用了6个数码管输出信息。
+传统上，要使用数码管，需要译码器将二进制编码的数字转换成7个笔画的编码，例如TTL的7447和CMOS的4511集成电路。
+给每个数码管配置一个译码器，并且将每一位数字同时传送到各译码器上，这种方案叫做静态显示。静态显示原理简单，但是浪费硬件资源。
+将译码器分时复用则构成动态显示电路：在一个时刻只点亮一个数码管，并使用一个扫描电路轮流扫描各个数码管。当扫描频率足够高时，显示的效果就像是所有数码管同时都被点亮。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/09/nios-display/" />
+<meta property="article:published_time" content="2016-09-22T18:57:00+08:00" />
+<meta property="article:modified_time" content="2016-09-22T18:57:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="软件控制数码管动态扫描显示"/>
+<meta name="twitter:description" content="TL;DR
+数码管一般用来显示的数字，通常由7个笔画构成(有的还有1个小数点)，所以也称为7段数码管。之前构建的Nios II系统就用了6个数码管输出信息。
+传统上，要使用数码管，需要译码器将二进制编码的数字转换成7个笔画的编码，例如TTL的7447和CMOS的4511集成电路。
+给每个数码管配置一个译码器，并且将每一位数字同时传送到各译码器上，这种方案叫做静态显示。静态显示原理简单，但是浪费硬件资源。
+将译码器分时复用则构成动态显示电路：在一个时刻只点亮一个数码管，并使用一个扫描电路轮流扫描各个数码管。当扫描频率足够高时，显示的效果就像是所有数码管同时都被点亮。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "软件控制数码管动态扫描显示",
+  "url": "http://z-rui.github.io/post/2016/09/nios-display/",
+  "wordCount": "163",
+  "datePublished": "2016-09-22T18:57:00+08:00",
+  "dateModified": "2016-09-22T18:57:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/09/nios-display/">
+
+    <title>软件控制数码管动态扫描显示 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/09/nios-display/">软件控制数码管动态扫描显示</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-09-22T18:57:00+08:00">Thu Sep 22, 2016</time> by rui</p>
+  </header>
+  <p><a href="#tl-dr">TL;DR</a></p>
+<p>数码管一般用来显示的数字，通常由7个笔画构成(有的还有1个小数点)，所以也称为7段数码管。之前构建的<a href="http://z-rui.github.io/post/2016/03/nios/">Nios II系统</a>就用了6个数码管输出信息。</p>
+<p>传统上，要使用数码管，需要译码器将二进制编码的数字转换成7个笔画的编码，例如TTL的7447和CMOS的4511集成电路。</p>
+<p>给每个数码管配置一个译码器，并且将每一位数字同时传送到各译码器上，这种方案叫做静态显示。静态显示原理简单，但是浪费硬件资源。</p>
+<p>将译码器分时复用则构成动态显示电路：在一个时刻只点亮一个数码管，并使用一个扫描电路轮流扫描各个数码管。当扫描频率足够高时，显示的效果就像是所有数码管同时都被点亮。</p>
+<p>我的开发板上有一个6位的共阳数码管，为了节省引脚个数，元件本身只能使用动态显示的方案（仅给出了7个笔画的引脚<code>DIG</code>和一个6位的掩码引脚<code>SEL</code>(低电平有效)，共13个引脚；如果采用静态显示，则需要8×6=48个引脚）。</p>
+<p>要实现动态显示，一种办法是设计硬件扫描电路。</p>
+<pre><code>module seg7ctl(
+	input CLK,
+	input [47:0] D,
+	output reg [5:0] SEL,
+	output reg [7:0] SEG
+);
+
+initial
+	SEL = 6'b111110;
+
+always
+	case (SEL)
+		6'b111110:
+			SEG = D[7:0];
+		6'b111101:
+			SEG = D[15:8];
+		6'b111011:
+			SEG = D[23:16];
+		6'b110111:
+			SEG = D[31:24];
+		6'b101111:
+			SEG = D[39:32];
+		6'b011111:
+			SEG = D[47:40];
+		default:
+			SEG = 8'bxxxxxxxx;
+	endcase
+
+always @(posedge CLK)
+	SEL = {SEL[4:0], SEL[5]};
+
+endmodule
+</code></pre><p>这个模块相当于一个把动态显示数码管转换成静态显示数码管的适配器。为了显示一些特殊的内容，我没有使用译码器，而是直接把数码管的8×6=48位原始内容暴露给CPU。因为超过了Nios II的总线宽度，我用两个PIO模块<code>seg_pio_hi</code>和<code>seg_pio_lo</code>进行通信。</p>
+<pre><code>void display(const char s[6])
+{
+	alt_u8 lo[4] = {s[5], s[4], s[3], s[2]};
+	alt_u8 hi[4] = {s[1], s[0]};
+
+	IOWR_ALTERA_AVALON_PIO_DATA(SEG_PIO_HI_BASE, *(alt_u32 *) hi);
+	IOWR_ALTERA_AVALON_PIO_DATA(SEG_PIO_LO_BASE, *(alt_u32 *) lo);
+}
+</code></pre><p>这样，调用</p>
+<pre><code>display(&quot;\x89\x86\xc7\xc7\xa3\x7d&quot;);
+</code></pre><p>就可以显示出类似<code>HeLLo!</code>的字样。</p>
+<p>硬件电路可定制性高，但是消耗硬件资源：48位的PIO需要48个寄存器，扫描电路需要6个寄存器，此外还需要一个单独的硬件时钟。</p>
+<h2 id="tldr">TL;DR</h2>
+<p>使用软件定时器也可以实现动态扫描。当Nios II系统中含有系统时钟时，可以添加定时器，使得某个回调函数函数每隔一段时间被调用一次。我可以在回调函数中直接向<code>SEG</code>和<code>DIG</code>引脚写入数据，从而无需额外的硬件电路。</p>
+<p>创建一个14位宽的PIO模块<code>pio_disp</code>，它的低8位连接到<code>DIG</code>引脚，高6位连接到<code>SEL</code>引脚。在软件中定义一个6字节的缓冲区<code>char DISPLAY_BUFFER[6];</code>。回调函数可以这么写：</p>
+<pre><code>alt_u32 on_alarm(void *context)
+{
+	static int i = 0;
+	alt_u8 data[4] = {DISPLAY_BUFFER[i], 0x7DF &gt;&gt; i};
+	IOWR_ALTERA_AVALON_PIO_DATA(PIO_DISP_BASE, *(alt_u32 *) data);
+	i = (i == 5) ? 0 : i + 1;
+	return (alt_u32) context;
+}
+</code></pre><p>在<code>main()</code>函数的开始部分调用初始化函数<code>display_init()</code>，其内容为：</p>
+<pre><code>int display_init(alt_u32 nticks)
+{
+	static alt_alarm the_alarm;
+	return alt_alarm_start(&amp;the_alarm, 0, &amp;on_alarm, (void *) nticks);
+}
+</code></pre><p>这样定时器会每个固定的时间被调用一次，数码管的内容被更新。要改变显示的内容，只需更新缓冲区的内容即可。</p>
+<pre><code>memcpy(DISPLAY_BUFFER, &quot;xxxxxx&quot;, 6);
+</code></pre><p>在软件的实现中，PIO模块仍然需要14个寄存器，没有专用的适配器电路。数码管的48位信息保存在<code>DISPLAY_BUFFER</code>中，实质上是在RAM里面，而不是48个专用的寄存器。</p>
+<p>系统时钟可能还需要一些硬件资源，但是系统时钟在其他很多场合也很有用。</p>
+<p>总体来说，硬件和软件的实现方式各有优劣。在这个例子中软件实现并不比硬件实现存储空间。但是软件更多使用RAM而不是寄存器。我的FPGA芯片中，寄存器只有约6000个，但是RAM有270000多比特。宝贵的硬件资源最好还是用来做高性能计算或者硬件接口，一般的逻辑用软件实现应该已经足够。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fnios-display%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fnios-display%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f09%2fnios-display%2f&amp;text=%e8%bd%af%e4%bb%b6%e6%8e%a7%e5%88%b6%e6%95%b0%e7%a0%81%e7%ae%a1%e5%8a%a8%e6%80%81%e6%89%ab%e6%8f%8f%e6%98%be%e7%a4%ba" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

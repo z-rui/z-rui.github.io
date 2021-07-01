@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bootstrap on 睿</title>
+    <link>http://z-rui.github.io/categories/bootstrap/</link>
+    <description>Recent content in bootstrap on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Sun, 25 Jan 2015 00:00:00 +0000</lastBuildDate><atom:link href="http://z-rui.github.io/categories/bootstrap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>定居GitHub.io</title>
+      <link>http://z-rui.github.io/post/2015/01/settlement/</link>
+      <pubDate>Sun, 25 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/01/settlement/</guid>
+      <description>&lt;p&gt;我需要一个可靠的地方存放我的文字。曾经试过很多办法，无论是纸质的、电子的或是基于网络的形式，都感觉不太靠谱：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;纸质的记事本，某一天弄丢了，就找不回来了。&lt;/li&gt;
+&lt;li&gt;在本机记录的文本，不方便保存历史记录，在更换电脑的时候有可能忘记迁移数据。&lt;/li&gt;
+&lt;li&gt;基于网络的内容管理系统，服务的稳定性是一个很大的问题，当我需要从一个平台迁移到另一个平台的时候，导入/导出也是一个艰巨的工作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现在我用Git来管理我这些文字，并且上传到GitHub服务器中。利用GitHub.io提供的Web服务进行展示。我认为有如下的好处。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="货币的时间价值" />
+<meta property="og:description" content="货币的时间价值是利息的(理论)来源。利息的计算是一个很有意思的问题。单利和复利属于比较简单的计算。
+设一笔资金的现值是\(\text{PV}\)，每期利率是\(r\)，那么\(N\)期之后，按照复利计算，它的价值\[\text{FV} = \text{PV}\left(1&#43;r\right)^N.\]
+这就是著名的复利公式。
+当每期都有新投入的现金时，就变得复杂起来。举个例子：银行贷款提供两种分期还款的方式：等额本息和等额本金。怎样计算每期应当偿还的金额？
+等额本息
+等额本息，即在每期末偿还一笔相同的金额\(\text{PMT}\)（也有在每期初还款的，暂不讨论这种情况），其中一部分是上期余额产生的利息，剩下的是偿还的本金。上期余额扣除本期偿还的本金后，成为本期余额……这个过程看起来挺复杂，其实利用货币的时间价值很容易算出\(\text{PMT}\)：把每期支付的金额归算为现值：
+
+第1期：\(\frac{\text{PMT}}{1&#43;r}\)
+第2期：\(\frac{\text{PMT}}{(1&#43;r)^2}\)
+&hellip;
+第N期：\(\frac{\text{PMT}}{(1&#43;r)^N}\)
+
+将它们相加，总的现值
+\begin{align}
+\text{PV} &amp;= \text{PMT}\left[(1&#43;r)^{-1} &#43; (1&#43;r)^{-2} &#43; \cdots &#43; (1&#43;r)^{-N} \right] \\\
+&amp;= \text{PMT} \frac{(1&#43;r)^{-1}\left[1-(1&#43;r)^{-N}\right]}{1-(1&#43;r)^{-1}} \\\
+&amp;= \text{PMT} \frac{1-(1&#43;r)^{-N}}{r}.
+\end{align}
+这也就是你每期支付\(\text{PMT}\)的情况下，银行愿意贷款给你的金额。反过来说，如果你打算贷款\(x\)，就可以根据此式算出每期的还款额
+\[\text{PMT} = \frac{r}{1-(1&#43;r)^{-N}} x.\]" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/11/tvm/" />
+<meta property="article:published_time" content="2016-11-02T20:43:00+08:00" />
+<meta property="article:modified_time" content="2016-11-02T20:43:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="货币的时间价值"/>
+<meta name="twitter:description" content="货币的时间价值是利息的(理论)来源。利息的计算是一个很有意思的问题。单利和复利属于比较简单的计算。
+设一笔资金的现值是\(\text{PV}\)，每期利率是\(r\)，那么\(N\)期之后，按照复利计算，它的价值\[\text{FV} = \text{PV}\left(1&#43;r\right)^N.\]
+这就是著名的复利公式。
+当每期都有新投入的现金时，就变得复杂起来。举个例子：银行贷款提供两种分期还款的方式：等额本息和等额本金。怎样计算每期应当偿还的金额？
+等额本息
+等额本息，即在每期末偿还一笔相同的金额\(\text{PMT}\)（也有在每期初还款的，暂不讨论这种情况），其中一部分是上期余额产生的利息，剩下的是偿还的本金。上期余额扣除本期偿还的本金后，成为本期余额……这个过程看起来挺复杂，其实利用货币的时间价值很容易算出\(\text{PMT}\)：把每期支付的金额归算为现值：
+
+第1期：\(\frac{\text{PMT}}{1&#43;r}\)
+第2期：\(\frac{\text{PMT}}{(1&#43;r)^2}\)
+&hellip;
+第N期：\(\frac{\text{PMT}}{(1&#43;r)^N}\)
+
+将它们相加，总的现值
+\begin{align}
+\text{PV} &amp;= \text{PMT}\left[(1&#43;r)^{-1} &#43; (1&#43;r)^{-2} &#43; \cdots &#43; (1&#43;r)^{-N} \right] \\\
+&amp;= \text{PMT} \frac{(1&#43;r)^{-1}\left[1-(1&#43;r)^{-N}\right]}{1-(1&#43;r)^{-1}} \\\
+&amp;= \text{PMT} \frac{1-(1&#43;r)^{-N}}{r}.
+\end{align}
+这也就是你每期支付\(\text{PMT}\)的情况下，银行愿意贷款给你的金额。反过来说，如果你打算贷款\(x\)，就可以根据此式算出每期的还款额
+\[\text{PMT} = \frac{r}{1-(1&#43;r)^{-N}} x.\]"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "货币的时间价值",
+  "url": "http://z-rui.github.io/post/2016/11/tvm/",
+  "wordCount": "236",
+  "datePublished": "2016-11-02T20:43:00+08:00",
+  "dateModified": "2016-11-02T20:43:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/11/tvm/">
+
+    <title>货币的时间价值 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/11/tvm/">货币的时间价值</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-11-02T20:43:00+08:00">Wed Nov 2, 2016</time> by rui</p>
+  </header>
+  <p>货币的时间价值是利息的(理论)来源。利息的计算是一个很有意思的问题。单利和复利属于比较简单的计算。
+设一笔资金的现值是\(\text{PV}\)，每期利率是\(r\)，那么\(N\)期之后，按照复利计算，它的价值\[\text{FV} = \text{PV}\left(1+r\right)^N.\]
+这就是著名的复利公式。</p>
+<p>当每期都有新投入的现金时，就变得复杂起来。举个例子：银行贷款提供两种分期还款的方式：等额本息和等额本金。怎样计算每期应当偿还的金额？</p>
+<h2 id="等额本息">等额本息</h2>
+<p>等额本息，即在每期末偿还一笔相同的金额\(\text{PMT}\)（也有在每期初还款的，暂不讨论这种情况），其中一部分是上期余额产生的利息，剩下的是偿还的本金。上期余额扣除本期偿还的本金后，成为本期余额……这个过程看起来挺复杂，其实利用货币的时间价值很容易算出\(\text{PMT}\)：把每期支付的金额归算为现值：</p>
+<ul>
+<li>第1期：\(\frac{\text{PMT}}{1+r}\)</li>
+<li>第2期：\(\frac{\text{PMT}}{(1+r)^2}\)</li>
+<li>&hellip;</li>
+<li>第N期：\(\frac{\text{PMT}}{(1+r)^N}\)</li>
+</ul>
+<p>将它们相加，总的现值
+\begin{align}
+\text{PV} &amp;= \text{PMT}\left[(1+r)^{-1} + (1+r)^{-2} + \cdots + (1+r)^{-N} \right] \\\<br>
+&amp;= \text{PMT} \frac{(1+r)^{-1}\left[1-(1+r)^{-N}\right]}{1-(1+r)^{-1}} \\\<br>
+&amp;= \text{PMT} \frac{1-(1+r)^{-N}}{r}.
+\end{align}
+这也就是你每期支付\(\text{PMT}\)的情况下，银行愿意贷款给你的金额。反过来说，如果你打算贷款\(x\)，就可以根据此式算出每期的还款额
+\[\text{PMT} = \frac{r}{1-(1+r)^{-N}} x.\]</p>
+<p>举例来说，某人申请了银行贷款10000元，年利率为4.9%，分12个月还清（月利率=年利率/12）。那么，他每月的还款额根据公式可以得到：
+\[\text{PMT} = \frac{4.9%/12}{1-(1+4.9%/12)^{-12}} \times 10000 = 855.62;\text{(元)}\]</p>
+<p>等额本息是银行贷款、分期消费等常用的还款方式。这里要注意一些潜在的陷阱。根据上面的计算可知需要支付的本息合计大约10267元，某些不怀好意的贷款人会宣称“年息2.67%”，这是错误的。同理，分期消费平台会用“手续费”的概念，使得不清楚状况的消费者低估了实际的利率。举个例子如下：</p>
+<p>某分期平台申请12期分期付款，并额外共收取8.80%的手续费。还款方式如下：设消费金额为\(x\)，则每期还款\(\frac{(1+8.80%)x}{12}\)。问实际利率是多少？</p>
+<p>注意，为了方便那些不专业的消费者理解或者算账，这个分期平台没有使用等额本息的还款公式，这里的“手续费”和实际的利率很可能相差甚远。</p>
+<p>要解出实际利率很简单，只要比照等额本息的计算公式和分期平台给出的公式，
+\[\frac{r}{1-(1+r)^{-12}} = \frac{1+8.80%}{12}.\]
+由此解得\(r=1.32%\)。因此，实际的年利率约为15.9%。</p>
+<h2 id="等额本金">等额本金</h2>
+<p>等额本金是用的较少的一种还款方式。它的计算相对简单。设贷款总额是\(x\)，则每期偿还的本金固定为\(\frac{x}{N}\)，此外还需要偿还上一期余额产生的利息。因为余额是逐期递减的，所以每期的还款也是越来越少的。</p>
+<p>第\(k\)期还款前，余额为\(\frac{N-k+1}{N}x\)，因此当期还款
+\[\text{PMT}(k) = \frac{x}{N} + \frac{N-k+1}{N}xr.\]</p>
+<p>举例来说，某人申请银行贷款10000元，年利率4.9%，采用等额本金的方式，分12月还清。那么，第1期他需要还款
+\[\text{PMT}(1) = \frac{10000}{12} + 10000\times\frac{4.9%}{12} = 874.17;\text{(元)}.\]
+之后每期可以比上一期少还\(\frac{1}{12}\times 10000 \times \frac{4.9%}{12} = 3.40\)元。到最后一期时，只需还款836.74元。</p>
+<p>有人根据计算，认为：在期数和利率相等的情况下，使用等额本金方式还款，还款总额小于等额本息方式。所以使用前者更<i>合算</i>。我的结论是：第一句话有道理，而第二句话是错误的。</p>
+<p>根据前面的分析，可知，等额本息的本息和为
+\[A=N\cdot\text{PMT} = \frac{rN}{1-(1+r)^{-N}}x.\]
+而等额本金的本息和为
+\[B=\sum_{i=1}^{N}\text{PMT}(i) = \left(1 + \frac{N+1}{2}r\right)x.\]</p>
+<p>可以证明，
+\[\frac{rN}{1-(1+r)^{-N}} \geq 1 + \frac{N+1}{2}r.\]
+因此\(A\geq B\)。事实上等号只在个别极限情况取得，例如\(N=1\)或者\(r=0\)。一般来说，等额本息的本息和总是比等额本金的多。其实从直观上很容易理解，因为等额本息一开始偿还的本金少，所以计的利息就多，本息和自然就多。严格的证明见文末。</p>
+<p>虽然两者的本息和不同，但是并不存在一种比另一种更<i>合算</i>的问题。实际上，本息和是一个没有意义的数字，因为它将不同时间点的金额直接求和，这就忽略了货币的时间价值。如果把等额本金的还款全部折算为现值，可以发现
+\begin{align}
+\text{PV} &amp;= \sum_{k=1}^N \frac{\text{PMT}(k)}{(1+r)^k} \\\<br>
+&amp;= \frac{x}{N} \underbrace{\sum_{k=1}^N \frac{1+(N-k+1)r}{(1+r)^k}}_{\triangleq S}.
+\end{align}</p>
+<p>使用错位相减法：
+\begin{eqnarray}
+S &amp;&amp;= &amp;&amp;\frac{1+Nr}{1+r} &amp;+&amp; \frac{1+(N-1)r}{(1+r)^2} &amp;+&amp; \cdots &amp;+&amp; \frac{1+2r}{(1+r)^{N-1}} &amp;+&amp; \frac{1+r}{(1+r)^N} \tag{1} \\\<br>
+(1+r)S &amp;&amp;= 1 + Nr &amp; + &amp;\frac{1+(N-1)r}{1+r} &amp;+&amp; \frac{1+(N-2)r}{(1+r)^2} &amp;+&amp; \cdots &amp;+&amp; \frac{1+r}{(1+r)^{N-1}} \tag{2}
+\end{eqnarray}
+\((2)-(1)\)，得
+\begin{align}
+rS &amp;= 1 + Nr -r \left[\frac{1}{1+r}+\frac{1}{(1+r)^2}+\cdots+\frac{1}{(1+r)^{N-1}}\right] - \frac{1+r}{(1+r)^N} \\\<br>
+&amp;= 1 + Nr - r \frac{1-(1+r)^{-N+1}}{r} - (1+r)^{-N+1}\\\<br>
+&amp;= Nr.
+\end{align}
+由此可知\(S=N\)，因此\(\text{PV}=x\)，这和等额本息的情况是完全一样的。简单地说，无论怎样还款，银行发放给你的贷款金额一定等于你的所有还款的现值之和。</p>
+<h2 id="附数学证明">附：数学证明</h2>
+<p>求证\[\frac{rN}{1-(1+r)^{-N}} \geq 1 + \frac{N+1}{2}r,\quad N\in\mathbb{N}^*,, r \geq 0.\]</p>
+<p><strong>证明</strong> <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>原不等式等价于
+\[ \left(1+\frac{N+1}{2}r\right)\frac{1-(1+r)^{-N}}{r} \leq N. \tag{$*$} \]</p>
+<p>使用数学归纳法。首先验证\(N=1\)的情况：</p>
+<p>\[\text{左边}=(1+r)\frac{1-(1+r)^{-1}}{r}=1=右边.\]</p>
+<p>假设\((*)\)成立，现在需要验证用\(N+1\)替代\(N\)，不等式也成立。即，需要证明
+\[ \left(1+\frac{N+2}{2}r\right)\frac{1-(1+r)^{-N-1}}{r} \leq N + 1.  \]</p>
+<p>证明如下：
+\begin{align}
+\text{左边}
+&amp;= \left(1+\frac{N+1}{2}r + \frac{1}{2}r\right)\left[\frac{1-(1+r)^{-N}}{r}+(1+r)^{-N-1}\right] \\\<br>
+&amp;= \underbrace{\left(1+\frac{N+1}{2}r\right)\frac{1-(1+r)^{-N}}{r}}_{\text{使用不等式$(*)$}} + \frac{1}{2}\left[1-(1+r)^{-N}\right] + \left(1+\frac{N+1}{2}r\right)(1+r)^{-N-1} + \frac{1}{2}r(1+r)^{-N-1} \\\<br>
+&amp;\leq N + \frac{1}{2} + \frac{1}{2}\big[-(1+r)+2+(N+1)r+r\big]{(1+r)}^{-N-1} \\\<br>
+&amp;= N + \frac{1}{2} + \frac{1}{2}\frac{\overbrace{1+(N+1)r}^{\leq(1+r)^{N+1},\rlap{\text{(伯努利不等式)}}{}}}{(1+r)^{N+1}} \\\<br>
+&amp;\leq N + \frac{1}{2} + \frac{1}{2} \\\<br>
+&amp;=右边.
+\end{align}</p>
+<p>综上所述，\((*)\)对任意正整数都成立。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>使用数学归纳法的证明是我的同学想出来的。 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f11%2ftvm%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f11%2ftvm%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f11%2ftvm%2f&amp;text=%e8%b4%a7%e5%b8%81%e7%9a%84%e6%97%b6%e9%97%b4%e4%bb%b7%e5%80%bc" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

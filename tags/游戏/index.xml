@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>游戏 on 睿</title>
+    <link>http://z-rui.github.io/tags/%E6%B8%B8%E6%88%8F/</link>
+    <description>Recent content in 游戏 on 睿</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2015---2020.
+使用[Hugo](http://gohugo.io)构建.
+</copyright>
+    <lastBuildDate>Thu, 29 Jan 2015 14:16:00 +0800</lastBuildDate><atom:link href="http://z-rui.github.io/tags/%E6%B8%B8%E6%88%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>连连看游戏中的配对路径搜索</title>
+      <link>http://z-rui.github.io/post/2015/01/llk/</link>
+      <pubDate>Thu, 29 Jan 2015 14:16:00 +0800</pubDate>
+      
+      <guid>http://z-rui.github.io/post/2015/01/llk/</guid>
+      <description>&lt;p&gt;在连连看游戏中，两个图案可以消去的条件是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;两者图案相同。&lt;/li&gt;
+&lt;li&gt;两种直接存在一条通路，它是一条只经过没有图案的地方、且转折点不超过2个的折线。满足此条件的两个图案被称为是可相连的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;要判断条件1非常容易，所以主要考虑怎样判断条件2。举一个具体的例子如下，图中空格表示没有图案的地方，字母和&lt;code&gt;#&lt;/code&gt;表示图案，&lt;code&gt;-+|&lt;/code&gt;表示路径。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;          
+ ### ##A# 
+ # ### |# 
+ +-----+# 
+ A####### 
+          
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在这个例子中，A和A是可相连的。图中所给出的路径含有两个转折点。&lt;/p&gt;
+&lt;p&gt;对于此类问题，能否给出一个普遍的判断方法？在实际问题中（例如在连连看游戏里），如果判定两个图案是可相连的，还要指出一条具体的路径。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

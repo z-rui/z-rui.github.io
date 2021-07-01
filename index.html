@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="睿" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="睿"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link active" href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></h2>
+    <p class="blog-post-meta"><time datetime="2021-06-30T22:22:19-07:00">Wed Jun 30, 2021</time> by rui</p>
+  </header>
+  <p>最近因为更换了新的电脑，所以尝试在Windows 10上使用 WSL 代替双系统的配置。WSL 2采用了虚拟化的技术，并且具备一个真正的Linux内核。WSL 2的VM相比传统的全系统VM而言更加精简，并且Linux和Windows系统之间的可交互性更好：</p>
+<ul>
+<li>每个操作系统都可以通过9P协议访问对方的文件系统；</li>
+<li>每个操作系统都可以较方便地调用另一个操作系统的程序。例如，在PowerShell中使用<code>grep</code>一类的工具。</li>
+<li>Linux的文件系统储存在 <code>.vhdx</code> 文件中，可以动态扩展和收缩，不需要单独分区；</li>
+<li>VM的占用的内存是根据实际使用情况动态调整的。</li>
+</ul>
+<p>听起来是个不错的选择。在新的预览版中，WSL 2更提供了GPU和GUI的支持。不过，我还没有用到预览版。</p>
+<figure>
+    <img src="/media/gentoo-wsl-1.png"
+         alt="Gentoo on WSL, running neofetch"/> 
+</figure>
+  <a href='http://z-rui.github.io/post/2021/06/gentoo-on-wsl/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-12-04T21:43:25-05:00">Fri Dec 4, 2020</time> by rui</p>
+  </header>
+  <p>使用对称密钥通信时，双方需要事先约定密钥。如何安全地操作是一个关键问题。<a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">Diffie-Hellman-Merkle算法</a>使得在不安全的信道中交换密钥成为可能。</p>
+<p>在Diffie-Hellman-Merkle算法中，事先约定整数G和M。通信双方Alice和Bob分别拥有自己的私钥a和b。Alice把自己的公钥A=G<sup>a</sup>发送给Bob。同理，Bob把B=G<sup>b</sup>发送给Alice。Alice计算B<sup>a</sup>，Bob计算A<sup>b</sup>。这样，他们就得到了共享密钥K=G<sup>ab</sup>。</p>
+<p>注意，这里的乘法定义在GF(M)上，即A=G<sup>a</sup> mod M，等等。对于取模的指数运算，其<a href="https://en.wikipedia.org/wiki/Discrete_logarithm">逆运算</a>是一个目前难以解决的问题。对于外界的观察者而言，只知道G、M、A、B，并不能容易地求出a、b或K。这样就确保了密钥交换过程的安全性。</p>
+<p>在实践中，常用密钥派生函数KDF对密钥K进行处理，用派生密钥KDF(K)作为对称加密的实际密钥。</p>
+  <a href='http://z-rui.github.io/post/2020/12/x25519/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-11-27T20:51:50-05:00">Fri Nov 27, 2020</time> by rui</p>
+  </header>
+  <p>自古以来，有大量信息需要隐秘地传输，例如军事机密。密码学也随之发展起来。一种常用的加密算法是<strong>对称加密算法</strong>，它由加密函数E和解密函数D构成：</p>
+<pre><code>    C=E(T,K)
+    T=D(C,K)
+</code></pre><p>其中T为<strong>明文</strong>，C为<strong>密文</strong>。信息的传输双方事先约定一个共用的密钥K。密文可以在不安全的信道中传递，即使被敌人截获，在未知密码的情况下也很难恢复出原文。</p>
+  <a href='http://z-rui.github.io/post/2020/11/chacha20/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/07/combination-code/">组合的编码/解码</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-07-24T21:41:11-07:00">Fri Jul 24, 2020</time> by rui</p>
+  </header>
+  <p>n 元集合 {0,1,&hellip;,n-1} 的 k 元子集共有 \(n\choose k\) 个。
+设某个子集的元素为 \(c_1&lt;c_2&lt;\cdots&lt;c_k\)， 则该子集可以<a href="https://en.wikipedia.org/wiki/Combinatorial_number_system">编码</a>为
+\[{c_k\choose k} + \cdots + {c_2\choose 2} + {c_1\choose 1}.\]</p>
+<p>此编码最小值为 0， 最大值为
+\[{n-1\choose k} + \cdots + {n-k+1\choose 2} + {n-k\choose 1} = {n\choose k}-1.\]
+上式的证明： 在两边加上 \(n-k\choose 0\) 并使用恒等式 \({n\choose k}={n-1\choose k-1}+{n-1\choose k}\)。</p>
+  <a href='http://z-rui.github.io/post/2020/07/combination-code/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/06/conic/">圆锥曲线的反射性质</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-06-23T21:25:27-07:00">Tue Jun 23, 2020</time> by rui</p>
+  </header>
+  <p>当一束光从焦点发射，并在与圆锥曲线相交的点处发生反射时，反射的光线必定：</p>
+<ul>
+<li>穿过另一焦点（椭圆）；
+<figure>
+    <img src="/media/conic-1.png" width="50%"/> 
+</figure>
+</li>
+<li>反向延长后穿过另一焦点（双曲线）；
+<figure>
+    <img src="/media/conic-2.png" width="50%"/> 
+</figure>
+</li>
+<li>与对称轴平行（抛物线）。这个性质使得它的<a href="https://en.wikipedia.org/wiki/Parabolic_reflector">旋转曲面</a>很适合用来发出/收集平行光。
+<figure>
+    <img src="/media/conic-3.png" width="50%"/> 
+</figure>
+</li>
+</ul>
+<p>证明的办法：先在曲线上任取一点P，作焦点和P的连线（如果是抛物线则另作一条过P且与对称轴平行的线），然后证明所作的线与法线（或切线）构成的锐（直）角相等即可。</p>
+  <a href='http://z-rui.github.io/post/2020/06/conic/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/05/abc/">ABC记法</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-05-14T18:08:56-07:00">Thu May 14, 2020</time> by rui</p>
+  </header>
+  <link href="/css/abcjs-midi.css" type="text/css" rel="stylesheet" />
+<script src="/scripts/abcjs_plugin-midi_5.11.0-min.js"></script>
+<script type="text/javascript">
+	window.ABCJS.plugin.render_options = {
+		responsive: "resize",
+		inlineControls: {
+			loopToggle: true,
+		},
+	};
+</script>
+<p><a href="https://en.wikipedia.org/wiki/ABC_notation">ABC</a>是一种文本记谱法，
+既方便人工录入，也方便计算机读取。</p>
+  <a href='http://z-rui.github.io/post/2020/05/abc/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/04/portage-sqfs/">用SquashFS存储Portage树</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-04-26T21:17:43-07:00">Sun Apr 26, 2020</time> by rui</p>
+  </header>
+  <p>Gentoo系统中的<a href="https://wiki.gentoo.org/wiki/Ebuild_repository">Portage树</a>存储了软件仓库中<strong>所有</strong>软件的元信息。其中最主要的是<a href="https://wiki.gentoo.org/wiki/Ebuild">Ebuild脚本</a>，它记载了软件的编译方法、依赖关系等。它通常位于<code>/usr/portage</code>。</p>
+<p>可想而知，这个树中包含了大量的文件，因此占用了很大的磁盘空间。根据我最近的测量，</p>
+<ul>
+<li>所有文件的大小总和超过300MiB；</li>
+<li>实际占用磁盘空间超过600MiB (ext4)。</li>
+</ul>
+<p>但实际上，其中大部分文件都比较小，且属于较易被压缩的文本文件。因此，值得考虑使用一种压缩的文件系统存放Portage树。</p>
+<p><a href="https://www.kernel.org/doc/Documentation/filesystems/squashfs.txt">SquashFS</a>是一种可压缩的只读文件系统。将Portage树的全部内容放在其中，只需约50MiB的存储空间。</p>
+<p>在配置SquashFS的过程中，走了一些弯路。因此，我把操作过程记录在这里，以便日后参考。</p>
+  <a href='http://z-rui.github.io/post/2020/04/portage-sqfs/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/04/qemu/">QEMU 笔记</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-04-19T18:28:14-07:00">Sun Apr 19, 2020</time> by rui</p>
+  </header>
+  <p>我最近尝试了在 Gentoo 上用 <a href="https://qemu.org/">QEMU</a>
+运行 Windows 10。 我想把过程中的一些细节记录在这里。</p>
+<figure>
+    <img src="/media/qemu-1.png"/> 
+</figure>
+
+<p><a href="https://wiki.gentoo.org/wiki/QEMU">Gentoo Wiki</a> 和 <a href="https://wiki.gentoo.org/wiki/QEMU">ArchWiki</a> 上的 QEMU 条目也是很好的参考。</p>
+  <a href='http://z-rui.github.io/post/2020/04/qemu/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/03/irc/">近代科技：IRC</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-03-21T21:37:03-07:00">Sat Mar 21, 2020</time> by rui</p>
+  </header>
+  <p>IRC (Internet Relay Chat) 是 90 年代提出的互联网协议。
+用户可以连接到 IRC 上与其他用户进行即时通讯。多个用户可以在一个频道（类似聊天室的概念）交流，也可以进行两用户间的一对一交流。
+协议很简陋，只能传输文本内容。即便如此，这个协议体现了早期互联网标准化和开放的特点：任何人可以根据标准，制作自己的实现；不同的实现可以互联互通。</p>
+<p>和IRC有关的更多信息可以参考 <a href="http://www.irchelp.org/">http://www.irchelp.org/</a>。</p>
+  <a href='http://z-rui.github.io/post/2020/03/irc/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2020/03/excerpt/">文摘</a></h2>
+    <p class="blog-post-meta"><time datetime="2020-03-14T17:38:53-07:00">Sat Mar 14, 2020</time> by rui</p>
+  </header>
+  <p>严复在一篇文章中提到这样一句话：</p>
+<blockquote>
+<p>華風之弊， 八字盡之： 始於作偽， 終於無恥。</p>
+</blockquote>
+<p>话说得很重， 但有时也是非常准确的。</p>
+<p>查询这句话的出处时， 又看见了他写的《論世變之亟》。
+其中有一些句子至今仍值得思考。</p>
+  <a href='http://z-rui.github.io/post/2020/03/excerpt/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  
+  
+  <a class="btn btn-outline-primary disabled" href="#" role="button" aria-disabled="true">上一页</a>
+  <a class="btn btn-outline-primary" href="/page/2/" rel="next" role="button">下一页</a>
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

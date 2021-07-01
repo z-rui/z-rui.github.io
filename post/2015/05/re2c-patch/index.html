@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="IUP代码生成器以及re2c补丁一枚" />
+<meta property="og:description" content="最近虽然写SQLite图形前端的计划还没有什么进展，但是准备工作已经做起来了。在这过程中常常有意外收获。
+在计划使用IUP作为图形界面库的时候，因为LED使用的机制过老，而Lua绑定又要增加新的依赖。（我的经验是，一旦用了IUP的Lua绑定，就会不知不觉地把和GUI不相关的逻辑代码写在Lua里。）所以我打算自己写一个新的GUI代码生成器。它的特点是：
+
+使用IUP的新接口，例如IupSetCallback, IupSetAttributeHandle。
+不使用IupSetHandle给每个IUP对象绑定一个全局名称。
+生成纯C代码，不依赖Lua。
+
+目前这个项目已经托管在GitHub，仍在开发中。最新的master分支已经基本能用。
+写这个程序其实就是发明一个小型的专用语言，所以免不了和Lex &amp; Yacc这样的元老打交道。最初我打算手写词法分析器和语法分析器，然而只有词法分析器被我手写出来。语法分析器我用Lemon生成。Lemon和Yacc的语法并不兼容，但好在前者是公有领域内的软件，编译起来也很方便。
+Lemon生成的是LALR(1)语法分析器，对语法似乎有很大的限制，总之并不能像我想象地那样好地工作。GNU Bison可以生成更加强大的语法分析器而且和Yacc更加兼容，但我没有尝试。
+后来我嫌词法分析器手写也太麻烦，索性用Flex改成自动生成。这就是master分支的最新状态。
+很多人把Flex &amp; Bison看成是Lex &amp; Yacc的GNU版本。其实这是不对的。Flex不是GNU系列的软件，采用的也不是GPL协议（而是BSD协议）。所以所谓GNU Flex的称法完全是子虚乌有，但网上一查却还能查出一大堆。（但Bison的确是GNU软件。）
+Flex对于喜欢瞎搞编译器的我来说应该是非常趁手的工具。我只需要给出词法定义，所有其他的辅助代码（输入输出、内存管理）全都由Flex搞定。最后程序的主体部分就只有：
+do {
+	token = yylex();
+	Parse(parser, token, strdup(yytext));
+} while (token);
+词法分析每读一个记号，就送给语法分析器，如此循环直到文件结束。
+值得注意的细节是，yytext不能直接传送给语法分析器。这是因为LALR语法分析器和词法分析器不是同步工作的，读入一个记号以后往往不会立即进行归约(reduce)。等到归约的时候，相应的动作代码才被执行。这时候yytext的内容恐怕已经发生了变化。所以在传送词法记号的时候，就应该传送一份拷贝。
+下面说说re2c。re2c是一个相对小众的工具，文档也不多。它可以把DFA（有限状态自动机，词法分析的核心理论）直接编码成(含有很多goto的)C代码。Flex的做法是把状态和跳转规则保存在静态数组里，而其他部分的代码都是同样的模板。
+re2c也可以用来写词法分析器。据称，直接编码的DFA构造的词法分析器和手写的词法分析器的效率是接近的，而比Flex那样表格驱动的快很多倍。不过，Flex名字本身意思就是Fast lex，所以究竟能快多少呢？我很好奇。和Flex不同，re2c不产生辅助代码。为了方便起见，我只好采取把输入文件一次性全部读入内存的办法。这样做其实很实用。（Lemon自身分析语法规则的时候，就采用这样的做法。）
+我为GUI代码生成器的项目创建了一个新的分支，用re2c生成词法分析器。
+最后说说re2c的补丁。re2c的词法规则是放在形如/*!re2c ... */的注释块中的。据说也可以使用%{ ... %}作为界限符，但是我试了一下，Segmentation fault。
+就我个人的审美而言，我觉得%{ %}作为界限符更加美观一点。把有意义的代码写在注释里边是很讨厌的事情。如果要专门为re2c编写语法高亮规则，采用%{ %}这样的界限符也更容易实现一些。
+崩溃的原因是re2c自己的词法分析器写的不对，里边有一个硬编码的字符串长度，只适用于前一种形式。补丁已提交到SourceForge。
+更新: re2c的维护者者说他看出了问题，但并不能重现re2c崩溃的现象。真是奇怪啊，在我这里凡是含有%{ %}界限符的文件统统都会崩溃。
+更新#2: re2c的维护者很快就发布了re2c的新版本修正了这个错误。不过他扩展了我提供的补丁，因为程序中还有其他几处类似的错误。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2015/05/re2c-patch/" />
+<meta property="article:published_time" content="2015-05-20T01:51:00+08:00" />
+<meta property="article:modified_time" content="2015-05-20T01:51:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IUP代码生成器以及re2c补丁一枚"/>
+<meta name="twitter:description" content="最近虽然写SQLite图形前端的计划还没有什么进展，但是准备工作已经做起来了。在这过程中常常有意外收获。
+在计划使用IUP作为图形界面库的时候，因为LED使用的机制过老，而Lua绑定又要增加新的依赖。（我的经验是，一旦用了IUP的Lua绑定，就会不知不觉地把和GUI不相关的逻辑代码写在Lua里。）所以我打算自己写一个新的GUI代码生成器。它的特点是：
+
+使用IUP的新接口，例如IupSetCallback, IupSetAttributeHandle。
+不使用IupSetHandle给每个IUP对象绑定一个全局名称。
+生成纯C代码，不依赖Lua。
+
+目前这个项目已经托管在GitHub，仍在开发中。最新的master分支已经基本能用。
+写这个程序其实就是发明一个小型的专用语言，所以免不了和Lex &amp; Yacc这样的元老打交道。最初我打算手写词法分析器和语法分析器，然而只有词法分析器被我手写出来。语法分析器我用Lemon生成。Lemon和Yacc的语法并不兼容，但好在前者是公有领域内的软件，编译起来也很方便。
+Lemon生成的是LALR(1)语法分析器，对语法似乎有很大的限制，总之并不能像我想象地那样好地工作。GNU Bison可以生成更加强大的语法分析器而且和Yacc更加兼容，但我没有尝试。
+后来我嫌词法分析器手写也太麻烦，索性用Flex改成自动生成。这就是master分支的最新状态。
+很多人把Flex &amp; Bison看成是Lex &amp; Yacc的GNU版本。其实这是不对的。Flex不是GNU系列的软件，采用的也不是GPL协议（而是BSD协议）。所以所谓GNU Flex的称法完全是子虚乌有，但网上一查却还能查出一大堆。（但Bison的确是GNU软件。）
+Flex对于喜欢瞎搞编译器的我来说应该是非常趁手的工具。我只需要给出词法定义，所有其他的辅助代码（输入输出、内存管理）全都由Flex搞定。最后程序的主体部分就只有：
+do {
+	token = yylex();
+	Parse(parser, token, strdup(yytext));
+} while (token);
+词法分析每读一个记号，就送给语法分析器，如此循环直到文件结束。
+值得注意的细节是，yytext不能直接传送给语法分析器。这是因为LALR语法分析器和词法分析器不是同步工作的，读入一个记号以后往往不会立即进行归约(reduce)。等到归约的时候，相应的动作代码才被执行。这时候yytext的内容恐怕已经发生了变化。所以在传送词法记号的时候，就应该传送一份拷贝。
+下面说说re2c。re2c是一个相对小众的工具，文档也不多。它可以把DFA（有限状态自动机，词法分析的核心理论）直接编码成(含有很多goto的)C代码。Flex的做法是把状态和跳转规则保存在静态数组里，而其他部分的代码都是同样的模板。
+re2c也可以用来写词法分析器。据称，直接编码的DFA构造的词法分析器和手写的词法分析器的效率是接近的，而比Flex那样表格驱动的快很多倍。不过，Flex名字本身意思就是Fast lex，所以究竟能快多少呢？我很好奇。和Flex不同，re2c不产生辅助代码。为了方便起见，我只好采取把输入文件一次性全部读入内存的办法。这样做其实很实用。（Lemon自身分析语法规则的时候，就采用这样的做法。）
+我为GUI代码生成器的项目创建了一个新的分支，用re2c生成词法分析器。
+最后说说re2c的补丁。re2c的词法规则是放在形如/*!re2c ... */的注释块中的。据说也可以使用%{ ... %}作为界限符，但是我试了一下，Segmentation fault。
+就我个人的审美而言，我觉得%{ %}作为界限符更加美观一点。把有意义的代码写在注释里边是很讨厌的事情。如果要专门为re2c编写语法高亮规则，采用%{ %}这样的界限符也更容易实现一些。
+崩溃的原因是re2c自己的词法分析器写的不对，里边有一个硬编码的字符串长度，只适用于前一种形式。补丁已提交到SourceForge。
+更新: re2c的维护者者说他看出了问题，但并不能重现re2c崩溃的现象。真是奇怪啊，在我这里凡是含有%{ %}界限符的文件统统都会崩溃。
+更新#2: re2c的维护者很快就发布了re2c的新版本修正了这个错误。不过他扩展了我提供的补丁，因为程序中还有其他几处类似的错误。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "IUP代码生成器以及re2c补丁一枚",
+  "url": "http://z-rui.github.io/post/2015/05/re2c-patch/",
+  "wordCount": "52",
+  "datePublished": "2015-05-20T01:51:00+08:00",
+  "dateModified": "2015-05-20T01:51:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2015/05/re2c-patch/">
+
+    <title>IUP代码生成器以及re2c补丁一枚 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/05/re2c-patch/">IUP代码生成器以及re2c补丁一枚</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-05-20T01:51:00+08:00">Wed May 20, 2015</time> by rui</p>
+  </header>
+  <p>最近虽然写SQLite图形前端的计划还没有什么进展，但是准备工作已经做起来了。在这过程中常常有意外收获。</p>
+<p>在计划使用IUP作为图形界面库的时候，因为LED使用的机制过老，而Lua绑定又要增加新的依赖。（我的经验是，一旦用了IUP的Lua绑定，就会不知不觉地把和GUI不相关的逻辑代码写在Lua里。）所以我打算自己写一个新的GUI代码生成器。它的特点是：</p>
+<ul>
+<li>使用IUP的新接口，例如<code>IupSetCallback</code>, <code>IupSetAttributeHandle</code>。</li>
+<li>不使用<code>IupSetHandle</code>给每个IUP对象绑定一个全局名称。</li>
+<li>生成纯C代码，不依赖Lua。</li>
+</ul>
+<p>目前这个项目已经<a href="https://github.com/z-rui/dlg">托管在GitHub</a>，仍在开发中。最新的master分支已经基本能用。</p>
+<p>写这个程序其实就是发明一个小型的专用语言，所以免不了和Lex &amp; Yacc这样的元老打交道。最初我打算手写词法分析器和语法分析器，然而只有词法分析器被我手写出来。语法分析器我用<a href="http://www.hwaci.com/sw/lemon/">Lemon</a>生成。Lemon和Yacc的语法并不兼容，但好在前者是公有领域内的软件，编译起来也很方便。</p>
+<p>Lemon生成的是LALR(1)语法分析器，对语法似乎有很大的限制，总之并不能像我想象地那样好地工作。GNU Bison可以生成更加强大的语法分析器而且和Yacc更加兼容，但我没有尝试。</p>
+<p>后来我嫌词法分析器手写也太麻烦，索性用Flex改成自动生成。这就是master分支的最新状态。</p>
+<p>很多人把Flex &amp; Bison看成是Lex &amp; Yacc的GNU版本。其实这是不对的。Flex不是GNU系列的软件，采用的也不是GPL协议（而是BSD协议）。所以所谓GNU Flex的称法完全是子虚乌有，但网上一查却还能查出一大堆。（但Bison的确是GNU软件。）</p>
+<p>Flex对于喜欢瞎搞编译器的我来说应该是非常趁手的工具。我只需要给出词法定义，所有其他的辅助代码（输入输出、内存管理）全都由Flex搞定。最后程序的主体部分就只有：</p>
+<pre><code>do {
+	token = yylex();
+	Parse(parser, token, strdup(yytext));
+} while (token);
+</code></pre><p>词法分析每读一个记号，就送给语法分析器，如此循环直到文件结束。</p>
+<p>值得注意的细节是，<code>yytext</code>不能直接传送给语法分析器。这是因为LALR语法分析器和词法分析器不是同步工作的，读入一个记号以后往往不会立即进行归约(reduce)。等到归约的时候，相应的动作代码才被执行。这时候<code>yytext</code>的内容恐怕已经发生了变化。所以在传送词法记号的时候，就应该传送一份拷贝。</p>
+<p>下面说说re2c。re2c是一个相对小众的工具，文档也不多。它可以把DFA（有限状态自动机，词法分析的核心理论）直接编码成(含有很多<code>goto</code>的)C代码。Flex的做法是把状态和跳转规则保存在静态数组里，而其他部分的代码都是同样的模板。</p>
+<p>re2c也可以用来写词法分析器。据称，直接编码的DFA构造的词法分析器和手写的词法分析器的效率是接近的，而比Flex那样表格驱动的快很多倍。不过，Flex名字本身意思就是Fast lex，所以究竟能快多少呢？我很好奇。和Flex不同，re2c不产生辅助代码。为了方便起见，我只好采取把输入文件一次性全部读入内存的办法。这样做其实很实用。（Lemon自身分析语法规则的时候，就采用这样的做法。）</p>
+<p>我为GUI代码生成器的项目创建了一个新的分支，用<a href="http://re2c.org/">re2c</a>生成词法分析器。</p>
+<p>最后说说re2c的补丁。re2c的词法规则是放在形如<code>/*!re2c ... */</code>的注释块中的。据说也可以使用<code>%{ ... %}</code>作为界限符，但是我试了一下，Segmentation fault。</p>
+<p>就我个人的审美而言，我觉得<code>%{ %}</code>作为界限符更加美观一点。把有意义的代码写在注释里边是很讨厌的事情。如果要专门为re2c编写语法高亮规则，采用<code>%{ %}</code>这样的界限符也更容易实现一些。</p>
+<p>崩溃的原因是re2c自己的词法分析器写的不对，里边有一个硬编码的字符串长度，只适用于前一种形式。<a href="https://sourceforge.net/p/re2c/patches/27/">补丁</a>已提交到SourceForge。</p>
+<p><strong>更新:</strong> re2c的维护者者说他看出了问题，但并不能重现re2c崩溃的现象。真是奇怪啊，在我这里凡是含有<code>%{ %}</code>界限符的文件统统都会崩溃。</p>
+<p><strong>更新#2:</strong> re2c的维护者很快就发布了<a href="http://sourceforge.net/projects/re2c/files/re2c/0.14.3/">re2c的新版本</a>修正了这个错误。不过他扩展了我提供的补丁，因为程序中还有其他几处类似的错误。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f05%2fre2c-patch%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f05%2fre2c-patch%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2015%2f05%2fre2c-patch%2f&amp;text=IUP%e4%bb%a3%e7%a0%81%e7%94%9f%e6%88%90%e5%99%a8%e4%bb%a5%e5%8f%8are2c%e8%a1%a5%e4%b8%81%e4%b8%80%e6%9e%9a" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="幻方生成器" />
+<meta property="og:description" content="幻方(magic square)是休闲数学(recreational mathematics)所感兴趣的话题。相传在古代曾有神龟浮出水面，背上有图案，称为《洛书》：
+
+载九履一，左三右七，二四为肩，六八为足，五居中腹。
+
+这是一个3阶幻方，如下所示。它的特点是每行、每列、每条对角线上的数字之和都相等。
+4 9 2
+3 5 7
+8 1 6
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/08/magic-square/" />
+<meta property="article:published_time" content="2016-08-11T01:47:00+00:00" />
+<meta property="article:modified_time" content="2016-08-11T01:47:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="幻方生成器"/>
+<meta name="twitter:description" content="幻方(magic square)是休闲数学(recreational mathematics)所感兴趣的话题。相传在古代曾有神龟浮出水面，背上有图案，称为《洛书》：
+
+载九履一，左三右七，二四为肩，六八为足，五居中腹。
+
+这是一个3阶幻方，如下所示。它的特点是每行、每列、每条对角线上的数字之和都相等。
+4 9 2
+3 5 7
+8 1 6
+"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "幻方生成器",
+  "url": "http://z-rui.github.io/post/2016/08/magic-square/",
+  "wordCount": "87",
+  "datePublished": "2016-08-11T01:47:00+00:00",
+  "dateModified": "2016-08-11T01:47:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/08/magic-square/">
+
+    <title>幻方生成器 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/08/magic-square/">幻方生成器</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-08-11T01:47:00Z">Thu Aug 11, 2016</time> by rui</p>
+  </header>
+  <p>幻方(magic square)是休闲数学(recreational mathematics)所感兴趣的话题。相传在古代曾有神龟浮出水面，背上有图案，称为《洛书》：</p>
+<blockquote>
+<p>载九履一，左三右七，二四为肩，六八为足，五居中腹。</p>
+</blockquote>
+<p>这是一个3阶幻方，如下所示。它的特点是每行、每列、每条对角线上的数字之和都相等。</p>
+<pre><code>4 9 2
+3 5 7
+8 1 6
+</code></pre>
+<p>奇数阶的幻方有一种很容易的构造方法，称为<a href="https://en.wikipedia.org/wiki/Siamese_method">Siamese方法</a>。用模拟的办法，很容易将它写成程序，以便自动生成幻方。</p>
+<p>偶数阶的幻方的构造比较困难，我之前并不会。下面是一个4阶幻方：</p>
+<pre><code> 1 15 14  4
+12  6  7  9
+ 8 10 11  5
+13  3  2 16
+</code></pre>
+<p>查了<a href="https://en.wikipedia.org/wiki/Magic_square#A_method_of_constructing_a_magic_square_of_doubly_even_order">维基百科</a>知道，4n阶幻方有相对容易的构造方法。编写成程序时，为了简单，采用一种固定的策略：把行和列平均分成4等分，则整个幻方分为16个子块，如下：</p>
+<pre><code>AbcD
+eFGh
+iJKl
+MnoP
+</code></pre>
+<p>按照行优先、从左到右、从上到下的顺序填数。如果当前位置位于大写字母所在的子块，则填写这个格子的正数序数，否则填写倒数序数。这样构造出来的幻方就满足各行、列、对角线之和相等的条件。</p>
+<p>最困难的是4n+2阶幻方，能查到的构造方法有<a href="https://en.wikipedia.org/wiki/LUX_method_for_magic_squares">LUX法</a>和<a href="https://en.wikipedia.org/wiki/Strachey_method_for_magic_squares">Strachey法</a>。这些方法乍看毫无道理可言，所以能够想到而且还能证明正确性在我看来的确是一件了不起的事情。我采用了Strachey法构造这种类型的幻方。</p>
+<p>至此，所有阶数的幻方的构造方法都已经具备。作为唯一的特例，2阶幻方是不存在的。</p>
+<p>我用Go语言编写了幻方生成器。使用Go的好处之一是安装非常方便：</p>
+<pre><code>go get <a href="https://github.com/z-rui/msquare">github.com/z-rui/msquare</a></code></pre>
+<p>简单的一条命令，就可以将相应程序安装到<code>$GOPATH/bin</code>目录中去。一切自动，无需下载、解压、<code>./configure &amp;&amp; make</code>，不用纠结依赖问题。</p>
+<p>用<code>msquare</code>生成一个幻方看看吧！</p>
+<pre><code>$ msquare 6
+35  1  6 26 19 24
+ 3 32  7 21 23 25
+31  9  2 22 27 20
+ 8 28 33 17 10 15
+30  5 34 12 14 16
+ 4 36 29 13 18 11
+</code></pre>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fmagic-square%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fmagic-square%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f08%2fmagic-square%2f&amp;text=%e5%b9%bb%e6%96%b9%e7%94%9f%e6%88%90%e5%99%a8" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://z-rui.github.io/post/" />
+<meta property="og:updated_time" content="2021-06-30T22:22:19-07:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "headline": "睿",
+  "url" : "http://z-rui.github.io/post/",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  },
+  "dateModified": "2021-06-30T22:22:19-07:00",
+  "keywords": "algorithm,""bootstrap,""computing,""diary,""hack,""lua,""math,""playing,""thinking,""bfs,""bug,""dfs,""gcc,""git,""github,""gnu,""gnuplot,""gui,""iup,""mingw,""三角形,""学习,""惊喜,""数值分析,""斐波那契数,""游戏,""物理,""老师,""考试,""补丁,""连连看,""魔方,"
+}
+</script>
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/">
+
+    <title>睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    <link rel="alternate" type="application/rss+xml" href="http://z-rui.github.io/post/index.xml" title="睿" />
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/05/iup-patch/">IUP的两个补丁</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-05-15T15:02:00+08:00">Fri May 15, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>, <a href="/categories/hack/" rel="category tag">hack</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/iup/" rel="tag">IUP</a>, <a href="/tags/gui/" rel="tag">GUI</a>, <a href="/tags/%E8%A1%A5%E4%B8%81/" rel="tag">补丁</a>
+
+</p>
+  </header>
+  <p>我正计划编写一个<a href="https://www.github.com/z-rui/yasf">SQLite的图形前端</a>。为此我选择<a href="http://webserver2.tecgraf.puc-rio.br/iup/">IUP</a>作为图形界面库。</p>
+<p>IUP具有如下特点符合我的口味，因此被我选作图形界面库：</p>
+<ol>
+<li>C语言接口。GUI常用面向对象的方法处理，所以使用C++的图形界面库更常见。IUP使用C语言实现了一套类型系统，并提供了非常简洁的C语言接口。</li>
+<li>跨平台。使用IUP编写的图形界面程序可以运行在Windows和UNIX操作系统上。</li>
+<li>相对GTK+、Qt等大型的图形界面库(Qt应该算作综合工具箱)，体积小巧便于发布，配置起来也比较容易。</li>
+<li>控件虽然没有其他工具箱来得丰富，但基本够用。文档比较详细。</li>
+</ol>
+<p>IUP目前最新的版本是3.14。它仍然存在一些问题，所以我在这里给出两个补丁。</p>
+<p>第一个问题是IupSplit中嵌入的IupMatrix有时候会崩溃。我向IUP的作者反映了这个问题。作者回复说他已经在SVN中修复。所以，IUP的下一个版本中将不会再有这个问题。</p>
+<p>补丁：（来自<a href="http://sourceforge.net/p/iup/iup/2897/tree//trunk/iup/srccontrols/matrix/iupmat_edit.c?diff=53d9aa9d0910d44ffbc10019:2896">SVN</a>）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-patch" data-lang="patch"><span style="color:#f92672">--- a/srccontrols/matrix/iupmat_edit.c
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/srccontrols/matrix/iupmat_edit.c
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -678,6 +678,7 @@
+</span><span style="color:#75715e"></span>   IupSetAttribute(ih-&gt;data-&gt;texth, &#34;VALUE&#34;,  &#34;&#34;);
+   IupSetAttribute(ih-&gt;data-&gt;texth, &#34;VISIBLE&#34;, &#34;NO&#34;);
+   IupSetAttribute(ih-&gt;data-&gt;texth, &#34;ACTIVE&#34;,  &#34;NO&#34;);
+<span style="color:#a6e22e">+  IupSetAttribute(ih-&gt;data-&gt;texth, &#34;FLOATING&#34;, &#34;IGNORE&#34;);
+</span><span style="color:#a6e22e"></span> 
+ 
+   /******** DROPDOWN *************/
+<span style="color:#75715e">@@ -696,4 +697,5 @@
+</span><span style="color:#75715e"></span>   IupSetAttribute(ih-&gt;data-&gt;droph, &#34;MULTIPLE&#34;, &#34;NO&#34;);
+   IupSetAttribute(ih-&gt;data-&gt;droph, &#34;VISIBLE&#34;, &#34;NO&#34;);
+   IupSetAttribute(ih-&gt;data-&gt;droph, &#34;ACTIVE&#34;,  &#34;NO&#34;);
+<span style="color:#f92672">-}
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+  IupSetAttribute(ih-&gt;data-&gt;droph, &#34;FLOATING&#34;, &#34;IGNORE&#34;);
+</span><span style="color:#a6e22e">+}
+</span></code></pre></div><p>(注：截至写本文时，本站用于语法高亮的脚本<a href="https://highlightjs.org/">Highlight.js</a>的版本为8.5，它似乎不能正确显示上述代码：最后一部分被作为注释处理了。)</p>
+<p>第二个问题是IupTree控件的<code>NAME</code>属性不起作用。即，无法使用<code>IupGetDialogChild</code>找到相应的控件。这是出于兼容性考虑，IupTree控件的<code>NAME</code>属性默认为是<code>TITLE</code>属性的同义词。</p>
+<p>IUP的下一个版本也许还会保留这个行为，但我并不需要它。所以我也许应该修改IUP的代码，取消掉这样的兼容行为。要修改这个行为，需要修改平台相关的驱动代码。因为我目前在Windows下开发，所以我只修改了Windows相关的文件。其他平台做类似修改即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-patch" data-lang="patch"><span style="color:#f92672">--- a/src/win/iupwin_tree.c
+</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/src/win/iupwin_tree.c
+</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -3060,7 +3060,6 @@
+</span><span style="color:#75715e"></span>   iupClassRegisterAttributeId(ic, &#34;DEPTH&#34;,  winTreeGetDepthAttrib,  NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &#34;KIND&#34;,   winTreeGetKindAttrib,   NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &#34;PARENT&#34;, winTreeGetParentAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+<span style="color:#f92672">-  iupClassRegisterAttributeId(ic, &#34;NAME&#34;,   winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+</span><span style="color:#f92672"></span>   iupClassRegisterAttributeId(ic, &#34;TITLE&#34;,  winTreeGetTitleAttrib,  winTreeSetTitleAttrib, IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &#34;CHILDCOUNT&#34;, winTreeGetChildCountAttrib, NULL, IUPAF_READONLY|IUPAF_NO_INHERIT);
+   iupClassRegisterAttributeId(ic, &#34;COLOR&#34;, winTreeGetColorAttrib, winTreeSetColorAttrib, IUPAF_NO_INHERIT);
+</code></pre></div><p>我不是很确定修改IUP的源码以使它符合我的需求是不是明智的选择。</p>
+<p>一旦修改了IUP的源码，那么基本上来说，我应该将IUP静态链接到我的程序中。因为编译出一个修改过的动态链接库似乎并没有什么意义（不能被其他程序共用）。</p>
+<p>还有一种做法是绕过IUP现在提供的<code>IupGetDialogChild</code>机制，另外建立一套获取窗体中的控件的机制。IUP传统的机制是为每一个控件指定一个全局的标识符。像<code>IupSetAtt</code>这样的便捷函数就是在鼓励使用这样的机制（也是为了兼容旧的LED窗体描述机制）。这种做法固然简单有效，但我觉得很丑陋。只可惜像IupTree这样的控件出于兼容性考虑还不能支持<code>NAME</code>属性。</p>
+<p>我认为每个窗体有一个单独的名字空间才是正确的做法。不知道是不是出于同样的观点，IUP现在提供了一套新的机制，就是使用控件的<code>NAME</code>属性。这样，控件的标识符的作用域就仅限于其所在的窗体。使用<code>IupGetDialogChild(dlg, &quot;NAME&quot;)</code>这样的函数调用来获得<code>dlg</code>窗体中标识符为<code>NAME</code>的控件。</p>
+  <a href='http://z-rui.github.io/post/2015/05/iup-patch/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/05/geometry/">一道几何题的证明</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-05-06T13:30:00+08:00">Wed May 6, 2015</time> by rui</p>
+  </header>
+  <p>这是一道来自高中数学的几何题。值得纪念一下，因为它有好几种证明的办法。有的办法简单，有的办法麻烦。</p>
+<figure>
+    <img src="/media/geometry-1.svg"/> 
+</figure>
+
+<p>问题是这样的：如图，矩形的边长\(AB=a, BC=b\)，而\(P\)是\(CD\)上的动点。问：\(\angle APB\)什么时候最大？并说明理由。</p>
+<p>根据直觉可知，当\(P\)是\(CD\)的中点的时候，\(\angle APB\)应该最大。</p>
+<p>直觉虽然有重要的提示作用，但是有时也不很可靠，所以并不能作为推理的依据。现在让我们忘记直觉，按照一般的分析办法来处理这个问题。</p>
+  <a href='http://z-rui.github.io/post/2015/05/geometry/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/04/sqlite3-type-system/">SQLite3类型系统</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-04-30T10:07:00+08:00">Thu Apr 30, 2015</time> by rui</p>
+  </header>
+  <p>SQLite3非常<a href="https://www.sqlite.org/different.html">与众不同</a>。它的类型系统也不同于大部分的数据库管理系统(DBMS)。</p>
+<p>通常，DBMS使用静态类型(static typing)，即数据表的每一列中只能存放同一种类型的数据，这个类型在创建表的时候就已经确定。而SQLite3使用称为manifest typing的类型系统，它允许每一列中存放不同类型的元素，实际上很像动态类型。Manifest typing的准确译法我不知道。按照字面意思可以翻译成“显式类型”，可是这又无法体现它动态类型的特点。</p>
+<p>注：有的教材把行称为“记录”，把列称为“字段”。我认为这些名字并不形象，对理解数据表帮助不大。</p>
+<p>首先，数据表的每一列并没有严格的数据类型，只有具体的数据有类型。SQLite3的数据类型有5种，如下面的例子所示。</p>
+<pre><code>SELECT
+  TYPEOF(NULL),
+  TYPEOF(-9223372036854775808),
+  TYPEOF(1e-5),
+  TYPEOF('hello, world'),
+  TYPEOF(X'DEADBEEF');
+--&gt; null|integer|real|text|blob
+</code></pre><p>虽然和静态类型有很大的不同，但是实际使用的时候，SQLite3和使用静态类型的DBMS是兼容的。</p>
+<pre><code>CREATE TABLE BOOKS(
+  ID INTEGER PRIMARY KEY,
+  NAME VARCHAR(255),
+  PRICE REAL
+);
+INSERT INTO BOOKS(NAME, PRICE) VALUES
+  ('The Art of Computer Programming', 259.99),
+  ('Concrete Mathematics', 57.57);
+</code></pre><p>你照样可以在创建表格的时候指定各个列的类型，不过它们只是一个摆设，并不会被SQLite3严格执行（有一些例外，见下文）。事实上，SQLite3中根本没有<code>VARCHAR(255)</code>这个数据类型，你可以指定任意名称的数据类型。这样做实际上提高了SQLite3和其他DBMS的兼容性。</p>
+  <a href='http://z-rui.github.io/post/2015/04/sqlite3-type-system/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/04/rubiks-cube/">重拾三阶魔方</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-04-22T13:06:00+08:00">Wed Apr 22, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/playing/" rel="category tag">playing</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E9%AD%94%E6%96%B9/" rel="tag">魔方</a>
+
+</p>
+  </header>
+  <p>前天玩了一次别人的三阶魔方，5分钟内都没能复原。</p>
+<p>岁月不饶人，说的也不是没有道理。</p>
+<p>想当年我也曾凭借一个简化版的CFOP公式，在1分钟内就能把三阶魔方复原。（当时的世界纪录是6.x秒。我当然差的还远，即便要自称“高手”，也必须是30秒以内复原才算；但是在同龄人之间自然可以炫耀一番。）5~6年的时间，竟然已经几乎忘光了。</p>
+<p>想想也可笑。“想当年”，我们不也是猛练各种解题技巧，在100分钟内把一张数学卷子给做完？5~6年以后，就算不设时间限制，恐怕有些题也是没法做出来。这么说起来，当初又为什么要训练到那样的程度呢？</p>
+<p>不过魔方确实是一个很有意思的玩具。就算我练不成速拧高手（现在的世界纪录大概是5.x秒，时代在进步），没事玩玩也是挺有意思的。所以产生了重拾三阶魔方的念头。</p>
+<p>我买了一只型号叫作GAN357的魔方，它附送了一份公式参考，包括入门级别的层先法和比较高级的CFOP法。层先法总共10个公式，比较适合入门。对于拼底块十字这种最最基础的没有公式可言的操作，参考上也做了详细的解释。所以，仅靠这张参考就完全学会魔方复原，一点也不困难。CFOP法是层先法的改进，提高了复原的速度，但是相应地，公式也就大大增加，多达119个公式。要熟练掌握CFOP是不那么容易的，但是一旦熟练，复原魔方的时间就可以缩短到30秒乃至更短。</p>
+<p>应该说，现在玩魔方比我当年要轻松多了，魔方买到手攻略也就送到家，还有“玩”的必要吗？直接就是入门到进阶一条龙服务，把菜鸟培养成高手。</p>
+<p>我当年玩魔方的时候哪有攻略可查。可惜，凭借自己的智慧没能复原整个魔方。最好的成绩是复原了前两层，而对于第三层根本束手无策（其实是不舍得破坏前两层已经拼好的所谓“完美”状态）。</p>
+<p>出于想要复原魔方的强烈愿望，还是忍不住去网上查找复原魔方有没有什么窍门。然后就接触到了所谓的层先法解法和公式记号。对于公式，心里只能用“神奇”来评价；它就像巫师的咒语一样，念一遍就会起效果。按部就班地操作，最后果不其然复原了整个魔方的全部六面。当时的心情，我想每个玩过魔方的人都有切身体验吧。</p>
+<p>我曾把复原魔方的公式记在了一本笔记本上。那本笔记本后来在一次清理房间的过程中被意外地和废纸一起卖掉了，就再也找不到了。</p>
+<p>但我想，要不是一开始有过自己的动手和研究，而是上来就套公式的话，复原一个魔方就应该是意料之中的理所当然的事情，恐怕不会有太多的新鲜感和成就感。如果一定要类比的话，应试教育就是那种一上来就把所有招式都教给你，解题只需套公式而无需深入研究和理解，入门到进阶的一条龙服务，把门外汉直接培养成解题能手。如果一个人志在获得魔方速拧的世界冠军，那么我觉得“一条龙服务”不失为一种实际的选择。但这同时意味着失去了所有的乐趣和成就。死记硬背+苦练不说，所有的成就都也不过是前人的成果，我做得再好，只能说明我和前人一样好，否则就是我连前人也不如。</p>
+<p>并非每个人生下来都有想取得速拧冠军的理想。真正有这样理想的人，一般来说，一定是玩了很长时间的魔方，对它有很深的兴趣的人。在此基础之上，他才愿意去记忆大量的公式并且训练手速。对玩魔方不感兴趣的人，或者天生手笨的人，即便有“一条龙服务”摆在面前，也不见得会动心。不幸的是，每个人生下来就被寄予考上好学校的期望，因而注定着要参与各种各样的招生考试。选择应试教育其实只是这样的大背景下一种必然的结果而已。</p>
+<p>扯远了。我不否认间接经验的价值。事实上，因为间接经验的存在人类的知识才能迅速地发展。虽然原创研究是推动人类进步的重要因素，但现实中大多数人最常用的知识，其实都是很久以前传下来的间接经验（加减乘除？）。有的人手快，有的人脑子好。脑子好的人想出了速拧的公式，但他未必能创造世界纪录。手快的人可能没法自己推导出魔方的复原公式，但是他通过理解他人总结的公式，发挥自己手快的特长，就能创造世界纪录。闻道有先后，术业有专攻，如是而已。</p>
+<p>正因为公式的存在，魔方才可能成为大众的玩具。复原三阶魔方其实是一种在外行人看来非常了不起，但其实很容易的本事。不少人学复原魔方的初衷只是为了炫耀。炫耀炫耀也就罢了，不宜以此宣称自己天资聪颖，最多也只是熟能生巧罢了。</p>
+<p>刚才试了试，似乎仍然需要1分多钟的时间才能复原。这样的成绩似乎还差得很远，不过我并不在意。自己玩得开心就好。</p>
+<p>今天我另外还看了三阶魔方的其他解法（不是基于层先法），看的时候甚感吃力。感觉层先法在我脑中已形成固定模式无法改变。这大概也是很多其他领域中会出现的事情：一旦对某种理论高度熟悉，就会形成固定的看法，而所有其他的理论都会被看作荒诞之谈。</p>
+  <a href='http://z-rui.github.io/post/2015/04/rubiks-cube/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/04/gnuplot/">用gnuplot将数据可视化</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-04-10T16:52:00+08:00">Fri Apr 10, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>, <a href="/categories/math/" rel="category tag">math</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/gnuplot/" rel="tag">Gnuplot</a>, <a href="/tags/gnu/" rel="tag">GNU</a>, <a href="/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" rel="tag">数值分析</a>
+
+</p>
+  </header>
+  <p>今天我做了两件事，其一是了解了样条插值的概念，其二是观察了使用有限差分方法求解的调和场。做这两件事都用到了gnuplot。</p>
+<p><a href="http://www.gnuplot.info/">Gnuplot</a>是一个可用于作图的免费软件。使用它可以将数值计算的结果以图像的方式呈现，以获得直观的感受。</p>
+<h1 id="观察插值函数">观察插值函数</h1>
+<p>试想原本有一个连续函数，由于测量的原因现在只知道其中的个别点的位置。</p>
+<figure>
+    <img src="/media/gnuplot-sample.png" width="100%"/> 
+</figure>
+
+<p>但是我想知道中间某个点处的函数值，我会这么做：用一条光滑的曲线把这些点连接起来，然后根据图像来找到对应的函数值。这就是科学实验中常用的图解法的原理。</p>
+  <a href='http://z-rui.github.io/post/2015/04/gnuplot/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/03/theorem/">判定给定边长可否构成三角形的一个定理</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-03-01T07:17:00+08:00">Sun Mar 1, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/math/" rel="category tag">math</a>, <a href="/categories/algorithm/" rel="category tag">algorithm</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E4%B8%89%E8%A7%92%E5%BD%A2/" rel="tag">三角形</a>, <a href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/" rel="tag">斐波那契数</a>
+
+</p>
+  </header>
+  <p>本定理来自一道算法竞赛题：</p>
+<blockquote>
+<p>给定任意多条边，每条边都是不超过1,000,000,000的正整数。请给出一个算法，判断其中是否存在3条边可以构成三角形。</p>
+</blockquote>
+<p>应用该定理可以有效地解决此问题。</p>
+<h1 id="定理">定理</h1>
+<blockquote>
+<p>给定n个边长，如果其中最大的边长与最小的边长的比值小于第n个斐波那契数，那么其中必存在3个边长可以构成三角形。</p>
+</blockquote>
+<h1 id="应用">应用</h1>
+<p>由题中条件可知，最大的边长和最短的边长的比值不超过\(1,000,000,000 &lt; F_{45}\)。所以，只要边的个数达到45，根据上述定理，就必然存在3条边可以构成三角形。如果边的个数少于45个，也很好办，穷举解决即可（\({45 \choose 3} = 14190\)，穷举量很小）。</p>
+  <a href='http://z-rui.github.io/post/2015/03/theorem/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/minimal-lua/">减小Lua的二进制体积</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-26T07:01:00+08:00">Thu Feb 26, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/hack/" rel="category tag">hack</a>, <a href="/categories/lua/" rel="category tag">Lua</a>
+
+
+</p>
+  </header>
+  <p><a href="http://www.lua.org">Lua</a>本身已经是一个十分轻量级的脚本语言。在我的64位Windows上编译出来的<code>lua53.dll</code>仅248K。(参照物：<code>python34.dll</code>为3963K。)</p>
+<p><a href="http://www.lua.org/notes/ltn001.html">Lua Technical Note 1</a>介绍了通过删减功能来进一步减小Lua的二进制体积的方法。这篇文章针对的是Lua 3.2，16年前的版本，尽管如此，它仍然给了我很大的启发。</p>
+<p>首先看Lua 5.3中哪些模块占用的二进制体积最多：</p>
+<pre><code>size	%all	%core	file
+23571	7%	12%	lauxlib.o
+20909	6%	11%	lparser.o
+20256	6%	11%	lapi.o
+18403	5%	10%	lvm.o
+14413	4%	8%	llex.o
+13526	4%	7%	lcode.o
+12584	4%	7%	lgc.o
+10214	3%	5%	ldebug.o
+8967	3%	5%	lobject.o
+8776	2%	5%	ldo.o
+7002	2%	4%	ltable.o
+5087	1%	3%	lundump.o
+4887	1%	3%	lstate.o
+3970	1%	2%	ltm.o
+3832	1%	2%	ldump.o
+2818	1%	1%	lstring.o
+2525	1%	1%	lfunc.o
+2170	1%	1%	linit.o
+1810	1%	1%	lopcodes.o
+1498	0%	1%	lmem.o
+1406	0%	1%	lzio.o
+860	0%	0%	lctype.o
+189484	54%	100%	(core)
+</code></pre>
+  <a href='http://z-rui.github.io/post/2015/02/minimal-lua/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/lua-surprises/">Lua语言中的“惊喜”</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-26T06:00:00+08:00">Thu Feb 26, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>, <a href="/categories/lua/" rel="category tag">Lua</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%E6%83%8A%E5%96%9C/" rel="tag">惊喜</a>, <a href="/tags/bug/" rel="tag">bug</a>
+
+</p>
+  </header>
+  <p><a href="http://www.lua.org/">Lua</a>在有些地方没有采用其他语言(尤其是C)的约定俗成，所以经常给程序编写者带来惊喜(surprise, &ldquo;gotcha&rdquo;)。根据我的经验，整理如下：</p>
+<ol>
+<li>不等号是<code>~=</code>，而不是<code>!=</code>。</li>
+</ol>
+<ul>
+<li>这是我写Lua程序时最常犯的一个笔误。只能说，几乎所有的程序语言，不等号用的都是<code>!=</code>(C家族)，还有一部分用<code>&lt;&gt;</code>(Pascal, Basic, SQL)。用<code>~=</code>真的只有Lua一家。</li>
+</ul>
+  <a href='http://z-rui.github.io/post/2015/02/lua-surprises/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/line/">在位图上画直线</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-18T02:01:00+08:00">Wed Feb 18, 2015</time> by rui</p>
+  </header>
+  <p>在显示器上画出的各种图形中，直线是最简单的一种。这里说的<strong>直线</strong>，有确定的起点和终点；数学家也许更愿意称其为<strong>线段</strong>。</p>
+<p>画直线是如此的简单，以至于人们也许已经忽略了它也是逐个像素点绘制出来的，而把它当作一种原子的操作。我也是如此认为，直到昨天一位同学谈他的计算机图形学课程时，说到了这个问题。</p>
+<p>于是我尝试用自己的知识来解决这个问题。显示器上的直线和数学上的线段最明显的差别是，前者是由有限个点构成的，而后者不是。所以，显示器上的直线只是一种近似，而我要使得这种近似的效果尽量好。</p>
+<p>为了简化问题，假设显示器显示的是一幅单色的位图。我想到的做法是这样的：</p>
+<ol>
+<li>画起点。</li>
+<li>画完一个点后，在其周围的点中，找到距离给定直线最近的点，然后画这个点。</li>
+<li>重复第2步，直到画了终点为止。</li>
+</ol>
+<p>这个做法看上去应该没有问题，只有一些细节部分需要考虑。</p>
+  <a href='http://z-rui.github.io/post/2015/02/line/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2015/02/mingw-bug/">发现了MinGW GCC的一个bug</a></h2>
+    <p class="blog-post-meta"><time datetime="2015-02-09T08:26:00+08:00">Mon Feb 9, 2015</time> by rui in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/computing/" rel="category tag">computing</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/mingw/" rel="tag">MinGW</a>, <a href="/tags/gcc/" rel="tag">GCC</a>, <a href="/tags/bug/" rel="tag">bug</a>
+
+</p>
+  </header>
+  <p>我今天发现MinGW内置的打印函数<code>__mingw_printf</code>在处理<code>%a</code>格式的时候会产生不正确的输出。下面这段程序体现了这个问题。</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+int main()
+{
+	printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	__mingw_printf(&quot;%a %a\n&quot;, 1.0, 1.1);
+	return 0;
+}
+</code></pre><p>输出是</p>
+<pre><code>0x1.000000p+0 0x1.19999ap+0
+0x0p-63 0x8.cccccccccccdp-3
+</code></pre><p>因为浮点数<code>1.0</code>显然不能表示为<code>0x0p-63</code>，所以<code>__mingw_printf</code>是错的。</p>
+<p>这个错误我提交在 <a href="http://sourceforge.net/p/mingw-w64/bugs/459/">http://sourceforge.net/p/mingw-w64/bugs/459/</a> ，过几天我看看有没有人回应。</p>
+  <a href='http://z-rui.github.io/post/2015/02/mingw-bug/'>继续阅读 →</a>
+</article> 
+
+
+
+
+
+<nav class="blog-pagination">
+  
+  <a class="btn btn-outline-primary" href="/post/page/9/" rel="prev" role="button">上一页</a>
+  <a class="btn btn-outline-primary" href="/post/page/11/" rel="next" role="button">下一页</a>
+  
+  
+  
+</nav>
+
+
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

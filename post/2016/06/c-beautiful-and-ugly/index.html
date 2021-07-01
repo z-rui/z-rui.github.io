@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="C语言的美与丑" />
+<meta property="og:description" content="C语言的设计非常如同公理体系般简洁，而所能够演绎出来的内容又足够完备。这是对C的美的一种简单概括。
+我要说的“公理体系”中的最核心的组件，便是指针。有智者说到，计算机科学中的一切问题，都可以通过增加一层间接(indirection)来解决1 。指针可以用来解决什么问题呢？" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/" />
+<meta property="article:published_time" content="2016-06-12T14:32:00+08:00" />
+<meta property="article:modified_time" content="2016-06-12T14:32:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C语言的美与丑"/>
+<meta name="twitter:description" content="C语言的设计非常如同公理体系般简洁，而所能够演绎出来的内容又足够完备。这是对C的美的一种简单概括。
+我要说的“公理体系”中的最核心的组件，便是指针。有智者说到，计算机科学中的一切问题，都可以通过增加一层间接(indirection)来解决1 。指针可以用来解决什么问题呢？"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C语言的美与丑",
+  "url": "http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/",
+  "wordCount": "259",
+  "datePublished": "2016-06-12T14:32:00+08:00",
+  "dateModified": "2016-06-12T14:32:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/">
+
+    <title>C语言的美与丑 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/">C语言的美与丑</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-06-12T14:32:00+08:00">Sun Jun 12, 2016</time> by rui</p>
+  </header>
+  <p>C语言的设计非常如同公理体系般简洁，而所能够演绎出来的内容又足够完备。这是对C的美的一种简单概括。</p>
+<p>我要说的“公理体系”中的最核心的组件，便是指针。有智者说到，计算机科学中的一切问题，都可以通过增加一层间接(indirection)来解决<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 。指针可以用来解决什么问题呢？</p>
+<h3 id="1-引用参数">1. 引用参数</h3>
+<p>C语言按值传递参数，因此函数内部对参数变量的修改对外部没有影响。有的时候，希望函数能够对外部有影响，最典型的例子是<code>scanf</code>函数。这时候，指针赋予了函数修改外部变量的能力。</p>
+<p>C++另外引入了一种称为引用的类型，是C++中传递引用参数的推荐做法。但是，引用除了更加受限（不能为NULL；初始化之后无法改变指向）之外，和指针是完全平行的。我想这恐怕不是C++的设计者喜欢这么一点点语法糖，而是诸如运算符重载这样的语法必须依靠引用才能合理地实现。</p>
+<p>虽然是不得已而为之，但是两套功能几乎重复的系统，在我看来是丑的。例如在拷贝构造函数这样的结构中：</p>
+<pre><code>Foo::Foo(Foo &amp;that)
+{
+	this-&gt;foo = that.foo;
+	this-&gt;bar = that.bar;
+}
+</code></pre><p>一边是指针，另一边是引用，显得非常不对称。</p>
+<h3 id="2-动态内存管理">2. 动态内存管理</h3>
+<p>一般的自动变量，生存期仅限于所在函数活动的期间。一旦函数返回，对象也就随之销毁。使用指针可以突破这个限制，也就是实现了对象生存期和代码层次结构的解耦合。</p>
+<p>动态内存管理的另一个好处是，可以在运行时动态确定需要分配的内存大小。C++的STL用<code>std::vector</code>之类的容器实现了动态大小的数组，封装了动态内存管理的过程。但它的内部仍然是使用指针，结合<code>new</code>和<code>delete</code>运算符实现的。</p>
+<h3 id="3-自引用结构">3. 自引用结构</h3>
+<p>数据结构的一个思想是，它可以递归定义。例如，一个二叉树的两个子树又各是一个二叉树。指针能够很自然地表现这种自引用结构：</p>
+<pre><code>struct binary_tree {
+	struct binary_tree *left, *right;
+};
+</code></pre><h3 id="4-函数指针">4. 函数指针</h3>
+<p>我第一次见到函数指针的用法(用于<code>qsort</code>)时，简直惊呆了。此后，我对C++的虚函数以及多态机制就没有了多少神秘感。老实说，C++的虚函数在形式上比较漂亮，用起来也的确方便，但也不再是什么“黑魔法”。并不是C++新的语法结构带来了多态的功能，这个功能实际上是函数指针提供的，C++的语法只不过将它封装了起来而已(“虚函数表”作为一个实现细节，使用者无需特别关注)。</p>
+<hr>
+<p>另一方面，C语言被设计出来时，主要的目的是用它编写可移植的UNIX操作系统。因此，在很多方面，实用性占了主导地位。因此，有些语法结构的限制很大，缺少概念上的完整性。</p>
+<h3 id="1-多维数组">1. 多维数组</h3>
+<p>C语言对多维数组的要求非常严苛，除了第1维以外其余所有维的长度在编译阶段必须是常数。只有满足这个条件，才可以使用诸如<code>arr[i][j]</code>的语法来访问多维数组。例如</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* N和M是编译时已知的常数 */</span>
+<span style="color:#66d9ef">int</span> a[N][M]; <span style="color:#75715e">/* int *a = 大小为 sizeof (int) * N * M 的一段栈空间 */</span>
+a[i][j] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">/* a[i * M + j] = 0; */</span>
+</code></pre></div><p>从注释可以理解，为什么第2维的长度必须给出。因为编译器在计算目标地址的时候要用到它。</p>
+<p>C99提出了可变长度数组(VLA)的概念，成功地解决了这个问题。但是受到C++委员会的抵制，VLA没有进入C++标准。编译器对VLA的支持程度也是参差不齐。</p>
+<p>对于编写操作系统而言，恐怕很少遇到多维数组的情况。但是科学计算却常要用到。最典型的例子是矩阵运算：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">mat_mul</span>(<span style="color:#66d9ef">int</span> m, <span style="color:#66d9ef">int</span> n, <span style="color:#66d9ef">int</span> p, <span style="color:#66d9ef">double</span> prod[m][p], <span style="color:#66d9ef">double</span> a[m][n], <span style="color:#66d9ef">double</span> b[n][p])
+{
+	<span style="color:#75715e">/* ... */</span>
+}
+</code></pre></div><p>我们希望这段程序能够做任何\(\mathbf{A}^{m\times n}\)和\(\mathbf{B}^{n\times p}\)的矩阵乘法。上述代码只有在支持VLA的编译器中能够通过。如果不使用VLA，那么就只能放弃既有的多维数组的语法，而求助于指针：把诸如<code>double a[m][n]</code>的定义改成<code>double *a</code>，然后将代码中诸如<code>a[i][j]</code>的访问改成<code>a[i * n + j]</code>。其实也不是特别痛苦，举这个例子只不过想说明，C语言中多维数组的应用场合非常受限，因此比较丑。</p>
+<p>上面这个矩阵乘法的例子在C++中可以通过函数模板来实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span>size_t n, size_t p<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">void</span> mat_mul(<span style="color:#66d9ef">int</span> m, <span style="color:#66d9ef">double</span> prod[][p], <span style="color:#66d9ef">double</span> a[][n], <span style="color:#66d9ef">double</span> b[n][p])
+{
+	<span style="color:#75715e">/* ... */</span>
+}
+</code></pre></div><p>当然，这个写法一方面很丑（凭什么<code>n</code>和<code>p</code>是模板参数，<code>m</code>就不是？），另一方面，对于每一组不同的(n, p)，编译器都会产生一套特化的代码，实际上却并没有必要。如果程序经常处理尺寸不同的矩阵，那么目标代码就会极度膨胀。此外，即便使用了模板，被传递进来的矩阵的尺寸也必须在编译期就是常数，否则编译器无法进行模板推导。这就限制了一些使用场景，例如：由用户输入2个尺寸任意的矩阵，然后计算它们的乘积。</p>
+<p>事实上，在C++中，处理多维数组也是一件比较头疼的事情。</p>
+<h3 id="2-复合字面量">2. 复合字面量</h3>
+<p>在传统的C语言中，数组、结构体之类的复合类型都是二等公民：它们不能被赋值、作为参数传递、作为返回值返回。如果要间接地实现上述功能，还是需要借助指针。在C89中，结构体的“公民权利”被稍微提升了一些：它可以被赋值、作为参数传递，作为返回值返回。但是，仍然存在一些问题。</p>
+<p>结构体的赋值，仅限于从一个变量赋值给另一个变量，而无法从各个元素的角度进行整体赋值。另一方面，这个所谓的“整体赋值”操作在初始化阶段却是允许的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> Foo foo <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}; <span style="color:#75715e">/* OK */</span>
+foo <span style="color:#f92672">=</span> {<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>}; <span style="color:#75715e">/* WRONG! */</span>
+</code></pre></div><p>在C99中，上述问题进一步被引入的新概念——复合字面量解决。可以使用</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">foo <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> Foo) {<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>};
+</code></pre></div><p>对结构体进行整体赋值。但是这个语法估计又受到了C++的抵制，因为C++已经设计了构造函数来解决这个问题：</p>
+<pre><code>struct Foo {
+	int x, y, z;
+	Foo(int x, int y, int z) : x(x), y(y), z(z) {}
+};
+
+Foo foo(1, 2, 3);
+foo = Foo(4, 5, 6);
+</code></pre><p>C++的做法也有一些丑的地方，这里暂且不说。</p>
+<p>在C99之前，C语言存在唯一的一种复合字面量：字符串字面量。这是一个突兀存在的特例，因为它实在是太常用了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="color:#e6db74">&#34;hello, world</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</code></pre></div><p>相当于</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">{
+	<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> temp_str[] <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;h&#39;</span>, <span style="color:#e6db74">&#39;e&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;,&#39;</span>, <span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;d&#39;</span>, <span style="color:#e6db74">&#39;\n&#39;</span>, <span style="color:#e6db74">&#39;\0&#39;</span>};
+	printf(temp_str);
+}
+</code></pre></div><p>可想而知，如果不引入这个特例，C语言基本上不能用。</p>
+<p>C99的复合字面量也支持数组类型，例如上面的例子在C99中也可以写成</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf((<span style="color:#66d9ef">char</span> []) {<span style="color:#e6db74">&#39;h&#39;</span>, <span style="color:#e6db74">&#39;e&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;,&#39;</span>, <span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;w&#39;</span>, <span style="color:#e6db74">&#39;o&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>, <span style="color:#e6db74">&#39;l&#39;</span>, <span style="color:#e6db74">&#39;d&#39;</span>, <span style="color:#e6db74">&#39;\n&#39;</span>, <span style="color:#e6db74">&#39;\0&#39;</span>});
+</code></pre></div><p>并不是特别地有用。即便在C99中，数组仍然是二等公民，而且具有一些非常奇怪的特性。</p>
+<ol>
+<li>数组仍然不可以进行整体赋值，除了初始化的过程以外。</li>
+</ol>
+<pre><code language="c">int array[] = {1, 2, 3}; /\* OK \*/
+array = (int []) {4, 5, 6}; /\* WRONG! \*/
+</code></pre>
+<ol start="2">
+<li>数组可以被作为参数传递。但是实际上传递的并非数组本身，而是指向其第1个元素的指针。换言之，<pre><code language="c">int foo(int bar[N]);</code></pre>声明的函数原型和<pre><code language="c">int foo(int *bar);</code></pre>是完全等价的。这是C语言为了传递数组参数而又不改变其二等公民身份而引入的一个奇怪政策。</li>
+<li>没有任何函数能够返回一个数组。如果可以的话，这个函数的原型将变得非常奇怪，类似<pre><code language="c">int foo()[N];</code></pre>恐怕没有人会喜欢。事实上，因为数组不能被赋值，返回一个数组的函数也基本上没有任何意义。</li>
+</ol>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_software_engineering">软件工程基本定理</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fc-beautiful-and-ugly%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fc-beautiful-and-ugly%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fc-beautiful-and-ugly%2f&amp;text=C%e8%af%ad%e8%a8%80%e7%9a%84%e7%be%8e%e4%b8%8e%e4%b8%91" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

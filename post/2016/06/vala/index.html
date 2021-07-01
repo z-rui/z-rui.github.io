@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta property="og:title" content="Vala语言" />
+<meta property="og:description" content="Vala是一个建立在GLib上的语言。GLib是基于C语言的基础功能库，和Boost之于C&#43;&#43;的地位有几分类似。GLib除了提供了一些数据结构、线程操作、输入输出外，还有一套完全基于C语言的对象系统GObject。在此基础之上，才有了GTK&#43;，这个在Linux上比较流行的图形工具包。
+GLib很不错，善用之可以避免重新造很多轮子。GObject可能是摆脱C&#43;&#43;后不得已的选择，因为图形界面这样的东西太依赖于面向对象的特性了。它们都基于C，设计得或许很漂亮，可用起来就比较麻烦了，因为C编译器不像C&#43;&#43;那样能自动生成代码。例如，C&#43;&#43;的shared_ptr可以以几乎透明的方式实现引用计数：每一份拷贝在进入和退出作用域的地方，C&#43;&#43;编译器可以自动插入增加引用和减少引用的代码。换作C的话，则需要在代码中明确写出来。
+为了减轻开发人员的负担，提高开发效率，Vala被发明出来，它模仿C#的语法，在语法层面上支持面向对象。值得指出的是，Vala的编译器先将vala源文件转换成C源文件，然后调用C编译器来编译。因为幕后是C语言，所以一方面不会带来性能上的退化，另一方面也不会引入兼容性的困难。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://z-rui.github.io/post/2016/06/vala/" />
+<meta property="article:published_time" content="2016-06-08T02:17:00+08:00" />
+<meta property="article:modified_time" content="2016-06-08T02:17:00+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vala语言"/>
+<meta name="twitter:description" content="Vala是一个建立在GLib上的语言。GLib是基于C语言的基础功能库，和Boost之于C&#43;&#43;的地位有几分类似。GLib除了提供了一些数据结构、线程操作、输入输出外，还有一套完全基于C语言的对象系统GObject。在此基础之上，才有了GTK&#43;，这个在Linux上比较流行的图形工具包。
+GLib很不错，善用之可以避免重新造很多轮子。GObject可能是摆脱C&#43;&#43;后不得已的选择，因为图形界面这样的东西太依赖于面向对象的特性了。它们都基于C，设计得或许很漂亮，可用起来就比较麻烦了，因为C编译器不像C&#43;&#43;那样能自动生成代码。例如，C&#43;&#43;的shared_ptr可以以几乎透明的方式实现引用计数：每一份拷贝在进入和退出作用域的地方，C&#43;&#43;编译器可以自动插入增加引用和减少引用的代码。换作C的话，则需要在代码中明确写出来。
+为了减轻开发人员的负担，提高开发效率，Vala被发明出来，它模仿C#的语法，在语法层面上支持面向对象。值得指出的是，Vala的编译器先将vala源文件转换成C源文件，然后调用C编译器来编译。因为幕后是C语言，所以一方面不会带来性能上的退化，另一方面也不会引入兼容性的困难。"/>
+<meta name="generator" content="Hugo 0.79.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Vala语言",
+  "url": "http://z-rui.github.io/post/2016/06/vala/",
+  "wordCount": "187",
+  "datePublished": "2016-06-08T02:17:00+08:00",
+  "dateModified": "2016-06-08T02:17:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "rui"
+  }
+}
+</script>
+
+
+
+    <link rel="canonical" href="http://z-rui.github.io/post/2016/06/vala/">
+
+    <title>Vala语言 | 睿</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="http://z-rui.github.io/css/style.e408605af1290e616960aef7be39db8d54400ce717e8e4f12f733d8fb56d62ee.css" rel="stylesheet" integrity="sha256-5AhgWvEpDmFpYK73vjnbjVRADOcX6OTxL3M9j7VtYu4=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="http://z-rui.github.io/js/fontawesome.min.16a86fa8fbdecc0f27392feecb61ee0803a507820bded359407103a49126b52c.js" integrity="sha256-FqhvqPvezA8nOS/uy2HuCAOlB4IL3tNZQHEDpJEmtSw=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107426776-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-107426776-1');
+</script>
+<meta name="propeller" content="d63126d84a83d7ea4f51d0b9be8f9ac8">
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="http://z-rui.github.io/">首页</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="http://z-rui.github.io/post/2016/06/vala/">Vala语言</a></h2>
+    <p class="blog-post-meta"><time datetime="2016-06-08T02:17:00+08:00">Wed Jun 8, 2016</time> by rui</p>
+  </header>
+  <p>Vala是一个建立在GLib上的语言。GLib是基于C语言的基础功能库，和Boost之于C++的地位有几分类似。GLib除了提供了一些数据结构、线程操作、输入输出外，还有一套完全基于C语言的对象系统GObject。在此基础之上，才有了GTK+，这个在Linux上比较流行的图形工具包。</p>
+<p>GLib很不错，善用之可以避免重新造很多轮子。GObject可能是摆脱C++后不得已的选择，因为图形界面这样的东西太依赖于面向对象的特性了。它们都基于C，设计得或许很漂亮，可用起来就比较麻烦了，因为C编译器不像C++那样能自动生成代码。例如，C++的<code>shared_ptr</code>可以以几乎透明的方式实现引用计数：每一份拷贝在进入和退出作用域的地方，C++编译器可以自动插入增加引用和减少引用的代码。换作C的话，则需要在代码中明确写出来。</p>
+<p>为了减轻开发人员的负担，提高开发效率，Vala被发明出来，它模仿C#的语法，在语法层面上支持面向对象。值得指出的是，Vala的编译器先将vala源文件转换成C源文件，然后调用C编译器来编译。因为幕后是C语言，所以一方面不会带来性能上的退化，另一方面也不会引入兼容性的困难。</p>
+<p>下面说说Vala的几个特点。</p>
+<p>首先，Vala的基础设施建立在GLib上。具体表现在</p>
+<ul>
+<li>所有内置(built-in)类型都是GLib定义的类型，例如<code>int</code>是<code>gint</code>，<code>bool</code>是<code>gboolean</code>，等等。</li>
+<li>内置的数据结构，例如列表<code>List</code>，基于GLib的<code>GList</code>，但是语法上增加了泛型的支持。因此用起来要更加方便些。</li>
+<li>动态对象的分配和释放，都是使用GLib提供的函数<code>g_malloc</code>, <code>g_free</code>等等。从这个角度看，Vala可以看作是一个对GLib的封装。</li>
+</ul>
+<p>其次，Vala的面向对象机制非常有趣。它支持很多种设计。一方面是基于GObject的面向对象模型。如果要实现一些高级的面向对象的功能，这个类必须声明为GObject的子类。这部分可以看作是对GObject的封装。对GTK+的支持也就是从这里而来的。使用Vala编写GTK+程序非常容易：</p>
+<pre><code>void main(string[] args)
+{
+	Gtk.init(ref args);
+	var window = new Gtk.Window();
+	window.destroy.connect(Gtk.main_quit);
+	window.show_all();
+	Gtk.main();
+}
+</code></pre><p>我还用Vala结合GTK+写了一个<a href="https://www.github.com/z-rui/valanim/">Nim游戏</a>作为练习。</p>
+<p>另一方面，Vala还可以把很多并非基于GObject的C语言库，用面向对象的方法封装起来。</p>
+<p>很多程序库出于兼容性考虑，使用C语言的API，但是设计上采用的是面向对象的思路：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Foo <span style="color:#f92672">*</span>x <span style="color:#f92672">=</span> Foo_new(<span style="color:#ae81ff">42</span>);
+Foo_bar(x, baz);
+Foo_free(x);
+</code></pre></div><p>一般情况下，较少用到高级的面向对象的特性，所以C语言已经足够。使用Vala可以将其封装为</p>
+<pre><code>Foo x = new Foo(42);
+x.bar(baz);
+// 自动释放
+</code></pre><p>和Java/C#的语法很像了。而且可以在作用域的末尾自动释放这个对象，相当于C++中的RAII的思路。</p>
+<p>用C++的语法，如果使用RAII，可以表述为</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">ClassFoo <span style="color:#a6e22e">x</span>(<span style="color:#ae81ff">42</span>);
+x.bar(baz);
+</code></pre></div><p>问题在于，C++不允许向已有类型绑定新的方法。所以必须另外编写一个新的类，其中包含原来的<code>Foo</code>类型的一个指针，然后，为原来所有的API调用编写对应的方法。即</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClassFoo</span> {
+	Foo <span style="color:#f92672">*</span>m_ptr;
+	Foo(<span style="color:#66d9ef">int</span> arg)
+	{
+		m_ptr <span style="color:#f92672">=</span> Foo_new(arg);
+	}
+	<span style="color:#f92672">~</span>Foo()
+	{
+		Foo_free(m_ptr);
+	}
+	<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">bar</span>(<span style="color:#66d9ef">int</span> baz)
+	{
+		<span style="color:#66d9ef">return</span> Foo_bar(m_ptr, baz);
+	}
+};
+</code></pre></div><p>诸如此类。但是，写成这样还不够。因为存在析构函数，所以还要编写相应的拷贝构造函数(copy constructor)和拷贝赋值运算符(copy assignment operator)，它们被称作C++的<a href="https://en.wikipedia.org/wiki/Rule_of_three_(C%2B%2B_programming)">三大件(the big three)</a>。这是一件很有挑战性的事情。想要达到的目的是：</p>
+<pre><code>Foo x(42); // x.m_ptr = xxx;
+Foo y = x; // x.m_ptr = 0; y.m_ptr = xxx;
+x = y;    // x.m_ptr = xxx; y.m_ptr = 0;
+</code></pre><p>也就是说，等号右边的变量将要失去对原对象的引用，因为同一时刻只能存在一份引用（类似<code>unique_ptr</code>的语义），否则当作用域退出时，两个对象分别调用他们的析构函数，就会造成一个对象被释放多次，引发内存错误。</p>
+<p>与此同时，我们有时候希望用一个新的对象覆盖掉原来的对象，即</p>
+<pre><code>Foo x(42);   // x.m_ptr = xxx;
+x = Foo(43); // x.m_ptr = yyy; xxx已被释放;
+</code></pre><p>然而，这个功能想要实现却不太容易。我认为这是C++设计上的一个缺陷(C++11引入了一些新机制来解决这个问题，但却让语法更加复杂了)。</p>
+<p>Vala采用了另一种策略，不是试图兼容C的语法，然后在此基础上创建一个新的类进行封装，而是描述C的API采用了什么样的约定，从而自动生成对应的面向对象的模型。在上面的例子中，只要知道</p>
+<ol>
+<li>类名<code>Foo</code>；</li>
+<li>类的方法的调用约定：<code>x.bar(baz)</code> -&gt; <code>Foo_bar(x, baz)</code>；</li>
+<li>创建函数<code>Foo_new</code>, 释放函数<code>Foo_free</code>。</li>
+</ol>
+<p>只需在<code>.vapi</code>文件中写：</p>
+<pre><code>[Compact]
+class Foo {
+	public int bar(int baz);
+	public Foo(int arg);
+}
+</code></pre><p>那么Vala编译器就能自动地将vala代码</p>
+<pre><code>Foo x = new Foo(42);
+x.bar(baz);
+</code></pre><p>转换为C代码</p>
+<pre><code>_tmp0_ = Foo_new (42);
+x = _tmp0_;
+Foo_bar (x, baz);
+</code></pre><p>这是纯粹的代码转换，不会增加额外的胶水代码。当然，机器生成代码未必适合人阅读，但编译后的效果是一样的。</p>
+<p>和C++一样，这里也会遇到拷贝赋值的问题。这里分为两种情况：</p>
+<ol>
+<li>对象支持引用计数，则拷贝赋值对应于引用计数增加。</li>
+<li>对象提供了拷贝函数，则拷贝赋值对应于调用该函数。</li>
+</ol>
+<p>不满足上述条件的对象无法被拷贝赋值。即便如此，仍然支持两种操作：</p>
+<ol>
+<li>用一个新的对象覆盖原来的对象。这里并不涉及拷贝的问题。即</li>
+</ol>
+<pre><code>x = new Foo(43);</code></pre>
+<ol start="2">
+<li>用<code>(owned)</code>修饰符转移所有权。即</li>
+</ol>
+<pre><code>x = (owned) y;</code></pre>
+<p>这样<code>y</code>的值将传递给<code>x</code>，自己则变为<code>null</code>。</p>
+<p>C++11发明了一些新的规则（移动构造函数，移动赋值运算符）来实现类似的语义。它试图用一种通用的规则，从原理上处理这个问题。一定程度上讲，继承了C语言“只提供机制，不提供政策”的哲学。</p>
+<p>对于C和C++而言，很多看似不解的问题，只要从大的规则向下推理，答案总是很清楚，没有什么例外。这是这两个语言美的地方。为什么C++98中<code>x = Foo(43)</code>不可行？因为表达式<code>Foo(43)</code>的类型是<code>Foo</code>，和其他相同类型的表达式（例如，<code>y</code>），地位上没有任何区别。而这是一个赋值表达式，按照语法规则，必须调用<code>Foo</code>类中的拷贝赋值运算符。如果没法调用这个运算符，那就没有办法了。虽然大家心里都清楚，<code>Foo(43)</code>只是一个临时的对象，这个赋值只是为了重写<code>x</code>罢了，不存在“拷贝”的问题（和<code>x = y</code>不同，这个赋值之后显然多了一份拷贝），但是C++编译器的目的不是“尽最大的可能实现代码的语义”，而是“严格遵守语法规则来解释代码”。就是那样不近人情，一丝不苟。</p>
+<p>而Vala则相反，以实现功能为主要目的，更加实在些（毕竟没有想要成为通用语言的野心）。</p>
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>分享</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fvala%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fvala%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=http%3a%2f%2fz-rui.github.io%2fpost%2f2016%2f06%2fvala%2f&amp;text=Vala%e8%af%ad%e8%a8%80" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>关于</h4>
+    <p dir="auto"><iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
+<iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>最近发布</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/post/2021/06/gentoo-on-wsl/">在 Windows Subsystem for Linux 上运行 Gentoo</a></li>
+
+<li><a href="/post/2020/12/x25519/">自制加密通信协议（二）：密钥交换算法</a></li>
+
+<li><a href="/post/2020/11/chacha20/">自制加密通信协议（一）：对称加密算法</a></li>
+
+<li><a href="/post/2020/07/combination-code/">组合的编码/解码</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      © 2015&mdash;2020.
+使用<a href="http://gohugo.io">Hugo</a>构建.
+      
+      </p>
+      <p>
+      <a href="#">回到页首</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

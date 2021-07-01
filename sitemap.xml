@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://z-rui.github.io/post/</loc>
+    <lastmod>2021-06-30T22:22:19-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2021/06/gentoo-on-wsl/</loc>
+    <lastmod>2021-06-30T22:22:19-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/</loc>
+    <lastmod>2021-06-30T22:22:19-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/12/x25519/</loc>
+    <lastmod>2020-12-04T21:43:25-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/11/chacha20/</loc>
+    <lastmod>2020-11-27T20:51:50-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/07/combination-code/</loc>
+    <lastmod>2020-07-24T21:41:11-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/06/conic/</loc>
+    <lastmod>2020-06-23T21:25:27-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/05/abc/</loc>
+    <lastmod>2020-05-14T18:08:56-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/04/portage-sqfs/</loc>
+    <lastmod>2020-04-26T21:17:43-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/04/qemu/</loc>
+    <lastmod>2020-04-19T18:28:14-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/03/irc/</loc>
+    <lastmod>2020-03-21T21:37:03-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2020/03/excerpt/</loc>
+    <lastmod>2020-03-14T17:38:53-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2019/11/excerpt/</loc>
+    <lastmod>2019-11-11T22:29:08-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2018/12/manual-duplex/</loc>
+    <lastmod>2018-12-19T18:02:53-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2018/10/dc/</loc>
+    <lastmod>2018-10-27T14:43:52-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2018/09/wifi_suspend/</loc>
+    <lastmod>2018-10-01T11:57:33-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2018/09/fbterm/</loc>
+    <lastmod>2018-09-30T16:01:20-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2018/07/probability/</loc>
+    <lastmod>2018-07-20T00:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/12/ibus-2/</loc>
+    <lastmod>2017-12-30T21:52:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/12/gentoo-debug/</loc>
+    <lastmod>2017-12-25T17:18:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/12/ibus/</loc>
+    <lastmod>2017-12-24T21:57:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/11/drawtree/</loc>
+    <lastmod>2017-11-18T22:52:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/10/mpostcn/</loc>
+    <lastmod>2017-10-02T20:44:00-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/09/textab/</loc>
+    <lastmod>2017-09-21T16:09:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/03/cjk-extend/</loc>
+    <lastmod>2017-03-29T00:15:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/03/go-scanf/</loc>
+    <lastmod>2017-03-17T16:50:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/03/pdf-imposition/</loc>
+    <lastmod>2017-03-07T20:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/03/inkscape-coloring/</loc>
+    <lastmod>2017-03-07T11:48:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/02/typezh/</loc>
+    <lastmod>2017-02-22T13:19:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/01/gentoo-vultr/</loc>
+    <lastmod>2017-01-20T16:08:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2017/01/makeindex-pp/</loc>
+    <lastmod>2017-01-19T16:11:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/12/vector-ops/</loc>
+    <lastmod>2016-12-13T21:55:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/11/more-arithmetic/</loc>
+    <lastmod>2016-11-28T21:01:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/11/obsolete-logtable/</loc>
+    <lastmod>2016-11-23T22:28:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/11/tvm/</loc>
+    <lastmod>2016-11-02T20:43:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/11/varcomp/</loc>
+    <lastmod>2016-11-01T00:46:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/10/pic_mcu/</loc>
+    <lastmod>2016-10-14T22:08:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/10/led_circuit/</loc>
+    <lastmod>2016-10-07T19:34:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/09/pstricks/</loc>
+    <lastmod>2016-09-29T15:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/09/bin2dec/</loc>
+    <lastmod>2016-09-24T14:05:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/09/nios-display/</loc>
+    <lastmod>2016-09-22T18:57:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/09/chatroom/</loc>
+    <lastmod>2016-09-12T21:56:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/09/gnupg/</loc>
+    <lastmod>2016-09-11T01:21:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/08/equal-temperament/</loc>
+    <lastmod>2016-08-24T23:18:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/08/virtual-base/</loc>
+    <lastmod>2016-08-11T17:29:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/08/magic-square/</loc>
+    <lastmod>2016-08-11T01:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/07/golang-yacc/</loc>
+    <lastmod>2016-07-25T14:59:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/07/golang-shared-library/</loc>
+    <lastmod>2016-07-23T20:45:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/07/golang-generator/</loc>
+    <lastmod>2016-07-22T23:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/07/nanatsu-no-ko/</loc>
+    <lastmod>2016-07-06T16:31:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/06/c-beautiful-and-ugly/</loc>
+    <lastmod>2016-06-12T14:32:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/06/math/</loc>
+    <lastmod>2016-06-09T22:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/06/vala/</loc>
+    <lastmod>2016-06-08T02:17:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/05/gentoo/</loc>
+    <lastmod>2016-05-14T18:06:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/05/suckless/</loc>
+    <lastmod>2016-05-10T14:21:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/05/numerical-diffeq/</loc>
+    <lastmod>2016-05-05T22:27:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/04/cmos-triangle-wave-generator/</loc>
+    <lastmod>2016-04-19T01:29:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/04/opamp-rs-latch/</loc>
+    <lastmod>2016-04-15T12:27:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/04/dynamic-circuit/</loc>
+    <lastmod>2016-04-08T20:39:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/03/ds1302/</loc>
+    <lastmod>2016-03-30T14:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/03/nios/</loc>
+    <lastmod>2016-03-25T18:41:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/02/qc20/</loc>
+    <lastmod>2016-02-15T20:24:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/02/honesty-test/</loc>
+    <lastmod>2016-02-04T15:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/02/wsh/</loc>
+    <lastmod>2016-02-04T04:04:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/01/dc-source-continued/</loc>
+    <lastmod>2016-01-26T20:28:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/01/lighting-up-pencil-lead/</loc>
+    <lastmod>2016-01-21T17:03:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2016/01/dc-source/</loc>
+    <lastmod>2016-01-19T21:20:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/12/internet-speed-tool/</loc>
+    <lastmod>2015-12-25T10:05:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/12/laplace/</loc>
+    <lastmod>2015-12-09T19:03:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/12/fourier/</loc>
+    <lastmod>2015-12-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/11/compile-gtk/</loc>
+    <lastmod>2015-11-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/11/openmp/</loc>
+    <lastmod>2015-11-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/10/bypass-xauth/</loc>
+    <lastmod>2015-10-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/10/x11forward/</loc>
+    <lastmod>2015-10-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/10/openssh/</loc>
+    <lastmod>2015-10-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/10/toygc/</loc>
+    <lastmod>2015-10-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/09/noto/</loc>
+    <lastmod>2015-09-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/09/gcd/</loc>
+    <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/08/python-quines/</loc>
+    <lastmod>2015-08-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/08/hide-developer-options-in-android/</loc>
+    <lastmod>2015-08-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/08/ulbuf/</loc>
+    <lastmod>2015-08-02T01:31:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/07/yasf/</loc>
+    <lastmod>2015-07-24T22:11:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/07/probablity-in-poker-game/</loc>
+    <lastmod>2015-07-13T16:56:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/07/wercker/</loc>
+    <lastmod>2015-07-06T23:06:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/coin/</loc>
+    <lastmod>2015-06-22T18:20:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/negative-feedback-amplifier/</loc>
+    <lastmod>2015-06-13T17:30:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/math/</loc>
+    <lastmod>2015-06-08T23:59:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/automated-deploy/</loc>
+    <lastmod>2015-06-07T01:29:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/pi-digits/</loc>
+    <lastmod>2015-06-05T19:47:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/ltspice/</loc>
+    <lastmod>2015-06-02T19:06:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/06/pull-request/</loc>
+    <lastmod>2015-06-02T04:09:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/05/re2c-patch/</loc>
+    <lastmod>2015-05-20T01:51:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/computing/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/gui/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/hack/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/iup/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/05/iup-patch/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E8%A1%A5%E4%B8%81/</loc>
+    <lastmod>2015-05-15T15:02:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/05/geometry/</loc>
+    <lastmod>2015-05-06T13:30:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/04/sqlite3-type-system/</loc>
+    <lastmod>2015-04-30T10:07:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/playing/</loc>
+    <lastmod>2015-04-22T13:06:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/04/rubiks-cube/</loc>
+    <lastmod>2015-04-22T13:06:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E9%AD%94%E6%96%B9/</loc>
+    <lastmod>2015-04-22T13:06:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/gnu/</loc>
+    <lastmod>2015-04-10T16:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/gnuplot/</loc>
+    <lastmod>2015-04-10T16:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/math/</loc>
+    <lastmod>2015-04-10T16:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2015-04-10T16:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/04/gnuplot/</loc>
+    <lastmod>2015-04-10T16:52:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/algorithm/</loc>
+    <lastmod>2015-03-01T07:17:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E4%B8%89%E8%A7%92%E5%BD%A2/</loc>
+    <lastmod>2015-03-01T07:17:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/03/theorem/</loc>
+    <lastmod>2015-03-01T07:17:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/</loc>
+    <lastmod>2015-03-01T07:17:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/lua/</loc>
+    <lastmod>2015-02-26T07:01:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/02/minimal-lua/</loc>
+    <lastmod>2015-02-26T07:01:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/bug/</loc>
+    <lastmod>2015-02-26T06:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/02/lua-surprises/</loc>
+    <lastmod>2015-02-26T06:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E6%83%8A%E5%96%9C/</loc>
+    <lastmod>2015-02-26T06:00:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/02/line/</loc>
+    <lastmod>2015-02-18T02:01:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/gcc/</loc>
+    <lastmod>2015-02-09T08:26:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/mingw/</loc>
+    <lastmod>2015-02-09T08:26:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/02/mingw-bug/</loc>
+    <lastmod>2015-02-09T08:26:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/bfs/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/dfs/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/thinking/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E8%BF%9E%E8%BF%9E%E7%9C%8B/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/01/llk/</loc>
+    <lastmod>2015-01-29T14:16:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/diary/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E7%89%A9%E7%90%86/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/01/physics_letter/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E8%80%81%E5%B8%88/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/%E8%80%83%E8%AF%95/</loc>
+    <lastmod>2015-01-27T03:58:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/categories/bootstrap/</loc>
+    <lastmod>2015-01-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/git/</loc>
+    <lastmod>2015-01-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/tags/github/</loc>
+    <lastmod>2015-01-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://z-rui.github.io/post/2015/01/settlement/</loc>
+    <lastmod>2015-01-25T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>
