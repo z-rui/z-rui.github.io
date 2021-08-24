@@ -14,7 +14,7 @@ params:
     sidebar:
         about: |
             <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
-            <iframe src="//ofgogoatan.com/afu.php?zoneid=3187370"></iframe>
+            <script src="https://liberapay.com/zealotry/widgets/button.js"></script><noscript><a href="https://liberapay.com/zealotry/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
         num_recent_posts: 4
 
 markup:
