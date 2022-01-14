@@ -3,24 +3,24 @@ date: 2016-12-13T21:55:00+08:00
 title: 复数和矢量运算
 ---
 
-在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\\)表示，并且使用角度制。
+在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\\,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\\)表示，并且使用角度制。
 
 <img style="margin: auto;" src="/media/vector-1.svg">
 
 <!--more-->
 
-平面上的矢量和复数之间有一一对应的关系。如图，\\(A\phase\varphi\\)对应矢量\\(\overrightarrow{OP}\\)，它也可以用直角坐标形式表示为\\(x+y\,\mathrm{i}\\)。通常，把\\(A\\)取成非负的，称为模：\\(r = \sqrt{x^2+y^2}\\)；把\\(\varphi\\)取在区间\\((-\pi,\pi]\\)内，称为幅角：\\(\varphi = \mathrm{atan2}(y, x)\\)。
+平面上的矢量和复数之间有一一对应的关系。如图，\\(A\phase\varphi\\)对应矢量\\(\overrightarrow{OP}\\)，它也可以用直角坐标形式表示为\\(x+y\\,\mathrm{i}\\)。通常，把\\(A\\)取成非负的，称为模：\\(r = \sqrt{x^2+y^2}\\)；把\\(\varphi\\)取在区间\\((-\pi,\pi]\\)内，称为幅角：\\(\varphi = \mathrm{atan2}(y, x)\\)。
 
 可以用欧拉公式证明两种形式是等价的，用矢量可以形象地表示出这一关系，便于记忆。
 
-用复数和矢量分析交流电是很方便的。例如，在三相电源中，设A相电压\\[\dot{U}\_A = 220\phase{0^\circ}\;\mathrm{V},\\]则另外两相电压分别可以表示为
+用复数和矢量分析交流电是很方便的。例如，在三相电源中，设A相电压\\[\dot{U}\_A = 220\phase{0^\circ}\\;\mathrm{V},\\]则另外两相电压分别可以表示为
 \begin{align}
-\dot{U}\_B &= 220\phase{-120^\circ}\;\mathrm{V}, \\\\ 
-\dot{U}\_C &= 220\phase{120^\circ}\;\mathrm{V}.
+\dot{U}\_B &= 220\phase{-120^\circ}\\;\mathrm{V}, \\\\ 
+\dot{U}\_C &= 220\phase{120^\circ}\\;\mathrm{V}.
 \end{align}
 
 这种记法的物理意义很明显。并且用这种表示进行算术运算也具有明确的意义。例如，线电压
-\\[\dot{U}\_{AB} = \dot{U}\_A - \dot{U}\_B = 220\sqrt3\phase{30^\circ}\;\mathrm{V}.\\]
+\\[\dot{U}\_{AB} = \dot{U}\_A - \dot{U}\_B = 220\sqrt3\phase{30^\circ}\\;\mathrm{V}.\\]
 可以直接从计算结果中读出它的幅值和相位。
 
 上面的计算因为涉及特殊角，所以可以笔算得出结果。甚至可以画出对应矢量的图形（恰好构成等腰三角形），用图解法来做。
@@ -48,7 +48,7 @@ title: 复数和矢量运算
 
 <img style="margin: auto;" src="/media/vector-3.svg">
 
-设三边按从小到大的顺序分别为\\(a,\,b,\,c\\)，边\\(a\\)所对的角为\\(\alpha\\)。则\\(\alpha=\arctan\frac{a}{b}\\)。注意我们总用小数除以大数。
+设三边按从小到大的顺序分别为\\(a,\\,b,\\,c\\)，边\\(a\\)所对的角为\\(\alpha\\)。则\\(\alpha=\arctan\frac{a}{b}\\)。注意我们总用小数除以大数。
 \begin{array}{rrr}
 &\lg 190.5 =& 2.2799 \\\\ 
 -&\lg 330.0 =& 2.5185 \\\\\hline
@@ -73,7 +73,7 @@ title: 复数和矢量运算
 \text{IV}   & + & - & -\alpha & -(90^\circ - \alpha) \\\\\hline
 \end{array}
 
-由上表知，计算结果位于第I象限，并且\\(|x| \ge |y|\\)，所以\\(\varphi=\alpha=30^\circ\\)。因此极坐标形式为\\(\dot{U}\_{AB} = 381.0\phase{30^\circ}\;\mathrm{V}.\\)
+由上表知，计算结果位于第I象限，并且\\(|x| \ge |y|\\)，所以\\(\varphi=\alpha=30^\circ\\)。因此极坐标形式为\\(\dot{U}\_{AB} = 381.0\phase{30^\circ}\\;\mathrm{V}.\\)
 
 ## 矢量计算尺
 

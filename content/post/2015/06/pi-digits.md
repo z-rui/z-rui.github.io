@@ -42,7 +42,7 @@ def pidigits():
 \\[\Delta^n a\_0 = \sum\_{k=0}^n (-1)^k {n\choose k}a\_{n-k}\\]
 
 对于莱布尼茨级数而言，\\(a\_n = {1\over2n+1}\\)。利用二项式系数的复杂的计算技巧可以证明(见文末)
-\\[\Delta^n a\_0 = \sum\_{k=0}^n (-1)^k {n\choose k}{1\over 2(n-k)+1} = (-1)^n{n!\,2^n\over(2n+1)!!}\\]
+\\[\Delta^n a\_0 = \sum\_{k=0}^n (-1)^k {n\choose k}{1\over 2(n-k)+1} = (-1)^n{n!\\,2^n\over(2n+1)!!}\\]
 其中双阶乘记号\\((2n+1)!! := (2n+1)\times(2n-1)\times(2n-3)\times\cdots\times3\times1\\)。
 
 代入欧拉变换的表达式得
@@ -75,7 +75,7 @@ Spigot算法有一个本质的问题是你必须预先指定将要计算多少�
 Gibbons提出的算法非常具有启发性：他把上述计算公式\\((1)\\)表示成如下的形式：
 \\[\pi = \left(2 + {1\over3} \times\right) \left(2 + {2\over5} \times\right) \left(2+{3\over7} \times\right) \cdots \left(2 + {i\over 2i+1} \times\right) \cdots \\]
 
-其中的每一项\\(T\_i = \left(2 + {i\over 2i+1} \times\right)\\)都是一个分式线性映射\\[T\_i:\;x\to{q\_ix + r\_i \over s\_ix + t\_i}\\]其中\\(q\_i = i, r\_i = 2(2i+1), s\_i = 0, t\_i = 2i+1\\)，当然，你给它们同时乘上或除以某一个常数也是无所谓的。
+其中的每一项\\(T\_i = \left(2 + {i\over 2i+1} \times\right)\\)都是一个分式线性映射\\[T\_i:\\;x\to{q\_ix + r\_i \over s\_ix + t\_i}\\]其中\\(q\_i = i, r\_i = 2(2i+1), s\_i = 0, t\_i = 2i+1\\)，当然，你给它们同时乘上或除以某一个常数也是无所谓的。
 
 分式线性映射可以用矩阵表示为\\[T\_i=\pmatrix{q\_i&r\_i\cr s\_i&t\_i}\\]不难证明，分式线性映射的复合可以用矩阵的乘法来表示。
 
@@ -107,7 +107,7 @@ Gibbon还指出，这个算法还有值得优化的地方。例如可以在恰�
 
 文中提及一个等式
 \\[\sum\_{k=0}^n (-1)^k {n\choose k}{1\over 2(n-k)+1} = (-1)^n{2^n n!\over (2n+1)!!}\\]
-这里我给予证明。正如文中所说，需要用到和二项式系数相关的运算技巧，所以我先给出二项式系数的定义：设\\(n, k\\)为自然数，那么\\[{n\choose k} = {n!\over k!\,(n-k)!}\\]
+这里我给予证明。正如文中所说，需要用到和二项式系数相关的运算技巧，所以我先给出二项式系数的定义：设\\(n, k\\)为自然数，那么\\[{n\choose k} = {n!\over k!\\,(n-k)!}\\]
 
 使用定义不难证明下面的等式成立：
 \\[{n\over n-k}{n-1\choose k} = {n\choose k}\\]
@@ -136,7 +136,7 @@ F(m)
 F(0)
 &= {-2n\over1}\cdot{-2(n-1)\over3}\cdots{-2(n-n+1)\over2(n-1)+1}F(n)\cr
 &= {-2n\over1}\cdot{-2(n-1)\over3}\cdots{-2(n-n+1)\over2(n-1)+1}\cdot{1\over2n+1}\cr
-&= (-1)^n{n!\,2^n\over(2n+1)!!}
+&= (-1)^n{n!\\,2^n\over(2n+1)!!}
 }\\]
 
 证明完毕。

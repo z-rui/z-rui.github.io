@@ -15,7 +15,8 @@ title: "一道几何题的证明"
 
 <!--more-->
 
-设\\(DP=x\;(0 \leq x \leq a)\\)，则\\(CP=a-x\\)。根据勾股定理：
+设\\(DP=x\\;(0 \leq x \leq a)\\)，则\\(CP=a-x\\)。根据勾股定理：
+
 \\[\eqalign{
 AP^2 &= x^2 + b^2, \cr
 BP^2 &= (a-x)^2 + b^2.
@@ -60,7 +61,7 @@ u'v-u{v'\over2} &= 2a^2b^2x - a^3b^2 = a^2b^2(2x-a).
 
 ---
 
-另一种做法是不用余弦定理而改用其他的三角恒等式。根据图形可知\\(\tan\angle PAD = {x\over b},\,\tan\angle PBC = {a-x\over b}\\)。所以根据余切公式
+另一种做法是不用余弦定理而改用其他的三角恒等式。根据图形可知\\(\tan\angle PAD = {x\over b},\\,\tan\angle PBC = {a-x\over b}\\)。所以根据余切公式
 \\[\cot\angle APB = {{1-{x\over b}{a-x\over b}} \over {x\over b}+{a-x\over b}} = {x^2-ax+b^2 \over ab}.\\]
 
 余切函数在\\((0, \pi)\\)上也是单调递减的。所以问题转化为求上述函数（记为\\(f(x)\\)）的最小值。计算导数
