@@ -74,7 +74,7 @@ Hx 有平方根，即存在 Ha &isin; G/H 使得 (Ha)² = Hx，即 H(a²) = Hx�
 __D.1__ 如果 G/H 中的所有元素的阶都有限，并且 H 中的所有元素的阶都有限，则 G 中所有元素的阶都有限。
 
 **证明** 设 x &isin; G，显然 x &isin; Hx。
-陪集 Hx &isin; G/M 的阶有限，则存在正整数 n 使得 (Hx)<sup>n</sup> = H(x<sup>n</sup>) = H。根据本章定理 5，得 x<sup>n</sup> &isin; H。又因为 H 中所有元素的阶都有限，所以存在正整数 m 使得 (x<sup>n</sup>)<sup>m</sup> = x<sup>nm</sup> = e。这说明 x 的阶是 nm 的约数，因而是有限的。
+陪集 Hx &isin; G/H 的阶有限，则存在正整数 n 使得 (Hx)<sup>n</sup> = H(x<sup>n</sup>) = H。根据本章定理 5，得 x<sup>n</sup> &isin; H。又因为 H 中所有元素的阶都有限，所以存在正整数 m 使得 (x<sup>n</sup>)<sup>m</sup> = x<sup>nm</sup> = e。这说明 x 的阶是 nm 的约数，因而是有限的。
 
 ---
 
