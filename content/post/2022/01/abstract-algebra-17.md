@@ -36,6 +36,12 @@ __E.1__ 证明四元数与矩阵加法和乘法构成含单位元的环。这个
 加法：
 
 * 零元为零矩阵。
+* 四元数形式的矩阵对加法封闭：
+\\[
+\begin{pmatrix}x_1&y_1\\\\-\overline{y_1}&\overline {x_1}\end{pmatrix}+
+\begin{pmatrix}x_2&y_2\\\\-\overline{y_2}&\overline {x_2}\end{pmatrix}=
+\begin{pmatrix}x_1+x_2&y_1+y_2\\\\-(\overline{y_1+y_2})&\overline {x_1+x_2}\end{pmatrix}
+\\]
 * 矩阵加法满足交换律、结合律。
 * 矩阵加法逆元为所有元素取相反数。
 
@@ -44,6 +50,13 @@ __E.1__ 证明四元数与矩阵加法和乘法构成含单位元的环。这个
 乘法：
 
 * 单位元为恒等矩阵 \\(1\\;0\choose0\\;1\\)。
+* 四元数形式的矩阵对乘法封闭：
+\\[
+\begin{pmatrix}x_1&y_1\\\\-\overline{y_1}&\overline {x_1}\end{pmatrix}
+\begin{pmatrix}x_2&y_2\\\\-\overline{y_2}&\overline {x_2}\end{pmatrix}=
+\begin{pmatrix}x_1x_2 - y_1\overline{y_2}&x_1y_2+\overline{x_2}y_1\\\\
+-(\overline{x_1y_2+\overline{x_2}y_1})&\overline{x_1x_2-y_1\overline{y_2}}\end{pmatrix}
+\\]
 * 矩阵乘法满足结合律。
 * 矩阵加法和乘法满足分配律。
 
@@ -65,12 +78,14 @@ __F.1__ 证明 \\(\End(G)\\) 和上述运算构成含单位元的环。
 加法：
 
 * 零元为映射 \\(x \mapsto 0\\)，其中 \\(0\\) 是 \\(G\\) 的零元。
+* 对加法封闭。
 * 加法满足交换律和结合律（来源于 \\(G\\) 中加法的交换律和结合律）。
 * 加法逆元存在：\\((-f)(x) = -f(x)\\)。
 
 乘法：
 
 * 单位元为恒等映射 \\(x \mapsto x\\)。
+* 对乘法封闭。
 * 乘法满足结合律（映射都满足结合律）。
 * 乘法满足分配律：
 \begin{align\*}
