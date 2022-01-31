@@ -3,7 +3,7 @@ date: 2016-12-13T21:55:00+08:00
 title: 复数和矢量运算
 ---
 
-在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase\[1\]{\\,\underline{\smash{\kern -.84pt\lower -.43pt{/}#1}}}A\phase\varphi\\)表示，并且使用角度制。
+在工程领域中，复数\\(\dot{A}=A\mathrm{e}^{\mathrm{i}\varphi}\\)被用来指代一个有效值为\\(A\\)，初相位为\\(\varphi\\)的正弦量\\(\Re\big[\sqrt2\dot{A}\big]=\sqrt2A\cos(\omega t+\varphi)\\)。这样的复数常被称作相量(phasor)，通常会用更简便的Steinmetz记号\\(\newcommand\phase{\enclose{phasorangle}}A\phase\varphi\\)表示，并且使用角度制。
 
 <img style="margin: auto;" src="/media/vector-1.svg">
 
