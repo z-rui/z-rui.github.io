@@ -4,7 +4,7 @@ title: "睿"
 baseurl: "https://z-rui.github.io/"
 defaultContentLanguage: "zh"
 copyright: |
-    &copy; 2015---2020.
+    &copy; 2015---2022.
     使用[Hugo](http://gohugo.io)构建.
 theme: "hugo-theme-bootstrap4-blog"
 
