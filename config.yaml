@@ -1,7 +1,7 @@
 MetaDataFormat: "yaml"
 
 title: "睿"
-baseurl: "https://z-rui.github.io/"
+baseURL: "https://z-rui.github.io/"
 defaultContentLanguage: "zh"
 copyright: |
     &copy; 2015---2022.
