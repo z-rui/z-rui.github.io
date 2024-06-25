@@ -165,9 +165,9 @@ kA_k + x_{k+1} + (k-1)G_{k+1}
 \begin{align}
 f'(x)
 &= n(1+x)^{n-1}+n\left(\frac{1}{x}+1\right)^{n-1}(-\frac{1}{x^2})y^{n+1} \\\\
-&= n(1+x)^{n-1}\left[1-\left(\frac{x}{y}\right)^{n+1}\right]
+&= n(1+x)^{n-1}\left[1-\left(\frac{y}{x}\right)^{n+1}\right]
 \end{align}
-注意条件\\(n>0\\)，当\\(x\<y\\)时，\\(\left(\frac xy\right)^{n+1} < 1\\)，因此\\(f'(x)<0\\)。类似地，当\\(x\>y\\)时，\\(f'(x)>0\\)。由此可知，\\(f(x)\\)在\\(x=y\\)处取得最小值，最小值为
+注意条件\\(n>0\\)，当\\(x\<y\\)时，\\(\left(\frac yx\right)^{n+1} > 1\\)，因此\\(f'(x)<0\\)。类似地，当\\(x\>y\\)时，\\(f'(x)>0\\)。由此可知，\\(f(x)\\)在\\(x=y\\)处取得最小值，最小值为
 \\[f_\min = f(y) = (1+y)^{n+1}\\]
 由此可知，对任意\\(x>0\\)都有
 \\[f(x)=(1+x)^n\left(1+\frac{y^{n+1}}{x^n}\right) \geq (1+y)^{n+1}\\]
