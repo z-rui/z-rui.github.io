@@ -24,26 +24,25 @@ title: 一个初等不等式
 其中\\(\binom n k = \frac{n!}{(n-k)!k!}\\)。
 
 首先，将不等式变形为
-\\[(c+d)^n\left[\frac{a^{n+1}}{c^n}+\frac{b^{n+1}}{d^n}\right] \geq (a+b)^{n+1}\\]
+\\[(c+d)^n\left(\frac{a^{n+1}}{c^n}+\frac{b^{n+1}}{d^n}\right) \geq (a+b)^{n+1}\\]
 将左边的二项式展开，
 \begin{align}
-左边 &= \sum_{k=0}^n \binom n k c^{n-k}d^k \left[\frac{a^{n+1}}{c^n}+\frac{b^{n+1}}{d^n}\right]\\\\
+左边 &= \sum_{k=0}^n \binom n k c^{n-k}d^k \left(\frac{a^{n+1}}{c^n}+\frac{b^{n+1}}{d^n}\right)\\\\
 &= \sum_{k=0}^n \binom n k \left(\frac{a^{n+1}d^k}{c^k} + \frac{b^{n+1}c^{n-k}}{d^{n-k}}\right)
 \end{align}
 定义\\(\alpha_k=\frac{a^{n+1}d^k}{c^k}\\)，\\(\beta_k=\frac{b^{n+1}c^{n-k}}{d^{n-k}}\\)。将求和式中的两项错开相加，可得
 \begin{align}
 左边&=\sum_{k=0}^n(\alpha_k+\beta_k)\\\\
-&= \binom n 0 \alpha_0 + \binom n 1 \alpha_1 + \binom n 2 \alpha_2 + \cdots + \binom n n \alpha_n \\\\
-&\phantom{{}=\binom n 0 \alpha_0} + \binom n 0 \beta_0 + \binom n 1 \beta_1 + \cdots + \binom n {n-1} \beta_{n-1} + \binom n n \beta_n \\\\
+&= \tbinom n 0 \alpha_0 + \tbinom n 1 \alpha_1 + \tbinom n 2 \alpha_2 + \cdots + \tbinom n n \alpha_n \\\\
+&\phantom{{}=\tbinom n 0 \alpha_0} + \tbinom n 0 \beta_0 + \tbinom n 1 \beta_1 + \cdots + \tbinom n {n-1} \beta_{n-1} + \tbinom n n \beta_n \\\\
 &= \alpha_0 + \sum_{k=1}^{n} \left[\binom n k\alpha_k + \binom n {k-1}\beta_{k-1}\right] + \beta_n
 \end{align}
-使用AM--GM不等式，
+使用AM--GM不等式，并使用恒等式\\(\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}\\)，得
 \begin{align}
 \binom n k\alpha_k + \binom n {k-1}\beta_{k-1}
-&\geq \left[\binom n k + \binom n {k-1}\right]\sqrt[\binom n k + \binom n {k-1}]{\alpha_k^{\binom n k}\beta_{k-1}^{\binom n {k-1}}}
+&\geq \binom {n+1}k\sqrt[\binom {n+1}k]{\alpha_k^{\binom n k}\beta_{k-1}^{\binom n {k-1}}}
 \end{align}
-当且仅当\\(\alpha_k=\beta_{k-1}\\)时，取等号。
-根式下方
+根式内部
 \begin{align}
 \alpha_k^{\binom{n}{k}}\beta_{k-1}^{\binom n {k-1}}
 &= \left(\frac{a^{n+1}d^k}{c^k}\right)^{\frac{n!}{(n-k)!k!}}
@@ -52,11 +51,9 @@ title: 一个初等不等式
    b^{\frac{(n+1)!}{(n-k+1)!(k-1)!}}\left(\frac{c}{d}\right)^{\frac{n!}{(n-k)!(k-1)!}}\\\\
 &= a^{(n+1-k)\binom{n+1}{k}} b^{k\binom{n+1}{k}}
 \end{align}
-再根据二项式系数的恒等式\\(\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}\\)得
+因此
 \\[
-\binom n k\alpha_k + \binom n {k-1}\beta_{k-1}
-\geq \binom{n+1}k \sqrt[\binom {n+1}{k}]{\alpha_k^{\binom n k}\beta_{k-1}^{\binom n {k-1}}}
-=\binom{n+1}k a^{n+1-k}b^k
+\sqrt[\binom {n+1}{k}]{\alpha_k^{\binom n k}\beta_{k-1}^{\binom n {k-1}}}=a^{n+1-k}b^k
 \\]
 在要证明的不等式中，我们得到
 \begin{align}
@@ -72,7 +69,7 @@ title: 一个初等不等式
 
 ## 点评
 
-这个证明方法我当时是凑出来的。将求和式中的项错开一位相加，再利用AM--GM不等式，得到的恰好是不等式的另一边，我也不知道为什么会有这样的巧合。
+这个证明方法我当时是凑出来的。将求和式中的项错开一位相加，再利用AM--GM不等式，得到的恰好是不等式的另一边。我也不知道为什么会有这样的巧合。
 
 用数学归纳法可以将该不等式扩展到任意多项，即
 \\[\frac{x_1^{n+1}}{y_1^n} + \cdots + \frac{x_m^{n+1}}{y_m^n} \geq \frac{(x_1 + \cdots + x_m)^{n+1}}{(y_1+\cdots+y_m)^n}\\]
@@ -160,13 +157,9 @@ kA_k + x_{k+1} + (k-1)G_{k+1}
 我们只需要证明
 \\[1+\frac{y^{n+1}}{x^n} \geq \frac{(1+y)^{n+1}}{(1+x)^n}\\]
 其中\\(x,y,n>0\\)。在上式中代换\\(y=\frac ba\\)和\\(x=\frac dc\\)就能得到原来的不等式。
-设\\[f(x)=(1+x)^n\left(1+\frac{y^{n+1}}{x^n}\right)=(1+x)^n + \left(\frac{1}{x}+1\right)^n y^{n+1}\\]
-对\\(x\\)求导，得
-\begin{align}
-f'(x)
-&= n(1+x)^{n-1}+n\left(\frac{1}{x}+1\right)^{n-1}(-\frac{1}{x^2})y^{n+1} \\\\
-&= n(1+x)^{n-1}\left[1-\left(\frac{y}{x}\right)^{n+1}\right]
-\end{align}
+设\\[f(x)=(1+x)^n\left(1+\frac{y^{n+1}}{x^n}\right)\\]
+求导，得
+\\[f'(x) = n(1+x)^{n-1}\left[1-\left(\frac{y}{x}\right)^{n+1}\right]\\]
 注意条件\\(n>0\\)，当\\(x\<y\\)时，\\(\left(\frac yx\right)^{n+1} > 1\\)，因此\\(f'(x)<0\\)。类似地，当\\(x\>y\\)时，\\(f'(x)>0\\)。由此可知，\\(f(x)\\)在\\(x=y\\)处取得最小值，最小值为
 \\[f_\min = f(y) = (1+y)^{n+1}\\]
 由此可知，对任意\\(x>0\\)都有
