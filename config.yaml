@@ -3,22 +3,23 @@ MetaDataFormat: "yaml"
 title: "睿"
 baseURL: "https://z-rui.github.io/"
 defaultContentLanguage: "zh"
-copyright: |
-    &copy; 2015---2026.
-    使用[Hugo](http://gohugo.io)构建.
-theme: "hugo-theme-bootstrap4-blog"
+theme: "hugo-xmin"
+
+menu:
+    main:
+      - name: 首页
+        url: ""
+        weight: 1
 
 params:
-    author: rui
-    header_visible: false
-    sidebar:
-        about: |
-            <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
-        num_recent_posts: 4
+    footer: |
+        &copy; 张睿 2015---{Year} | [GitHub](https://github.com/z-rui)
 
 markup:
     goldmark:
         renderer:
             unsafe: true
+    highlight:
+        codeFences: false
 
 # vim: ts=4:sw=4:et
