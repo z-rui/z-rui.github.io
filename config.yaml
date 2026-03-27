@@ -13,8 +13,7 @@ params:
     header_visible: false
     sidebar:
         about: |
-            <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
-            <script src="https://liberapay.com/zealotry/widgets/button.js"></script><noscript><a href="https://liberapay.com/zealotry/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+            <iframe src="https://ghbtns.com/github-btn.html?user=z-rui&type=follow&count=true" frameborder="0" scrolling="0" width="220px" height="30px"></iframe>
         num_recent_posts: 4
 
 markup:
