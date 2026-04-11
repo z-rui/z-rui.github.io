@@ -26,7 +26,7 @@ Opam 项目最近正在[试图增加对 UCRT 的支持](https://github.com/ocaml
 4. （骚操作开始）找一个合适的路径，运行 `opam source msys2`。它会在当前路径下创建一个 `msys2.xxx` 的目录，编辑其中的 `opam` 文件：
 ```
 -  "MINGW64" {msys2-mingw64:installed}
--  "UCRT64" {msys2-ucrt64:installed}
++  "UCRT64" {msys2-mingw64:installed}
 ```
 同时编辑 `gen_config.sh`，在 case 分支中允许 `UCRT64` 运行：
 ```
