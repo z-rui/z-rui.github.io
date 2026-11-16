@@ -98,20 +98,118 @@ $$\frac{z-1}{z+1} = \frac{b\\,\mathrm i}{a + 1}.$$
    2) \\(I_n = [n, +\infty)\\),
    3) \\(I_n = [-\frac{1}{n}, 1+\frac{1}{n}]\\).
 
+   <details> <summary>答案</summary>
+
+   1. 不满足“有界闭区间”（是开区间）。\\(\bigcap_{n=1}^\infty I_n = \varnothing\\)，理由如下：
+
+      设 \\(x\in \bigcap_{n=1}^\infty I_n\\)。由 \\(x\in I_1\\) 得 \\(x > 0\\)。那么，存在 \\(n > \frac{1}{x}\\) （由阿基米德性质保证），即 \\(x > \frac{1}{n}\\)，又由 \\(x\in I_n\\) 得 \\(0 < x \le \frac{1}{n}\\)。矛盾！故假设不成立，\\(\bigcap_{n=1}^\infty I_n = \varnothing\\)。
+
+   2. 不满足“有界闭区间”（区间无界）。\\(\bigcap_{n=1}^\infty I_n = \varnothing\\)，理由如下：
+
+      设 \\(x\in \bigcap_{n=1}^\infty I_n\\)。那么，存在 \\(n > x\\) （由阿基米德性质保证），又由 \\(x\in I_n\\) 得 \\(x \ge n\\)。矛盾！故假设不成立，\\(\bigcap_{n=1}^\infty I_n = \varnothing\\)。
+
+   3. 满足全部条件。\\(\bigcap_{n=1}^\infty I_n = [0, 1]\\)，理由如下：
+
+      设 \\(S = \bigcap_{n=1}^\infty I_n\\)。设 \\(0 \le x \le 1\\)，则易知
+$$ -\frac{1}{n} < 0 \le x \le 1 < 1 + \frac{1}{n}\qquad n = 1, 2, 3, \ldots $$
+可见对任意正整数 \\(n\\) 都有 \\(x\in I_n\\)。这说明 \\(S \supseteq [0, 1]\\)。另一方面，设 \\(y \in S\\)。
+      * 假设 \\(y < 0\\)，则当 \\(n > -\frac{1}{y}\\) 时，\\(-\frac{1}{n} > y\\)，于是 \\(y\notin I_n\\)，和 \\(y\in S\\) 矛盾。
+      * 假设 \\(y > 1\\)，则当 \\(n > \frac{1}{y-1}\\) 时，\\(1+\frac{1}{n} < y\\)，于是 \\(y\notin I_n\\)，和 \\(y\in S\\) 矛盾。
+
+      以上矛盾说明 \\(0 \le y \le 1\\)，因此 \\(S \subseteq [0, 1]\\)。综上所述，\\(S = [0, 1]\\)。
+   </details>
+
 5. 构造一个开区间 \\((0, 1)\\) 到 \\(\mathbb R\\) 的显式双射。并以此说明 \\((0, 1)\\) 为不可数集。
+
+   <details> <summary>答案</summary>
+
+   定义 \\(f: (0, 1) \to \mathbb R\\) 为
+$$ f(x) = \frac{2x-1}{1-(2x-1)^2}. $$
+易知，在 \\((0, 1)\\) 内，\\(1-(2x-1)^2 \ne 0\\)，因此该定义是良好的。下面说明它是双射。
+
+   设 \\(y\in\mathbb R\\)。如果 \\(y = 0\\)，那么由 \\(f(x) = 0\\) 得唯一解 \\(x=\frac{1}{2}\\)。以下假设 \\(y \ne 0\\)，我们将证明存在唯一的 \\(x\in (0, 1)\\) 使得 \\(f(x) = 0\\)。只须证明存在唯一的 \\(u\in (-1, 1)\\) 使 \\(\frac{u}{1-u^2} = y\\)（然后令 \\(u = 2x -1\\) 即可）。
+
+   由 \\(\frac{u}{1-u^2} = y\\) 变形得
+$$ yu^2 + u - y = 0,\qquad u\ne\pm 1. $$
+这是关于 \\(u\\) 的二次方程，判别式 \\(\Delta = 1 + 4y^2 > 0\\)，故有两个相异实根
+$$ u = \frac{-1 \pm \sqrt{1+4y^2}}{2y}.$$
+
+   * 如果取“\\(-\\)”：注意到 \\(|u| = \frac{1 + \sqrt{1+4y^2}}{|2y|} > \frac{\sqrt{4y^2}}{|2y|} = 1\\)。这说明 \\(u\notin(-1,1)\\)。
+   * 如果取“\\(+\\)”：注意到 \\(1+4y^2 < 1 + 4|y| + 4|y|^2 = (1 + |2y|)^2\\)，因此 \\(|u| = \frac{\sqrt{1+4y^2} - 1}{|2y|} < \frac{1+|2y|-1}{|2y|}= 1\\)。这说明 \\(u\in(-1,1)\\)。
+
+   综上所述，对任意 \\(y\in\mathbb R\\)，存在唯一的 \\(u\in(-1, 1)\\)（即存在唯一的 \\(x\in(0, 1)\\)），使 \\(\frac{u}{1-u^2} = y\\)（即 \\(f(x) = y\\)）。因此 \\(f\\) 是双射。
+
+   假设 \\((0, 1)\\) 可数，则存在双射 \\(\psi: \mathbb N\to (0, 1)\\)，进而 \\(f\circ \psi: \mathbb N\to R\\) 也是双射。这说明 \\(\mathbb R\\) 是可数集，但是实数集不可数是众所周知的。因此假设不成立，\\((0, 1)\\) 不可数。
+   </details>
 
 6. 设 \\(A\\), \\(B\\) 为非空有界实数集。
    1) 证明 \\(\sup(A\cup B) = \max \\{\sup A, \sup B\\}\\)；
    2) 若 \\(A \cap B \ne \varnothing\\)，证明 \\(\sup(A\cap B) \le \min\\{\sup A, \sup B\\}\\)。并举例说明严格不等号可以成立。
 
+   <details> <summary>答案</summary>
+
+   1) 设 \\(M = \max \\{\sup A, \sup B\\}\\)。设 \\(x \in A\cup B\\)。那么：
+      * 如果 \\(x\in A\\)，则 \\(x\le\sup A\le M\\)；
+      * 如果 \\(x\in B\\)，则 \\(x\le\sup B\le M\\)。
+
+      总之，\\(x \le M\\)，故 \\(M\\) 是 \\(A\cup B\\) 的上界。
+
+      另一方面，设 \\(M'\\) 是 \\(A\cup B\\) 的上界，则对任意 \\(a\in A \subseteq A\cup B\\)，\\(a\le M'\\)。从而 \\(M'\\) 是 \\(A\\) 的上界。根据上确界的定义，\\(M' \ge \sup A\\)。同理可证 \\(M'\ge \sup B\\)。因此 \\(M' \ge \max\\{\sup A, \sup B\\} = M\\)。
+
+      综上所述，\\(M\\) 是 \\(A\cup B\\) 的上确界。证毕。
+
+   2) 因为 \\(A\cap B\\) 是 \\(\mathbb R\\) 的非空子集，且 \\(A\\), \\(B\\) 有上界，所以 \\(A\cap B\\) 有上界，从而（根据确界定理）有上确界。设 \\(M = \sup(A\cap B)\\)。
+
+      假设 \\(M > \sup A\\)，考虑 \\(M' = \frac{1}{2}(M + \sup A)\\)，易知 \\(\sup A < M' < M\\)。设 \\(x\in A\cap B\\)，由 \\(x\in A\\) 得 \\(x \le \sup A < M'\\)，故 \\(M'\\) 是 \\(A\cap B\\) 的上界，且比 \\(M\\) 更小，和 \\(M\\) 是 \\(A\cap B\\) 的上确界矛盾。因此假设不成立。同理可证 \\(s > \sup B\\) 不成立。
+
+      综上所述，一定有 \\(s \le \sup A\\) 和 \\(s \le \sup B\\)，因此 \\(s \le \min\\{\sup A, \sup B\\}\\) 得证。
+
+      举例：取 \\(A = \\{0, 1\\}\\), \\(B = [0, 1)\\)。此时 \\(\sup A = 1\\), \\(\sup B = 1\\)，但是 \\(\sup(A\cap B) = \sup\\{0\\} = 0 < 1\\)。
+   </details>
+
 7. 设 \\(A\\), \\(B\\) 为非空有界实数集，\\(c\in\mathbb R\\) 为常数。
    1) 证明 \\(\sup(A + B) = \sup A + \sup B\\)；
    2) 若 \\(c < 0\\)，证明 \\(\sup(cA) = c\inf A\\)（可直接用 \\(\inf(-A) = -\sup A\\)）。
+
+   <details> <summary>答案</summary>
+
+   1) 设 \\(x \in A+B\\)，则存在 \\(a\in A\\) 和 \\(b\in B\\) 满足 \\(x = a + b\\)。而 \\(a \le \sup A\\), \\(b\le \sup B\\)，因此 \\(x \le \sup A + \sup B\\)。
+
+      设 \\(\varepsilon > 0\\)，由上确界性质知存在 \\(a'\in A\\) 和 \\(b'\in B\\) 使得 \\(a' > \sup A - \frac{\varepsilon}{2}\\) 且 \\(b' > \sup B - \frac{\varepsilon}{2}\\)。设 \\(x' = a' + b'\\)，则 \\(x'\in A+B\\) 且 \\(x' > \sup A + \sup B - \varepsilon\\)。
+
+      综上所述，根据上确界的ε刻画可知，\\(\sup(A+B) = \sup A + \sup B\\)。
+
+   2) \\(c < 0\\) 时 \\(-c > 0\\)。由已知条件可知，\\(-\sup (cA) = \inf(-cA) = \inf ((-c)A)\\)。因此，只须证明 \\(\inf((-c)A) = (-c)\inf A\\)。
+
+      设 \\(x\in A\\)，则 \\(x \ge \inf A\\)。于是 \\((-c) x \ge (-c)\inf A\\)。
+
+      设 \\(\varepsilon > 0\\)，由上确界性质知存在 \\(x'\in A\\) 使得 \\(x' < \inf A + \frac{\varepsilon}{-c}\\)。那么 \\((-c) x' < (-c) \inf A + \varepsilon\\)。
+
+      综上所述，根据下确界的ε刻画可知，\\(\inf((-c)A) = (-c)\inf A\\)。证毕。
+   </details>
 
 8. 设 \\(A\\), \\(B\\) 为非空有界实数集。定义
 $$ AB = \\{ ab \mid a\in A,\\, b\in B \\}. $$
    1) 若 \\(A,B \subseteq (0, +\infty)\\)，证明 \\(\sup(AB) = \sup A\cdot\sup B\\)；
    2) 若去掉“正数集”限制，等式 \\(\sup(AB) = \sup A\cdot\sup B\\) 是否依然成立？请举反例说明。
+
+   <details> <summary>答案</summary>
+
+   1) 设 \\(x\in AB\\)，则存在 \\(x\in A\\), \\(b\in B\\) 使得 \\(x = ab\\)。又因为 \\(0<a\le \sup A\\), \\(0<b\le \sup B\\)，所以 \\(ab \le \sup A\sup B\\)。
+
+      设 \\(\varepsilon > 0\\)，并设
+$$ \varepsilon' = \min\left\\{\frac{\varepsilon}{\sup A + \sup B}, \sup A, \sup B\right\\}, $$
+那么存在 \\(a'\in A\\) 使得 \\(a' > \sup A - \varepsilon' \ge 0\\)，且存在 \\(b'\in B\\) 使得 \\(b' > \sup B - \varepsilon' \ge 0\\)。于是 \\(a'b' \in AB\\) 且
+\begin{align*}
+a'b' &> (\sup A - \varepsilon')(\sup B - \varepsilon') \\\\
+     &= \sup A \sup B - \underbrace{\varepsilon' (\sup A + \sup B)}\_{=\varepsilon} + \underbrace{(\varepsilon')^2}\_{\ge 0} \\\\
+     &\ge \sup A \sup B - \varepsilon.
+\end{align*}
+
+      综上所述，根据上确界的ε刻画可知 \\(\sup (AB) = \sup A \sup B\\)。
+
+   2) 不成立。举反例如下：取 \\(A = B = [-1, 0]\\)，则 \\(\sup A \sup B = 0\\)，但是 \\(1\in AB\\) 且 \\(1 > 0\\)。
+   </details>
 
 9. 设 \\(\\{[a_n, b_n]\\}\_n\\) 为一列闭区间，且满足 \\([a_{n+1}, b_{n+1}] \subseteq [a_n, b_n]\\)。
    1) 如果已知对任意 \\(n\in\mathbb N\\)，\\(b_n - a_n \le \frac{1}{n+1}\\)，证明存在唯一实数 \\(c\\)，使得 \\(\bigcap_{n=0}^\infty [a_n, b_n] = \\{c\\}\\)；
